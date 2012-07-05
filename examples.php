@@ -130,6 +130,9 @@
 
 	$campaign_report_totals = $ac->api("campaign/report_totals?campaignid={$campaign_id}");
 
+	echo "<p>Reports:</p>";
+	echo "<pre>";
 	print_r($campaign_report_totals);
+	echo "</pre>";
 
 ?>
