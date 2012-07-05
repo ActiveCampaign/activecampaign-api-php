@@ -29,7 +29,7 @@
 	$subscriber = array(
 		"email" => "test@example.com",
 		"first_name" => "Matt",
-		"last_name" => "Smith",
+		"last_name" => "Test",
 		"p[2]" => 2,
 		"status[2]" => 2, // add as "Unsubscribed"
 	);
@@ -58,7 +58,7 @@
 		"first_name" => "Matt",
 		"last_name" => "Test",
 		"p[2]" => 2,
-		"status[2]" => 1, // change the list status to "Subscribed"
+		"status[2]" => 1, // change to "Subscribed"
 	);
 
 	$subscriber_edit = $ac->api("subscriber/edit?overwrite=0", $subscriber);
@@ -74,7 +74,7 @@
 		"subject" => "Check out our latest deals!",
 		"fromemail" => "newsletter@test.com",
 		"fromname" => "Test from API",
-		"html" => "<p>My email newsletter body.</p>",
+		"html" => "<p>My email newsletter.</p>",
 		"p[2]" => 2,
 	);
 
