@@ -1,6 +1,6 @@
 ## Installation
 
-You can install **activecampaign-php** by downloading the source.
+You can install **activecampaign-api-php** by downloading the source.
 
 [Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
 
