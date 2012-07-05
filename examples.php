@@ -122,4 +122,14 @@
 		exit();
 	}
 
+	/*
+	 *
+	 * VIEW CAMPAIGN REPORTS.
+	 *
+	 */
+
+	$campaign_report_totals = $ac->api("campaign/report_totals?campaignid={$campaign_id}");
+
+	print_r($campaign_report_totals);
+
 ?>
