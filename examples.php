@@ -27,7 +27,7 @@
 	 */
 
 	$subscriber = array(
-		"email" => "me@test.com",
+		"email" => "test@example.com",
 		"first_name" => "Matt",
 		"last_name" => "Smith",
 		"p[2]" => 2,
