@@ -19,10 +19,6 @@ define("ACTIVECAMPAIGN_API_KEY", "YOUR ACTIVECAMPAIGN API KEY");
 $ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
 $account = $ac->api("account/view");
-$subscriber_add = $ac->api("subscriber/add", $subscriber);
-$subscriber_edit = $ac->api("subscriber/edit?overwrite=0", $subscriber);
-$message_add = $ac->api("message/add", $message);
-$campaign_create = $ac->api("campaign/create", $campaign);
 </pre>
 
 See our [examples file](https://github.com/ActiveCampaign/activecampaign-api-php/blob/master/examples.php) for more in-depth samples.
