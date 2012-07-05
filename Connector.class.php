@@ -14,7 +14,7 @@ class Connector {
 	public function credentials_test() {
 		$test_url = "{$this->url}&api_action=group_view&api_output={$this->output}&id=3";
 		$r = $this->curl($test_url);
-		if ((int)$r->result_code) {
+		if (is_object($r) && (int)$r->result_code) {
 			// successful
 			$r = true;
 		}

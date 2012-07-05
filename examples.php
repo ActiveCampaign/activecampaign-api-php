@@ -7,6 +7,11 @@
 
 	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
+	if (!(int)$ac->credentials_test()) {
+		print_r("Invalid credentials (URL and API Key).");
+		exit();
+	}
+
 	/*
 	 *
 	 * VIEW ACCOUNT DETAILS.
@@ -49,9 +54,9 @@
 
 	$subscriber = array(
 		"id" => $subscriber_id,
-		"email" => "me@test.com",
+		"email" => "test@example.com",
 		"first_name" => "Matt",
-		"last_name" => "Smith",
+		"last_name" => "Test",
 		"p[2]" => 2,
 		"status[2]" => 1, // change the list status to "Subscribed"
 	);
@@ -68,7 +73,7 @@
 		"format" => "mime",
 		"subject" => "Check out our latest deals!",
 		"fromemail" => "newsletter@test.com",
-		"fromname" => "Mike Jones",
+		"fromname" => "Test from API",
 		"html" => "<p>My email newsletter body.</p>",
 		"p[2]" => 2,
 	);
@@ -109,6 +114,7 @@
 	if ((int)$campaign_create->result_code) {
 		// successful request
 		$campaign_id = (int)$campaign_create->id;
+		print_r("Campaign sent! (ID: {$campaign_id})");
 	}
 	else {
 		// request failed
