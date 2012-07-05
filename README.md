@@ -2,7 +2,7 @@
 
 You can install **activecampaign-php** by downloading the source.
 
-[Click here to download the source (.zip)](https://github.com/mthommes/activecampaign-php/zipball/master) which includes all dependencies.
+[Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
 
 `require_once("ActiveCampaign.class.php");`
 
@@ -34,4 +34,4 @@ $account = $ac->api("account/view");
 
 ## Reporting Issues
 
-We'd love to help if you have questions or problems. Report issues using the [Github Issue Tracker](https://github.com/mthommes/activecampaign-php/issues) or email support@activecampaign.com.
+We'd love to help if you have questions or problems. Report issues using the [Github Issue Tracker](https://github.com/ActiveCampaign/activecampaign-api-php/issues) or email support@activecampaign.com.
