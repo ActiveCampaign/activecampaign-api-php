@@ -2,9 +2,6 @@
 
 	require_once("classes/ActiveCampaign.class.php");
 
-	define("ACTIVECAMPAIGN_URL", "");
-	define("ACTIVECAMPAIGN_API_KEY", "");
-
 	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
 	if (!(int)$ac->credentials_test()) {

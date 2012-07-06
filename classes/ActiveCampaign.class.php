@@ -1,5 +1,7 @@
 <?php
 
+include "config.php";
+
 require_once("Connector.class.php");
 
 class ActiveCampaign extends Connector {

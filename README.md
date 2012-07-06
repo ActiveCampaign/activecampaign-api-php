@@ -6,15 +6,21 @@ You can install **activecampaign-api-php** by downloading the source.
 
 `require_once("ActiveCampaign.class.php");`
 
-Fill in your URL and API Key, and you are good to go!
+Fill in your URL and API Key in the `config.php` file, and you are good to go!
 
 ## Example Usage
 
-<pre>
-require_once("ActiveCampaign.class.php");
+### classes/config.php
 
+<pre>
 define("ACTIVECAMPAIGN_URL", "YOUR ACTIVECAMPAIGN URL");
 define("ACTIVECAMPAIGN_API_KEY", "YOUR ACTIVECAMPAIGN API KEY");
+</pre>
+
+### examples.php
+
+<pre>
+require_once("ActiveCampaign.class.php");
 
 $ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
@@ -27,8 +33,9 @@ See our [examples file](https://github.com/ActiveCampaign/activecampaign-api-php
 
 1. A valid ActiveCampaign account (trial or paid).
 2. ActiveCampaign version >= 5.4 (only Onsite users need to worry about this).
-3. PHP version >= 5.3.
-4. PHP JSON extension.
+3. PHP cURL enabled.
+4. PHP version >= 5.3.
+5. PHP JSON extension.
 
 ## Full Documentation
 
