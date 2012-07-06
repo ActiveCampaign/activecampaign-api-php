@@ -19,6 +19,33 @@
 
 	/*
 	 *
+	 * ADD NEW LIST.
+	 *
+	 */
+
+	$list = array(
+		"name" => "List 3",
+		"sender_name" => "My Company",
+		"sender_addr1" => "123 S. Street",
+		"sender_city" => "Chicago",
+		"sender_zip" => "60601",
+		"sender_country" => "USA",
+	);
+
+	$list_add = $ac->api("list/add", $list);
+
+	if ((int)$list_add->success) {
+		// successful request
+		$list_id = (int)$list_add->id;
+	}
+	else {
+		// request failed
+		print_r($list_add->result_message);
+		exit();
+	}
+
+	/*
+	 *
 	 * ADD NEW SUBSCRIBER.
 	 *
 	 */
@@ -27,13 +54,13 @@
 		"email" => "test@example.com",
 		"first_name" => "Matt",
 		"last_name" => "Test",
-		"p[2]" => 2,
-		"status[2]" => 2, // add as "Unsubscribed"
+		"p[{$list_id}]" => 2,
+		"status[{$list_id}]" => 2, // add as "Unsubscribed"
 	);
 
 	$subscriber_add = $ac->api("subscriber/add", $subscriber);
 
-	if ((int)$subscriber_add->result_code) {
+	if ((int)$subscriber_add->success) {
 		// successful request
 		$subscriber_id = (int)$subscriber_add->subscriber_id;
 	}
@@ -54,8 +81,8 @@
 		"email" => "test@example.com",
 		"first_name" => "Matt",
 		"last_name" => "Test",
-		"p[2]" => 2,
-		"status[2]" => 1, // change to "Subscribed"
+		"p[{$list_id}]" => 2,
+		"status[{$list_id}]" => 1, // change to "Subscribed"
 	);
 
 	$subscriber_edit = $ac->api("subscriber/edit?overwrite=0", $subscriber);
@@ -72,12 +99,12 @@
 		"fromemail" => "newsletter@test.com",
 		"fromname" => "Test from API",
 		"html" => "<p>My email newsletter.</p>",
-		"p[2]" => 2,
+		"p[{$list_id}]" => $list_id,
 	);
 
 	$message_add = $ac->api("message/add", $message);
 
-	if ((int)$message_add->result_code) {
+	if ((int)$message_add->success) {
 		// successful request
 		$message_id = (int)$message_add->id;
 	}
@@ -102,13 +129,13 @@
 		"tracklinks" => "all",
 		"trackreads" => 1,
 		"htmlunsub" => 1,
-		"p[2]" => 2,
+		"p[{$list_id}]" => $list_id,
 		"m[{$message_id}]" => 100,
 	);
 
 	$campaign_create = $ac->api("campaign/create", $campaign);
 
-	if ((int)$campaign_create->result_code) {
+	if ((int)$campaign_create->success) {
 		// successful request
 		$campaign_id = (int)$campaign_create->id;
 		print_r("Campaign sent! (ID: {$campaign_id})");

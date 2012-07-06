@@ -45,6 +45,7 @@ class Connector {
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
 		$object = json_decode($response);
+		$object->success = $object->result_code;
 		return $object;
 	}
 
