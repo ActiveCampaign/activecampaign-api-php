@@ -1,6 +1,6 @@
 <?php
 
-	require_once("classes/ActiveCampaign.class.php");
+	require_once("includes/ActiveCampaign.class.php");
 
 	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
