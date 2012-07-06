@@ -54,7 +54,7 @@
 		"email" => "test@example.com",
 		"first_name" => "Matt",
 		"last_name" => "Test",
-		"p[{$list_id}]" => 2,
+		"p[{$list_id}]" => $list_id,
 		"status[{$list_id}]" => 2, // add as "Unsubscribed"
 	);
 
@@ -81,7 +81,7 @@
 		"email" => "test@example.com",
 		"first_name" => "Matt",
 		"last_name" => "Test",
-		"p[{$list_id}]" => 2,
+		"p[{$list_id}]" => $list_id,
 		"status[{$list_id}]" => 1, // change to "Subscribed"
 	);
 
