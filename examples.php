@@ -40,7 +40,7 @@
 	}
 	else {
 		// request failed
-		print_r($list_add->result_message);
+		print_r($list_add->error);
 		exit();
 	}
 
@@ -66,7 +66,7 @@
 	}
 	else {
 		// request failed
-		print_r($subscriber_add->result_message);
+		print_r($subscriber_add->error);
 		exit();
 	}
 
@@ -110,7 +110,7 @@
 	}
 	else {
 		// request failed
-		print_r($message_add->result_message);
+		print_r($message_add->error);
 		exit();
 	}
 
@@ -142,7 +142,7 @@
 	}
 	else {
 		// request failed
-		print_r($campaign_create->result_message);
+		print_r($campaign_create->error);
 		exit();
 	}
 

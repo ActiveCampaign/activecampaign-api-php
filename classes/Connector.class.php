@@ -46,6 +46,9 @@ class Connector {
 		curl_close($request);
 		$object = json_decode($response);
 		$object->success = $object->result_code;
+		if (!(int)$object->result_code) {
+			$object->error = $object->result_message;
+		}
 		return $object;
 	}
 
