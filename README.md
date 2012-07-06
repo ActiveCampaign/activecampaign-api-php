@@ -6,7 +6,7 @@ You can install **activecampaign-api-php** by downloading the source.
 
 `require_once("includes/ActiveCampaign.class.php");`
 
-Fill in your URL and API Key in the `config.php` file, and you are good to go!
+Fill in your URL and API Key in the `includes/config.php` file, and you are good to go!
 
 ## Example Usage
 
