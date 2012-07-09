@@ -1,6 +1,8 @@
 <?php
 
-include "config.php";
+if ( !defined("ACTIVECAMPAIGN_URL") || !defined("ACTIVECAMPAIGN_API_KEY") ) {
+	include "config.php";
+}
 
 require_once("Connector.class.php");
 
