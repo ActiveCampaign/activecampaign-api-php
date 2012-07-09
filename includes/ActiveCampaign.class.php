@@ -21,6 +21,7 @@ class ActiveCampaign extends Connector {
 		// IE: "subscriber/view"
 		$components = explode("/", $path);
 		$component = $components[0];
+
 		if (preg_match("/\?/", $components[1])) {
 			// query params appended to method
 			// IE: subscriber/edit?overwrite=0
@@ -31,15 +32,41 @@ class ActiveCampaign extends Connector {
 		else {
 			// just a method provided
 			// IE: "subscriber/view
-			$method = $components[1];
-			$params = "";
+			if ( isset($components[1]) ) {
+				$method = $components[1];
+				$params = "";
+			}
+			else {
+				return "Invalid method.";
+			}
 		}
-		if ($component == "list") $component = "list_"; // reserved word
+
+		// adjustments
+		if ($component == "list") {
+			// reserved word
+			$component = "list_";
+		}
+		elseif ($component == "branding") {
+			$component = "design";
+		}
+		elseif ($component == "sync") {
+			$component = "subscriber";
+			$method = "sync";
+		}
+		elseif ($component == "singlesignon") {
+			$component = "auth";
+		}
+
 		$class = ucwords($component); // IE: "subscriber" becomes "Subscriber"
 		// IE: new Subscriber();
 		$class = new $class($this->url, $this->api_key);
 		// IE: $subscriber->view();
-		if ($method == "list") $method = "list_"; // reserved word
+
+		if ($method == "list") {
+			// reserved word
+			$method = "list_";
+		}
+
 		$response = $class->$method($params, $post_data);
 		return $response;
 	}
