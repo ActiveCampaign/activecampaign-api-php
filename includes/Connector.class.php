@@ -33,7 +33,19 @@ class Connector {
 		if ($post_data) {
 			curl_setopt($request, CURLOPT_POST, 1);
 			$data = "";
-			foreach($post_data as $key => $value) $data .= $key . "=" . urlencode($value) . "&";
+			foreach($post_data as $key => $value) {
+				if (is_array($value)) {
+					// IE: [group] => array(2 => 2, 3 => 3)
+					// normally we just want the key to be a string, IE: ["group[2]"] => 2
+					// but we want to allow passing both formats
+					foreach ($value as $k => $v) {
+						$data .= "{$key}[{$k}]=" . urlencode($v) . "&";
+					}
+				}
+				else {
+					$data .= "{$key}=" . urlencode($value) . "&";
+				}
+			}
 			$data = rtrim($data, "& ");
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
 		}
