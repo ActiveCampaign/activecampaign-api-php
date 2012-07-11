@@ -3,6 +3,9 @@
 if ( !defined("ACTIVECAMPAIGN_URL") || !defined("ACTIVECAMPAIGN_API_KEY") ) {
 	include "config.php";
 }
+else {
+	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+}
 
 require_once("Connector.class.php");
 
