@@ -50,24 +50,36 @@
 	 *
 	 */
 
-	$subscriber = array(
-		"email" => "test@example.com",
-		"first_name" => "Matt",
-		"last_name" => "Test",
-		"p[{$list_id}]" => $list_id,
-		"status[{$list_id}]" => 2, // add as "Unsubscribed"
-	);
+	// CHECK IF THEY EXIST FIRST.
+	$subscriber_exists = $ac->api("subscriber/view?email=test@example.com");
 
-	$subscriber_add = $ac->api("subscriber/add", $subscriber);
+	if ( !isset($subscriber_exists->id) ) {
 
-	if ((int)$subscriber_add->success) {
-		// successful request
-		$subscriber_id = (int)$subscriber_add->subscriber_id;
+		// SUBSCRIBER DOES NOT EXIST - ADD THEM.
+
+		$subscriber = array(
+			"email" => "test@example.com",
+			"first_name" => "Matt",
+			"last_name" => "Test",
+			"p[{$list_id}]" => $list_id,
+			"status[{$list_id}]" => 2, // add as "Unsubscribed"
+		);
+
+		$subscriber_add = $ac->api("subscriber/add", $subscriber);
+
+		if ((int)$subscriber_add->success) {
+			// successful request
+			$subscriber_id = (int)$subscriber_add->subscriber_id;
+		}
+		else {
+			// request failed
+			print_r($subscriber_add->error);
+			exit();
+		}
 	}
 	else {
-		// request failed
-		print_r($subscriber_add->error);
-		exit();
+		// SUBSCRIBER EXISTS - JUST GRAB THEIR ID.
+		$subscriber_id = $subscriber_exists->id;
 	}
 
 	/*
