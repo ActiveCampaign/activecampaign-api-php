@@ -1,6 +1,6 @@
 <?php
 
-class User extends ActiveCampaign {
+class AC_User extends ActiveCampaign {
 
 	public $url;
 	public $api_key;

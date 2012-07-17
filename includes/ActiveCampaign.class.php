@@ -6,7 +6,7 @@ if ( !defined("ACTIVECAMPAIGN_URL") || !defined("ACTIVECAMPAIGN_API_KEY") ) {
 
 require_once("Connector.class.php");
 
-class ActiveCampaign extends Connector {
+class ActiveCampaign extends AC_Connector {
 
 	public $url;
 	public $api_key;
@@ -14,7 +14,7 @@ class ActiveCampaign extends Connector {
 	function __construct($url, $api_key) {
 		$this->url = $url;
 		$this->api_key = $api_key;
-		Connector::__construct($url, $api_key);
+		AC_Connector::__construct($url, $api_key);
 	}
 
 	function api($path, $post_data = array()) {
@@ -58,7 +58,9 @@ class ActiveCampaign extends Connector {
 		}
 
 		$class = ucwords($component); // IE: "subscriber" becomes "Subscriber"
+		$class = "AC_" . $class;
 		// IE: new Subscriber();
+
 		$class = new $class($this->url, $this->api_key);
 		// IE: $subscriber->view();
 

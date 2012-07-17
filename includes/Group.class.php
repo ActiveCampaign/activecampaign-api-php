@@ -1,6 +1,6 @@
 <?php
 
-class Group extends ActiveCampaign {
+class AC_Group extends ActiveCampaign {
 
 	public $url;
 	public $api_key;
