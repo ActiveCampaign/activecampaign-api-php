@@ -59,7 +59,7 @@ class AC_Connector {
 		$object = json_decode($response);
 		if (!is_object($object) || !isset($object->result_code)) {
 			// something went wrong
-			return false;
+			return "There was an error with the API request (code {$http_code}).";
 		}
 		$object->success = $object->result_code;
 		if (!(int)$object->result_code) {
