@@ -57,6 +57,10 @@ class AC_Connector {
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
 		$object = json_decode($response);
+		if (!is_object($object) || !isset($object->result_code)) {
+			// something went wrong
+			return false;
+		}
 		$object->success = $object->result_code;
 		if (!(int)$object->result_code) {
 			$object->error = $object->result_message;
