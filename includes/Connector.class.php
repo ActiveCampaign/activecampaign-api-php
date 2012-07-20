@@ -50,7 +50,7 @@ class AC_Connector {
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
 		}
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
 		$response = curl_exec($request);
 //dbg($response);
