@@ -63,6 +63,10 @@ class AC_Subscriber extends ActiveCampaign {
 		elseif (preg_match("/^id=/", $params)) {
 			$action = "subscriber_view";
 		}
+		else {
+			// default
+			$action = "subscriber_view";
+		}
 		$request_url = "{$this->url}&api_action={$action}&api_output={$this->output}&{$params}";
 		$response = $this->curl($request_url);
 		return $response;
