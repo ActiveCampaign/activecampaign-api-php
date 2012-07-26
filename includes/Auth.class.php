@@ -16,12 +16,6 @@ class AC_Auth extends ActiveCampaign {
 		return $response;
 	}
 
-	function singlesignon_sameserver($params) {
-		$request_url = "{$this->url}&api_action=singlesignon_sameserver&api_output={$this->output}&{$params}";
-		$response = $this->curl($request_url);
-		return $response;
-	}
-
 }
 
 ?>
