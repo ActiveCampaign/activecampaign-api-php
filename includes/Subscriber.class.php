@@ -46,12 +46,6 @@ class AC_Subscriber extends ActiveCampaign {
 		return $response;
 	}
 
-	function sync($params) {
-		$request_url = "{$this->url}&api_action=sync_run&api_output={$this->output}&{$params}";
-		$response = $this->curl($request_url);
-		return $response;
-	}
-
 	function view($params) {
 		// can be a subscriber ID, email, or hash
 		if (preg_match("/^email=/", $params)) {
