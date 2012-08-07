@@ -40,6 +40,12 @@ class AC_User extends ActiveCampaign {
 		return $response;
 	}
 
+	function me() {
+		$request_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
+		$response = $this->curl($request_url);
+		return $response;
+	}
+
 	function view($params) {
 		// can be a user ID, email, or username
 		if (preg_match("/^email=/", $params)) {
