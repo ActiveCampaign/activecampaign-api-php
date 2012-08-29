@@ -39,6 +39,7 @@ class AC_Connector {
 					// normally we just want the key to be a string, IE: ["group[2]"] => 2
 					// but we want to allow passing both formats
 					foreach ($value as $k => $v) {
+						$k = urlencode($k);
 						$data .= "{$key}[{$k}]=" . urlencode($v) . "&";
 					}
 				}
