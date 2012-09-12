@@ -7,7 +7,16 @@ class AC_Connector {
 	public $output = "json";
 
 	function __construct($url, $api_key) {
-		$this->url = (preg_match("/\/$/", $url)) ? "{$url}admin/api.php?api_key={$api_key}" : "{$url}/admin/api.php?api_key={$api_key}";
+		$base = "";
+		if (!preg_match("/https:\/\/www.activecampaign.com/", $url)) {
+			// not a reseller
+			$base = "/admin";
+		}
+		if (preg_match("/\/$/", $url)) {
+			// remove trailing slash
+			$url = substr($url, 0, strlen($url) - 1);
+		}
+		$this->url = "{$url}{$base}/api.php?api_key={$api_key}";
 		$this->api_key = $api_key;
 	}
 
