@@ -6,7 +6,8 @@ class AC_Connector {
 	public $api_key;
 	public $output = "json";
 
-	function __construct($url, $api_key) {
+	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
+		// $api_pass should be md5() already
 		$base = "";
 		if (!preg_match("/https:\/\/www.activecampaign.com/", $url)) {
 			// not a reseller
@@ -16,7 +17,12 @@ class AC_Connector {
 			// remove trailing slash
 			$url = substr($url, 0, strlen($url) - 1);
 		}
-		$this->url = "{$url}{$base}/api.php?api_key={$api_key}";
+		if ($api_key) {
+			$this->url = "{$url}{$base}/api.php?api_key={$api_key}";
+		}
+		elseif ($api_user && $api_pass) {
+			$this->url = "{$url}{$base}/api.php?api_user={$api_user}&api_pass={$api_pass}";
+		}
 		$this->api_key = $api_key;
 	}
 
