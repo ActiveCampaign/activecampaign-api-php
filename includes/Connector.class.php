@@ -67,13 +67,22 @@ class AC_Connector {
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
 		$object = json_decode($response);
-		if (!is_object($object) || !isset($object->result_code)) {
+		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded)) ) {
 			// something went wrong
 			return "There was an error with the API request (code {$http_code}).";
 		}
-		$object->success = $object->result_code;
-		if (!(int)$object->result_code) {
-			$object->error = $object->result_message;
+		if (isset($object->result_code)) {
+			$object->success = $object->result_code;
+			if (!(int)$object->result_code) {
+				$object->error = $object->result_message;
+			}
+		}
+		elseif (isset($object->succeeded)) {
+			// some calls return "succeeded" only
+			$object->success = $object->succeeded;
+			if (!(int)$object->succeeded) {
+				$object->error = $object->message;
+			}
 		}
 		return $object;
 	}
