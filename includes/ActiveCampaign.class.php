@@ -11,10 +11,10 @@ class ActiveCampaign extends AC_Connector {
 	public $url;
 	public $api_key;
 
-	function __construct($url, $api_key) {
+	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url = $url;
 		$this->api_key = $api_key;
-		AC_Connector::__construct($url, $api_key);
+		AC_Connector::__construct($url, $api_key, $api_user, $api_pass);
 	}
 
 	function api($path, $post_data = array()) {
