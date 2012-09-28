@@ -41,6 +41,10 @@ class AC_Connector {
 	}
 
 	public function curl($url, $post_data = array()) {
+		// find the method from the URL
+		$method = preg_match("/api_action=[^&]*/i", $url, $matches);
+		$method = preg_match("/[^=]*$/i", $matches[0], $matches2);
+		$method = $matches2[0];
 		$request = curl_init();
 		curl_setopt($request, CURLOPT_URL, $url);
 		curl_setopt($request, CURLOPT_HEADER, 0);
@@ -72,6 +76,11 @@ class AC_Connector {
 //dbg($response);
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
+		// add methods that only return a string
+		$string_responses = array("form_html");
+		if (in_array($method, $string_responses)) {
+			return $response;
+		}
 		$object = json_decode($response);
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded)) ) {
 			// something went wrong
