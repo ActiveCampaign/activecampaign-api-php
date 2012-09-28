@@ -17,7 +17,7 @@ class AC_Form extends ActiveCampaign {
 	}
 
 	function html($params) {
-		$request_url = "{$this->url}&api_action=form_html&api_output={$this->output}";
+		$request_url = "{$this->url}&api_action=form_html&api_output={$this->output}&{$params}";
 		$response = $this->curl($request_url);
 		return $response;
 	}
