@@ -76,13 +76,13 @@ class AC_Connector {
 //dbg($response);
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
-		// add methods that only return a string
-		$string_responses = array("form_html");
-		if (in_array($method, $string_responses)) {
-			return $response;
-		}
 		$object = json_decode($response);
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded)) ) {
+		// add methods that only return a string
+			$string_responses = array("form_html");
+			if (in_array($method, $string_responses)) {
+				return $response;
+			}
 			// something went wrong
 			return "There was an error with the API request (code {$http_code}).";
 		}
