@@ -52,6 +52,12 @@ class AC_Account extends ActiveCampaign {
 		return $response;
 	}
 
+	function status_set($params) {
+		$request_url = "{$this->url}&api_action=account_status_set&api_output={$this->output}&{$params}";
+		$response = $this->curl($request_url);
+		return $response;
+	}
+
 	function view() {
 		$request_url = "{$this->url}&api_action=account_view&api_output={$this->output}";
 		$response = $this->curl($request_url);
