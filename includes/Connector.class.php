@@ -52,38 +52,47 @@ class AC_Connector {
 		if ($post_data) {
 			curl_setopt($request, CURLOPT_POST, 1);
 			$data = "";
-			foreach($post_data as $key => $value) {
-				if (is_array($value)) {
 
-					if (is_int($key)) {
-						// array two levels deep
-						foreach ($value as $key_ => $value_) {
-							if (is_array($value_)) {
-								foreach ($value_ as $k => $v) {
-									$k = urlencode($k);
-									$data .= "{$key_}[{$key}][{$k}]=" . urlencode($v) . "&";
+			if (is_array($post_data)) {
+				foreach($post_data as $key => $value) {
+					if (is_array($value)) {
+
+						if (is_int($key)) {
+							// array two levels deep
+							foreach ($value as $key_ => $value_) {
+								if (is_array($value_)) {
+									foreach ($value_ as $k => $v) {
+										$k = urlencode($k);
+										$data .= "{$key_}[{$key}][{$k}]=" . urlencode($v) . "&";
+									}
+								}
+								else {
+									$data .= "{$key_}[{$key}]=" . urlencode($value_) . "&";
 								}
 							}
-							else {
-								$data .= "{$key_}[{$key}]=" . urlencode($value_) . "&";
+						}
+						else {
+							// IE: [group] => array(2 => 2, 3 => 3)
+							// normally we just want the key to be a string, IE: ["group[2]"] => 2
+							// but we want to allow passing both formats
+							foreach ($value as $k => $v) {
+								$k = urlencode($k);
+								$data .= "{$key}[{$k}]=" . urlencode($v) . "&";
 							}
 						}
+
 					}
 					else {
-						// IE: [group] => array(2 => 2, 3 => 3)
-						// normally we just want the key to be a string, IE: ["group[2]"] => 2
-						// but we want to allow passing both formats
-						foreach ($value as $k => $v) {
-							$k = urlencode($k);
-							$data .= "{$key}[{$k}]=" . urlencode($v) . "&";
-						}
+						$data .= "{$key}=" . urlencode($value) . "&";
 					}
-
-				}
-				else {
-					$data .= "{$key}=" . urlencode($value) . "&";
 				}
 			}
+			else {
+				// not an array - perhaps serialized or JSON string?
+				// just pass it as data
+				$data = "data={$post_data}";
+			}
+
 			$data = rtrim($data, "& ");
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
 		}
