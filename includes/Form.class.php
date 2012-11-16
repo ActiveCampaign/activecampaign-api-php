@@ -24,7 +24,11 @@ class AC_Form extends ActiveCampaign {
 
 	function embed($params) {
 		$params_array = explode("&", $params);
-		$html = $this->html($params_array[0]);
+		$id_expression = (isset($params_array[0])) ? $params_array[0] : "id=0"; // id=24
+		$css_expression = (isset($params_array[1])) ? $params_array[1] : "css=1"; // css=1
+		$ajax_expression = (isset($params_array[2])) ? $params_array[2] : "ajax=0"; // ajax=0
+		$action_expression = (isset($params_array[3])) ? $params_array[3] : ""; // action=http://someurl.com
+		$html = $this->html($id_expression);
 		if ($html) {
 			// remove the action attribute
 			$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
@@ -35,6 +39,7 @@ class AC_Form extends ActiveCampaign {
 	}
 
 	function process() {
+		if ($_SERVER["REQUEST_METHOD"] != "POST") return;
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
 			$firstname = array_shift($fullname);
