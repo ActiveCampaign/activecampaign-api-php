@@ -22,6 +22,33 @@ class AC_Form extends ActiveCampaign {
 		return $response;
 	}
 
+	function embed($params) {
+		$params_array = explode("&", $params);
+		$html = $this->html($params_array[0]);
+		if ($html) {
+			// remove the action attribute
+			$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
+			// replace the Submit button to be an actual submit type.
+			$html = preg_replace("/input type='button'/", "input type='submit'", $html);
+		}
+		return $html;
+	}
+
+	function process() {
+		if (isset($_POST["fullname"])) {
+			$fullname = explode(" ", $_POST["fullname"]);
+			$firstname = array_shift($fullname);
+			$lastname = implode(" ", $fullname);
+		}
+		else {
+			$firstname = trim($_POST["firstname"]);
+			$lastname = trim($_POST["lastname"]);
+
+			if ($firstname == "") $firstname = trim($_POST["first_name"]);
+			if ($lastname == "") $lastname = trim($_POST["last_name"]);
+		}
+	}
+
 }
 
 ?>
