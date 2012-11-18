@@ -23,18 +23,69 @@ class AC_Form extends ActiveCampaign {
 	}
 
 	function embed($params) {
+
 		$params_array = explode("&", $params);
-		$id_expression = (isset($params_array[0])) ? $params_array[0] : "id=0"; // id=24
-		$css_expression = (isset($params_array[1])) ? $params_array[1] : "css=1"; // css=1
-		$ajax_expression = (isset($params_array[2])) ? $params_array[2] : "ajax=0"; // ajax=0
-		$action_expression = (isset($params_array[3])) ? $params_array[3] : ""; // action=http://someurl.com
-		$html = $this->html($id_expression);
-		if ($html) {
-			// remove the action attribute
-			$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
-			// replace the Submit button to be an actual submit type.
-			$html = preg_replace("/input type='button'/", "input type='submit'", $html);
+		$params_ = array();
+		foreach ($params_array as $expression) {
+			// IE: css=1
+			list($var, $val) = explode("=", $expression);
+			$params_[$var] = $val;
 		}
+
+		$id = (isset($params_["id"])) ? (int)$params_["id"] : 0;
+		$css = (isset($params_["css"])) ? (int)$params_["css"] : 1;
+		$ajax = (isset($params_["ajax"])) ? (int)$params_["ajax"] : 0;
+		$action = (isset($params_["action"])) ? $params_["action"] : "";
+
+		$html = $this->html("id={$id}");
+
+		if (is_object($html) && !(int)$html->success) {
+			return $html->error;
+		}
+
+		if ($html) {
+
+			if (!$css) {
+				// remove all CSS
+				$html = preg_replace("/<style[^>]*>(.*)<\/style>/s", "", $html);
+			}
+
+			if ($action) {
+				// replace the action attribute with the one provided
+				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='{$action}'", $html);
+			}
+			
+			if (!$ajax) {
+				// replace the Submit button to be an actual submit type
+				$html = preg_replace("/input type='button'/", "input type='submit'", $html);
+			}
+			else {
+				// if using Ajax, remove the action attribute
+				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
+				
+				// add jQuery stuff
+				$js = "<script type='text/javascript'>
+				
+$(document).ready(function () {
+	
+	$.ajax({
+		url: '',
+		dataType: 'json',
+		error: function(jqXHR, textStatus, errorThrown) {
+		},
+		success: function(data) {
+		}
+	});
+	
+});			
+
+</script>";
+				
+				$html = $html . $js;
+			}
+
+		}
+
 		return $html;
 	}
 
