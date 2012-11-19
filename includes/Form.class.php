@@ -128,7 +128,6 @@ $(document).ready(function() {
 	function process() {
 		$r = array();
 		if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
-//dbg($_POST);
 
 		$formid = $_POST["f"];
 		$email = $_POST["email"];
@@ -145,36 +144,26 @@ $(document).ready(function() {
 			if ($lastname == "") $lastname = trim($_POST["last_name"]);
 		}
 
-		if ( !isset($_POST["field"]) ) {
-			$xf = array();
-			foreach ($_POST as $k => $v) {
-				if (substr($k, 0, 6) == "field_") {
-					$tmparr = explode("_", substr($k, 6));
-					if ( count($tmparr) == 2 ) {
-						$xf[(int)$tmparr[0] . "," . (int)$tmparr[1]] = $v;
-					}
-				}
-			}
-			if ($xf) $_POST["field"] = $xf;
-		}
+		$fields = (isset($_POST["field"])) ? $_POST["field"] : array();
 
 		$subscriber = array(
 			"form" => $formid,
 			"email" => $email,
 			"first_name" => $firstname,
 			"last_name" => $lastname,
-			"field" => $xf,
 		);
+
+		foreach ($fields as $ac_field_id => $field_value) {
+			$subscriber["field"][$ac_field_id . ",0"] = $field_value;
+		}
 
 		// add lists
 		foreach ($_POST["nlbox"] as $listid) {
 			$subscriber["p[{$listid}]"] = $listid;
 			$subscriber["status[{$listid}]"] = 1;
 		}
-//dbg($subscriber);
 
 		$subscriber_request = $this->api("subscriber/sync", $subscriber);
-//dbg($subscriber_request);
 
 		if ((int)$subscriber_request->success) {
 			// successful request
