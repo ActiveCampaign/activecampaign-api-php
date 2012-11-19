@@ -54,33 +54,54 @@ class AC_Form extends ActiveCampaign {
 				// replace the action attribute with the one provided
 				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='{$action}'", $html);
 			}
-			
+
 			if (!$ajax) {
 				// replace the Submit button to be an actual submit type
 				$html = preg_replace("/input type='button'/", "input type='submit'", $html);
 			}
 			else {
+
+				// find the action attribute value (URL)
+				$action_val = preg_match("/action=['\"][^'\"]+['\"]/", $html, $m);
+				$action_val = $m[0];
+				$action_val = substr($action_val, 8, strlen($action_val) - 9);
+				$url = $action_val;
+
 				// if using Ajax, remove the action attribute
 				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
-				
+
 				// add jQuery stuff
 				$js = "<script type='text/javascript'>
-				
-$(document).ready(function () {
-	
-	$.ajax({
-		url: '',
-		dataType: 'json',
-		error: function(jqXHR, textStatus, errorThrown) {
-		},
-		success: function(data) {
-		}
+
+$(document).ready(function() {
+
+	$('input[type*=\"button\"]').click(function() {
+
+		var form_data = {};
+		$('form').each(function() {
+			form_data = $(this).serialize();
+		});
+
+		var url_;
+		url_ = $.ajax({
+			url: '',
+			type: 'POST',
+			dataType: 'html',
+			data: form_data,
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert('Error: ' + textStatus);
+			},
+			success: function(data) {
+
+			}
+		});
+
 	});
-	
-});			
+
+});
 
 </script>";
-				
+
 				$html = $html . $js;
 			}
 
@@ -91,6 +112,7 @@ $(document).ready(function () {
 
 	function process() {
 		if ($_SERVER["REQUEST_METHOD"] != "POST") return;
+//dbg($_POST);
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
 			$firstname = array_shift($fullname);
