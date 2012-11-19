@@ -73,20 +73,20 @@ class AC_Form extends ActiveCampaign {
 				// replace the Submit button to be an actual submit type
 				$html = preg_replace("/input type='button'/", "input type='submit'", $html);
 
-				// if action = this, remove the action attribute completely
+				// if action = "this", remove the action attribute completely
 				if (!$action_val) {
 					$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
 				}
 			}
 			else {
 
-				// if using Ajax, remove the action attribute completely
+				// if using Ajax, remove the <form> action attribute completely
 				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
 
 				$action_val = urldecode($action_val);
 
 				// add jQuery stuff
-				$js = "<script type='text/javascript'>
+				$extra = "<script type='text/javascript'>
 
 $(document).ready(function() {
 
@@ -101,13 +101,13 @@ $(document).ready(function() {
 		geturl = $.ajax({
 			url: '{$action_val}',
 			type: 'POST',
-			dataType: 'html',
+			dataType: 'json',
 			data: form_data,
 			error: function(jqXHR, textStatus, errorThrown) {
 				alert('Error: ' + textStatus);
 			},
 			success: function(data) {
-
+				$('#form_result_message').html(data.message);
 			}
 		});
 
@@ -117,7 +117,7 @@ $(document).ready(function() {
 
 </script>";
 
-				$html = $html . $js;
+				$html = $html . $extra;
 			}
 
 		}
@@ -126,8 +126,13 @@ $(document).ready(function() {
 	}
 
 	function process() {
-		if ($_SERVER["REQUEST_METHOD"] != "POST") return;
+		$r = array();
+		if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
 //dbg($_POST);
+
+		$formid = $_POST["f"];
+		$email = $_POST["email"];
+
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
 			$firstname = array_shift($fullname);
@@ -136,10 +141,59 @@ $(document).ready(function() {
 		else {
 			$firstname = trim($_POST["firstname"]);
 			$lastname = trim($_POST["lastname"]);
-
 			if ($firstname == "") $firstname = trim($_POST["first_name"]);
 			if ($lastname == "") $lastname = trim($_POST["last_name"]);
 		}
+
+		if ( !isset($_POST["field"]) ) {
+			$xf = array();
+			foreach ($_POST as $k => $v) {
+				if (substr($k, 0, 6) == "field_") {
+					$tmparr = explode("_", substr($k, 6));
+					if ( count($tmparr) == 2 ) {
+						$xf[(int)$tmparr[0] . "," . (int)$tmparr[1]] = $v;
+					}
+				}
+			}
+			if ($xf) $_POST["field"] = $xf;
+		}
+
+		$subscriber = array(
+			"form" => $formid,
+			"email" => $email,
+			"first_name" => $firstname,
+			"last_name" => $lastname,
+			"field" => $xf,
+		);
+
+		// add lists
+		foreach ($_POST["nlbox"] as $listid) {
+			$subscriber["p[{$listid}]"] = $listid;
+			$subscriber["status[{$listid}]"] = 1;
+		}
+//dbg($subscriber);
+
+		$subscriber_request = $this->api("subscriber/sync", $subscriber);
+//dbg($subscriber_request);
+
+		if ((int)$subscriber_request->success) {
+			// successful request
+			//$subscriber_id = (int)$subscriber_request->subscriber_id;
+			$r = array(
+				"success" => 1,
+				"message" => $subscriber_request->result_message,
+				//"subscriber_id" => $subscriber_id,
+			);
+		}
+		else {
+			// request failed
+			$r = array(
+				"success" => 0,
+				"message" => $subscriber_request->error,
+			);
+		}
+
+		return json_encode($r);
 	}
 
 }
