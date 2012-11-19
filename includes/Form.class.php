@@ -35,7 +35,8 @@ class AC_Form extends ActiveCampaign {
 		$id = (isset($params_["id"])) ? (int)$params_["id"] : 0;
 		$css = (isset($params_["css"])) ? (int)$params_["css"] : 1;
 		$ajax = (isset($params_["ajax"])) ? (int)$params_["ajax"] : 0;
-		$action = (isset($params_["action"])) ? $params_["action"] : "";
+		// to set the current page as the action, pass "action=", or "action=[THIS URL]"
+		$action = (isset($params_["action"])) ? ($params_["action"] ? $params_["action"] : "this") : "";
 
 		$html = $this->html("id={$id}");
 
@@ -45,30 +46,44 @@ class AC_Form extends ActiveCampaign {
 
 		if ($html) {
 
+			if ($action) {
+				if ($action != "this") {
+					// replace the action attribute with the one provided
+					$action_val = urldecode($action);
+					$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='{$action_val}'", $html);
+				}
+				else {
+					$action_val = "";
+				}
+			}
+			else {
+				// find the action attribute value (URL)
+				// should be the proc.php URL (at this point in the script)
+				$action_val = preg_match("/action=['\"][^'\"]+['\"]/", $html, $m);
+				$action_val = $m[0];
+				$action_val = substr($action_val, 8, strlen($action_val) - 9);
+			}
+
 			if (!$css) {
 				// remove all CSS
 				$html = preg_replace("/<style[^>]*>(.*)<\/style>/s", "", $html);
 			}
 
-			if ($action) {
-				// replace the action attribute with the one provided
-				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "action='{$action}'", $html);
-			}
-
 			if (!$ajax) {
 				// replace the Submit button to be an actual submit type
 				$html = preg_replace("/input type='button'/", "input type='submit'", $html);
+
+				// if action = this, remove the action attribute completely
+				if (!$action_val) {
+					$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
+				}
 			}
 			else {
 
-				// find the action attribute value (URL)
-				$action_val = preg_match("/action=['\"][^'\"]+['\"]/", $html, $m);
-				$action_val = $m[0];
-				$action_val = substr($action_val, 8, strlen($action_val) - 9);
-				$url = $action_val;
-
-				// if using Ajax, remove the action attribute
+				// if using Ajax, remove the action attribute completely
 				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
+
+				$action_val = urldecode($action_val);
 
 				// add jQuery stuff
 				$js = "<script type='text/javascript'>
@@ -82,9 +97,9 @@ $(document).ready(function() {
 			form_data = $(this).serialize();
 		});
 
-		var url_;
-		url_ = $.ajax({
-			url: '',
+		var geturl;
+		geturl = $.ajax({
+			url: '{$action_val}',
 			type: 'POST',
 			dataType: 'html',
 			data: form_data,
