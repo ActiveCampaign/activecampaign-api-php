@@ -125,9 +125,23 @@ $(document).ready(function() {
 		return $html;
 	}
 
-	function process() {
+	function process($params) {
+
 		$r = array();
 		if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
+
+		$sync = 0;
+		if ($params) {
+			$params_array = explode("&", $params);
+			$params_ = array();
+			foreach ($params_array as $expression) {
+				// IE: css=1
+				list($var, $val) = explode("=", $expression);
+				$params_[$var] = $val;
+			}
+
+			$sync = (isset($params_["sync"])) ? (int)$params_["sync"] : 0;
+		}
 
 		$formid = $_POST["f"];
 		$email = $_POST["email"];
@@ -163,7 +177,56 @@ $(document).ready(function() {
 			$subscriber["status[{$listid}]"] = 1;
 		}
 
-		$subscriber_request = $this->api("subscriber/sync", $subscriber);
+		if (!$sync) {
+
+			// do add/edit
+
+			$subscriber_exists = $this->api("subscriber/view?email={$email}", $subscriber);
+
+			if ( !isset($subscriber_exists->id) ) {
+
+				// subscriber does not exist - add them
+
+				$subscriber_request = $this->api("subscriber/add", $subscriber);
+
+				if ((int)$subscriber_request->success) {
+					// successful request
+					$subscriber_id = (int)$subscriber_request->subscriber_id;
+					$r = array(
+						"success" => 1,
+						"message" => $subscriber_request->result_message,
+						"subscriber_id" => $subscriber_id,
+					);
+				}
+				else {
+					// request failed
+					$r = array(
+						"success" => 0,
+						"message" => $subscriber_request->error,
+					);
+				}
+
+			}
+			else {
+
+				// subscriber already exists - edit them
+
+				$subscriber_id = $subscriber_exists->id;
+
+				$subscriber["id"] = $subscriber_id;
+
+				$subscriber_request = $this->api("subscriber/edit?overwrite=0", $subscriber);
+
+			}
+
+		}
+		else {
+
+			// perform sync (add or edit)
+
+			$subscriber_request = $this->api("subscriber/sync", $subscriber);
+
+		}
 
 		if ((int)$subscriber_request->success) {
 			// successful request
