@@ -94,6 +94,7 @@ class AC_Connector {
 			}
 
 			$data = rtrim($data, "& ");
+			curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:"));
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
 		}
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
