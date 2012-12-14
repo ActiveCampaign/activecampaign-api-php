@@ -47,6 +47,12 @@ class AC_Subscriber extends ActiveCampaign {
 		return $response;
 	}
 
+	function rate() {
+		$request_url = "{$this->url}&api_action=subscriber_rate&api_output={$this->output}";
+		$response = $this->curl($request_url);
+		return $response;
+	}
+
 	function sync($params, $post_data) {
 		$request_url = "{$this->url}&api_action=subscriber_sync&api_output={$this->output}";
 		if ($params) $request_url .= "&{$params}";
