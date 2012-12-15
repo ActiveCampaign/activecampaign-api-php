@@ -80,6 +80,7 @@ require_once("Auth.class.php");
 require_once("Campaign.class.php");
 require_once("Design.class.php");
 require_once("Form.class.php");
+require_once("Graph.class.php");
 require_once("Group.class.php");
 require_once("List.class.php");
 require_once("Message.class.php");
