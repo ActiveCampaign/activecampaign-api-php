@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined("ACTIVECAMPAIGN_URL") || !defined("ACTIVECAMPAIGN_API_KEY") ) {
+if ( !defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !defined("ACTIVECAMPAIGN_API_USER") && !defined("ACTIVECAMPAIGN_API_PASS")) ) {
 	include "config.php";
 }
 
