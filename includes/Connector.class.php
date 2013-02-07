@@ -112,7 +112,7 @@ class AC_Connector {
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
 		$response = curl_exec($request);
-//dbg($response);
+//$this->dbg($response);
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
 		$object = json_decode($response);
