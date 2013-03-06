@@ -46,6 +46,12 @@ class AC_Webhook extends ActiveCampaign {
 		return $response;
 	}
 
+	function events($params) {
+		$request_url = "{$this->url}&api_action=webhook_events&api_output={$this->output}&{$params}";
+		$response = $this->curl($request_url);
+		return $response;
+	}
+
 }
 
 ?>
