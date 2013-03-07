@@ -27,7 +27,7 @@ class AC_Connector {
 	}
 
 	public function credentials_test() {
-		$test_url = "{$this->url}&api_action=group_view&api_output={$this->output}&id=3";
+		$test_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
 		$r = $this->curl($test_url);
 		if (is_object($r) && (int)$r->result_code) {
 			// successful
