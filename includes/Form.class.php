@@ -88,17 +88,19 @@ class AC_Form extends ActiveCampaign {
 				// add jQuery stuff
 				$extra = "<script type='text/javascript'>
 
-$(document).ready(function() {
+var \$j = jQuery.noConflict();
 
-	$('input[type*=\"button\"]').click(function() {
+\$j(document).ready(function() {
+
+	\$j('input[type*=\"button\"]').click(function() {
 
 		var form_data = {};
-		$('form').each(function() {
-			form_data = $(this).serialize();
+		\$j('form').each(function() {
+			form_data = \$j(this).serialize();
 		});
 
 		var geturl;
-		geturl = $.ajax({
+		geturl = \$j.ajax({
 			url: '{$action_val}',
 			type: 'POST',
 			dataType: 'json',
@@ -107,7 +109,7 @@ $(document).ready(function() {
 				alert('Error: ' + textStatus);
 			},
 			success: function(data) {
-				$('#form_result_message').html(data.message);
+				\$j('#form_result_message').html(data.message);
 			}
 		});
 
