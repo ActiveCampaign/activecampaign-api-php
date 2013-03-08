@@ -73,14 +73,6 @@ class AC_Webhook extends ActiveCampaign {
 			return json_encode($_POST);
 		}
 				
-		$example_payload = $this->example_payload("event={$event}");
-		
-		foreach ($example_payload as $field => $value) {
-			if (isset($_POST[$field])) {
-				
-			}
-		}
-				
 	}
 
 }
