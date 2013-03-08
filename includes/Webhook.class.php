@@ -52,12 +52,6 @@ class AC_Webhook extends ActiveCampaign {
 		return $response;
 	}
 	
-	function example_payload($params) {
-		$request_url = "{$this->url}&api_action=webhook_example_payload&api_output={$this->output}&{$params}";
-		$response = $this->curl($request_url);
-		return $response;	
-	}
-	
 	function process($params) {
 		// process an incoming webhook payload (from ActiveCampaign), and format it (or do something with it)
 		
