@@ -92,10 +92,10 @@ var \$j = jQuery.noConflict();
 
 \$j(document).ready(function() {
 
-	\$j('input[type*=\"button\"]').click(function() {
+	\$j('#_form_{$id} input[type*=\"button\"]').click(function() {
 
 		var form_data = {};
-		\$j('form').each(function() {
+		\$j('#_form_{$id}').each(function() {
 			form_data = \$j(this).serialize();
 		});
 
