@@ -106,7 +106,7 @@ var \$j = jQuery.noConflict();
 			dataType: 'json',
 			data: form_data,
 			error: function(jqXHR, textStatus, errorThrown) {
-				alert('Error: ' + textStatus);
+				console.log('Error: ' + textStatus);
 			},
 			success: function(data) {
 				\$j('#form_result_message').html(data.message);
