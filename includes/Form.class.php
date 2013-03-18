@@ -156,8 +156,8 @@ var \$j = jQuery.noConflict();
 		else {
 			$firstname = trim($_POST["firstname"]);
 			$lastname = trim($_POST["lastname"]);
-			if ($firstname == "") $firstname = trim($_POST["first_name"]);
-			if ($lastname == "") $lastname = trim($_POST["last_name"]);
+			if ($firstname == "" && isset($_POST["first_name"])) $firstname = trim($_POST["first_name"]);
+			if ($lastname == "" && isset($_POST["last_name"])) $lastname = trim($_POST["last_name"]);
 		}
 
 		$fields = (isset($_POST["field"])) ? $_POST["field"] : array();
