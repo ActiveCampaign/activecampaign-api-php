@@ -1,7 +1,7 @@
 <?php
 
 if ( !defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !defined("ACTIVECAMPAIGN_API_USER") && !defined("ACTIVECAMPAIGN_API_PASS")) ) {
-	include "config.php";
+	require_once(dirname(__FILE__) . "/config.php");
 }
 
 require_once("Connector.class.php");
