@@ -106,7 +106,7 @@ var \$j = jQuery.noConflict();
 			dataType: 'json',
 			data: form_data,
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log('Error: ' + textStatus);
+				console.log(errorThrown);
 			},
 			success: function(data) {
 				\$j('#form_result_message').html(data.message);
@@ -162,7 +162,7 @@ var \$j = jQuery.noConflict();
 
 		$fields = (isset($_POST["field"])) ? $_POST["field"] : array();
 
-		$subscriber = array(
+		$contact = array(
 			"form" => $formid,
 			"email" => $email,
 			"first_name" => $firstname,
@@ -170,54 +170,54 @@ var \$j = jQuery.noConflict();
 		);
 
 		foreach ($fields as $ac_field_id => $field_value) {
-			$subscriber["field"][$ac_field_id . ",0"] = $field_value;
+			$contact["field"][$ac_field_id . ",0"] = $field_value;
 		}
 
 		// add lists
 		foreach ($_POST["nlbox"] as $listid) {
-			$subscriber["p[{$listid}]"] = $listid;
-			$subscriber["status[{$listid}]"] = 1;
+			$contact["p[{$listid}]"] = $listid;
+			$contact["status[{$listid}]"] = 1;
 		}
 
 		if (!$sync) {
 
 			// do add/edit
 
-			$subscriber_exists = $this->api("subscriber/view?email={$email}", $subscriber);
+			$contact_exists = $this->api("contact/view?email={$email}", $contact);
 
-			if ( !isset($subscriber_exists->id) ) {
+			if ( !isset($contact_exists->id) ) {
 
-				// subscriber does not exist - add them
+				// contact does not exist - add them
 
-				$subscriber_request = $this->api("subscriber/add", $subscriber);
+				$contact_request = $this->api("contact/add", $contact);
 
-				if ((int)$subscriber_request->success) {
+				if ((int)$contact_request->success) {
 					// successful request
-					$subscriber_id = (int)$subscriber_request->subscriber_id;
+					$contact_id = (int)$contact_request->contact_id;
 					$r = array(
 						"success" => 1,
-						"message" => $subscriber_request->result_message,
-						"subscriber_id" => $subscriber_id,
+						"message" => $contact_request->result_message,
+						"contact_id" => $contact_id,
 					);
 				}
 				else {
 					// request failed
 					$r = array(
 						"success" => 0,
-						"message" => $subscriber_request->error,
+						"message" => $contact_request->error,
 					);
 				}
 
 			}
 			else {
 
-				// subscriber already exists - edit them
+				// contact already exists - edit them
 
-				$subscriber_id = $subscriber_exists->id;
+				$contact_id = $contact_exists->id;
 
-				$subscriber["id"] = $subscriber_id;
+				$contact["id"] = $contact_id;
 
-				$subscriber_request = $this->api("subscriber/edit?overwrite=0", $subscriber);
+				$contact_request = $this->api("contact/edit?overwrite=0", $contact);
 
 			}
 
@@ -226,24 +226,24 @@ var \$j = jQuery.noConflict();
 
 			// perform sync (add or edit)
 
-			$subscriber_request = $this->api("subscriber/sync", $subscriber);
+			$contact_request = $this->api("contact/sync", $contact);
 
 		}
 
-		if ((int)$subscriber_request->success) {
+		if ((int)$contact_request->success) {
 			// successful request
-			//$subscriber_id = (int)$subscriber_request->subscriber_id;
+			//$contact_id = (int)$contact_request->contact_id;
 			$r = array(
 				"success" => 1,
-				"message" => $subscriber_request->result_message,
-				//"subscriber_id" => $subscriber_id,
+				"message" => $contact_request->result_message,
+				//"contact_id" => $contact_id,
 			);
 		}
 		else {
 			// request failed
 			$r = array(
 				"success" => 0,
-				"message" => $subscriber_request->error,
+				"message" => $contact_request->error,
 			);
 		}
 

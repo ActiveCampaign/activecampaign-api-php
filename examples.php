@@ -46,18 +46,18 @@
 
 	/*
 	 *
-	 * ADD NEW SUBSCRIBER.
+	 * ADD NEW CONTACT.
 	 *
 	 */
 
 	// CHECK IF THEY EXIST FIRST.
-	$subscriber_exists = $ac->api("subscriber/view?email=test@example.com");
+	$contact_exists = $ac->api("contact/view?email=test@example.com");
 
-	if ( !isset($subscriber_exists->id) ) {
+	if ( !isset($contact_exists->id) ) {
 
-		// SUBSCRIBER DOES NOT EXIST - ADD THEM.
+		// contact DOES NOT EXIST - ADD THEM.
 
-		$subscriber = array(
+		$contact = array(
 			"email" => "test@example.com",
 			"first_name" => "Matt",
 			"last_name" => "Test",
@@ -65,31 +65,31 @@
 			"status[{$list_id}]" => 2, // add as "Unsubscribed"
 		);
 
-		$subscriber_add = $ac->api("subscriber/add", $subscriber);
+		$contact_add = $ac->api("contact/add", $contact);
 
-		if ((int)$subscriber_add->success) {
+		if ((int)$contact_add->success) {
 			// successful request
-			$subscriber_id = (int)$subscriber_add->subscriber_id;
+			$contact_id = (int)$contact_add->contact_id;
 		}
 		else {
 			// request failed
-			print_r($subscriber_add->error);
+			print_r($contact_add->error);
 			exit();
 		}
 	}
 	else {
-		// SUBSCRIBER EXISTS - JUST GRAB THEIR ID.
-		$subscriber_id = $subscriber_exists->id;
+		// contact EXISTS - JUST GRAB THEIR ID.
+		$contact_id = $contact_exists->id;
 	}
 
 	/*
 	 *
-	 * EDIT SUBSCRIBER.
+	 * EDIT contact.
 	 *
 	 */
 
-	$subscriber = array(
-		"id" => $subscriber_id,
+	$contact = array(
+		"id" => $contact_id,
 		"email" => "test@example.com",
 		"first_name" => "Matt",
 		"last_name" => "Test",
@@ -97,7 +97,7 @@
 		"status[{$list_id}]" => 1, // change to "Subscribed"
 	);
 
-	$subscriber_edit = $ac->api("subscriber/edit?overwrite=0", $subscriber);
+	$contact_edit = $ac->api("contact/edit?overwrite=0", $contact);
 
 	/*
 	 *

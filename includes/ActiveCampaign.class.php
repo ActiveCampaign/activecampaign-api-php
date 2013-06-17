@@ -18,20 +18,20 @@ class ActiveCampaign extends AC_Connector {
 	}
 
 	function api($path, $post_data = array()) {
-		// IE: "subscriber/view"
+		// IE: "contact/view"
 		$components = explode("/", $path);
 		$component = $components[0];
 
 		if (preg_match("/\?/", $components[1])) {
 			// query params appended to method
-			// IE: subscriber/edit?overwrite=0
+			// IE: contact/edit?overwrite=0
 			$method_arr = explode("?", $components[1]);
 			$method = $method_arr[0];
 			$params = $method_arr[1];
 		}
 		else {
 			// just a method provided
-			// IE: "subscriber/view
+			// IE: "contact/view
 			if ( isset($components[1]) ) {
 				$method = $components[1];
 				$params = "";
@@ -50,19 +50,19 @@ class ActiveCampaign extends AC_Connector {
 			$component = "design";
 		}
 		elseif ($component == "sync") {
-			$component = "subscriber";
+			$component = "contact";
 			$method = "sync";
 		}
 		elseif ($component == "singlesignon") {
 			$component = "auth";
 		}
 
-		$class = ucwords($component); // IE: "subscriber" becomes "Subscriber"
+		$class = ucwords($component); // IE: "contact" becomes "Contact"
 		$class = "AC_" . $class;
-		// IE: new Subscriber();
+		// IE: new Contact();
 
 		$class = new $class($this->url, $this->api_key);
-		// IE: $subscriber->view();
+		// IE: $contact->view();
 
 		if ($method == "list") {
 			// reserved word
@@ -78,6 +78,7 @@ class ActiveCampaign extends AC_Connector {
 require_once("Account.class.php");
 require_once("Auth.class.php");
 require_once("Campaign.class.php");
+require_once("Contact.class.php");
 require_once("Design.class.php");
 require_once("Form.class.php");
 require_once("Group.class.php");
