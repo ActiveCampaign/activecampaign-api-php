@@ -4,32 +4,43 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>ActiveCampaign API for PHP by ActiveCampaign</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
-    <div class="wrapper">
+
       <header>
-        <img src="http://d226aj4ao1t61q.cloudfront.net/u7wjxqemu_128x128a.png" />
         <h1>ActiveCampaign API for PHP</h1>
         <p>PHP wrapper for the ActiveCampaign API.</p>
-
-        <p class="view"><a href="https://github.com/ActiveCampaign/activecampaign-api-php">View the Project on GitHub <small>ActiveCampaign/activecampaign-api-php</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ActiveCampaign/activecampaign-api-php/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ActiveCampaign/activecampaign-api-php">View On <strong>GitHub</strong></a></li>
-        </ul>
       </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/ActiveCampaign/activecampaign-api-php" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/ActiveCampaign/activecampaign-api-php/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
-        <h2>Installation</h2>
+        <h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>You can install <strong>activecampaign-api-php</strong> by downloading the source.</p>
 
@@ -39,16 +50,19 @@
 
 <p>Fill in your URL and API Key in the <code>includes/config.php</code> file, and you are good to go!</p>
 
-<h2>Example Usage</h2>
+<h2>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example Usage</h2>
 
-<h3>includes/config.php</h3>
+<h3>
+<a name="includesconfigphp" class="anchor" href="#includesconfigphp"><span class="octicon octicon-link"></span></a>includes/config.php</h3>
 
 <pre>
 define("ACTIVECAMPAIGN_URL", "YOUR ACTIVECAMPAIGN URL");
 define("ACTIVECAMPAIGN_API_KEY", "YOUR ACTIVECAMPAIGN API KEY");
 </pre>
 
-<h3>examples.php</h3>
+<h3>
+<a name="examplesphp" class="anchor" href="#examplesphp"><span class="octicon octicon-link"></span></a>examples.php</h3>
 
 <pre>
 require_once("includes/ActiveCampaign.class.php");
@@ -60,24 +74,27 @@ $account = $ac-&gt;api("account/view");
 
 <p>See our <a href="https://github.com/ActiveCampaign/activecampaign-api-php/blob/master/examples.php">examples file</a> for more in-depth samples.</p>
 
-<h2>Prerequisites</h2>
+<h2>
+<a name="prerequisites" class="anchor" href="#prerequisites"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
 
 <ol>
 <li>A valid ActiveCampaign <strong>hosted</strong> account (trial or paid).</li>
-</ol><h2>Full Documentation</h2>
+</ol><h2>
+<a name="full-documentation" class="anchor" href="#full-documentation"><span class="octicon octicon-link"></span></a>Full Documentation</h2>
 
 <p><a href="http://activecampaign.com/api">Click here to view our full API documentation.</a></p>
 
-<h2>Reporting Issues</h2>
+<h2>
+<a name="reporting-issues" class="anchor" href="#reporting-issues"><span class="octicon octicon-link"></span></a>Reporting Issues</h2>
 
 <p>We'd love to help if you have questions or problems. Report issues using the <a href="https://github.com/ActiveCampaign/activecampaign-api-php/issues">Github Issue Tracker</a> or email <a href="mailto:support@activecampaign.com">support@activecampaign.com</a>.</p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/ActiveCampaign">ActiveCampaign</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p>Project maintained by <a href="https://github.com/ActiveCampaign">ActiveCampaign</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
