@@ -75,7 +75,6 @@ class ActiveCampaign extends AC_Connector {
 
 }
 
-require_once("Account.class.php");
 require_once("Auth.class.php");
 require_once("Campaign.class.php");
 require_once("Contact.class.php");
@@ -86,6 +85,5 @@ require_once("List.class.php");
 require_once("Message.class.php");
 require_once("Subscriber.class.php");
 require_once("User.class.php");
-require_once("Webhook.class.php");
 
 ?>
