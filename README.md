@@ -37,10 +37,6 @@ $account = $ac->api("account/view");
 
 See our [examples file](https://github.com/ActiveCampaign/activecampaign-api-php/blob/master/examples.php) for more in-depth samples.
 
-## Prerequisites
-
-1. A valid ActiveCampaign **hosted** account (trial or paid).
-
 ## Full Documentation
 
 [Click here to view our full API documentation.](http://activecampaign.com/api)
