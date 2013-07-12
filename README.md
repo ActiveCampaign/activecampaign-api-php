@@ -21,8 +21,8 @@ Fill in your URL and API Key in the `includes/config.php` file, and you are good
 ### includes/config.php
 
 <pre>
-define("ACTIVECAMPAIGN_URL", "YOUR ACTIVECAMPAIGN URL");
-define("ACTIVECAMPAIGN_API_KEY", "YOUR ACTIVECAMPAIGN API KEY");
+define("ACTIVECAMPAIGN_URL", "https://ACCOUNT.api-us1.com");
+define("ACTIVECAMPAIGN_API_KEY", "njasdf89hy...23ad7");
 </pre>
 
 ### examples.php
@@ -30,6 +30,17 @@ define("ACTIVECAMPAIGN_API_KEY", "YOUR ACTIVECAMPAIGN API KEY");
 <pre>
 require_once("includes/ActiveCampaign.class.php");
 
+$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+
+$account = $ac->api("account/view");
+</pre>
+
+Or just include everything in the same PHP file:
+
+<pre>
+define("ACTIVECAMPAIGN_URL", "https://ACCOUNT.api-us1.com");
+define("ACTIVECAMPAIGN_API_KEY", "njasdf89hy...23ad7");
+require_once("includes/ActiveCampaign.class.php");
 $ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
 $account = $ac->api("account/view");
