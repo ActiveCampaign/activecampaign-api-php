@@ -4,7 +4,7 @@ This is the official PHP wrapper for the ActiveCampaign API. The purpose of thes
 2. It's fully supported by ActiveCampaign, meaning we fix any issues immediately, as well as continually improve the wrapper as the software changes and evolves.
 3. It's often the standard approach for demonstrating API requests when using ActiveCampaign support.
 
-Both customers of our hosted platform and On-Site edition can use these files. On-Site customers should clone the source and switch to the "onsite" branch, as that is geared towards the On-Site edition. Many features of the hosted platform are not available in the On-Site edition.
+Both customers of our hosted platform and **On-Site edition** can use these files. **On-Site customers should clone the source and switch to the "onsite" branch**, as that is geared towards the On-Site edition. Many features of the hosted platform are not available in the On-Site edition.
 
 ## Installation
 
