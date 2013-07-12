@@ -2,25 +2,33 @@
 
 	require_once("includes/ActiveCampaign.class.php");
 
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	//$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	$ac = new ActiveCampaign("https://staging-mthommes.api-us1.com", "2d2c0b7b9512cdcdaf15571284c1a3765bfafedb171544d0f9e1d462fe7093cfae761af1");
+
+	/*
+	 * TEST API CREDENTIALS.
+	 */
 
 	if (!(int)$ac->credentials_test()) {
-		print_r("Invalid credentials (URL and API Key).");
+		echo "<p>Access denied: Invalid credentials (URL and/or API key).</p>";
 		exit();
+	}
+	else {
+		echo "<p>Credentials valid! Proceeding...</p>";
 	}
 
 	/*
-	 *
 	 * VIEW ACCOUNT DETAILS.
-	 *
 	 */
 
 	$account = $ac->api("account/view");
 
+	echo "<pre>";
+	print_r($account);
+	echo "</pre>";
+
 	/*
-	 *
 	 * ADD NEW LIST.
-	 *
 	 */
 
 	$list = array(
@@ -37,72 +45,41 @@
 	if ((int)$list_add->success) {
 		// successful request
 		$list_id = (int)$list_add->id;
+		echo "<p>List added successfully (ID {$list_id})!</p>";
 	}
 	else {
 		// request failed
-		print_r($list_add->error);
+		echo "<p>Adding list failed. Error returned: " . $list_add->error . "</p>";
 		exit();
 	}
 
 	/*
-	 *
-	 * ADD NEW CONTACT.
-	 *
-	 */
-
-	// CHECK IF THEY EXIST FIRST.
-	$contact_exists = $ac->api("contact/view?email=test@example.com");
-
-	if ( !isset($contact_exists->id) ) {
-
-		// contact DOES NOT EXIST - ADD THEM.
-
-		$contact = array(
-			"email" => "test@example.com",
-			"first_name" => "Matt",
-			"last_name" => "Test",
-			"p[{$list_id}]" => $list_id,
-			"status[{$list_id}]" => 2, // add as "Unsubscribed"
-		);
-
-		$contact_add = $ac->api("contact/add", $contact);
-
-		if ((int)$contact_add->success) {
-			// successful request
-			$contact_id = (int)$contact_add->contact_id;
-		}
-		else {
-			// request failed
-			print_r($contact_add->error);
-			exit();
-		}
-	}
-	else {
-		// contact EXISTS - JUST GRAB THEIR ID.
-		$contact_id = $contact_exists->id;
-	}
-
-	/*
-	 *
-	 * EDIT contact.
-	 *
+	 * ADD OR EDIT CONTACT (TO THE NEW LIST CREATED ABOVE).
 	 */
 
 	$contact = array(
-		"id" => $contact_id,
 		"email" => "test@example.com",
-		"first_name" => "Matt",
+		"first_name" => "Test",
 		"last_name" => "Test",
 		"p[{$list_id}]" => $list_id,
-		"status[{$list_id}]" => 1, // change to "Subscribed"
+		"status[{$list_id}]" => 1, // "Active" status
 	);
 
-	$contact_edit = $ac->api("contact/edit?overwrite=0", $contact);
+	$contact_sync = $ac->api("contact/sync", $contact);
+
+	if ((int)$contact_sync->success) {
+		// successful request
+		$contact_id = (int)$contact_sync->subscriber_id;
+		echo "<p>Contact synced successfully (ID {$contact_id})!</p>";
+	}
+	else {
+		// request failed
+		echo "<p>Syncing contact failed. Error returned: " . $contact_sync->error . "</p>";
+		exit();
+	}
 
 	/*
-	 *
-	 * ADD NEW EMAIL MESSAGE.
-	 *
+	 * ADD NEW EMAIL MESSAGE (FOR A CAMPAIGN).
 	 */
 
 	$message = array(
@@ -119,30 +96,29 @@
 	if ((int)$message_add->success) {
 		// successful request
 		$message_id = (int)$message_add->id;
+		echo "<p>Message added successfully (ID {$message_id})!</p>";
 	}
 	else {
 		// request failed
-		print_r($message_add->error);
+		echo "<p>Adding email message failed. Error returned: " . $message_add->error . "</p>";
 		exit();
 	}
 
 	/*
-	 *
-	 * CREATE NEW CAMPAIGN.
-	 *
+	 * CREATE NEW CAMPAIGN (USING THE EMAIL MESSAGE CREATED ABOVE).
 	 */
 
 	$campaign = array(
 		"type" => "single",
-		"name" => "Campaign #44",
-		"sdate" => "2012-01-01 00:00:00",
+		"name" => "July Campaign", // internal name (message subject above is what contacts see)
+		"sdate" => "2013-07-01 00:00:00",
 		"status" => 1,
 		"public" => 1,
 		"tracklinks" => "all",
 		"trackreads" => 1,
 		"htmlunsub" => 1,
 		"p[{$list_id}]" => $list_id,
-		"m[{$message_id}]" => 100,
+		"m[{$message_id}]" => 100, // 100 percent of subscribers
 	);
 
 	$campaign_create = $ac->api("campaign/create", $campaign);
@@ -150,18 +126,16 @@
 	if ((int)$campaign_create->success) {
 		// successful request
 		$campaign_id = (int)$campaign_create->id;
-		print_r("Campaign sent! (ID: {$campaign_id})");
+		echo "<p>Campaign created and sent! (ID {$campaign_id})!</p>";
 	}
 	else {
 		// request failed
-		print_r($campaign_create->error);
+		echo "<p>Creating campaign failed. Error returned: " . $campaign_create->error . "</p>";
 		exit();
 	}
 
 	/*
-	 *
-	 * VIEW CAMPAIGN REPORTS.
-	 *
+	 * VIEW CAMPAIGN REPORTS (FOR THE CAMPAIGN CREATED ABOVE).
 	 */
 
 	$campaign_report_totals = $ac->api("campaign/report_totals?campaignid={$campaign_id}");
@@ -172,3 +146,5 @@
 	echo "</pre>";
 
 ?>
+
+<a href="http://www.activecampaign/api">View more API examples!</a>
