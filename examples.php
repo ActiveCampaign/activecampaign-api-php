@@ -60,7 +60,7 @@
 	if ((int)$subscriber_sync->success) {
 		// successful request
 		$subscriber_id = (int)$subscriber_sync->subscriber_id;
-		echo "<p>Subscriber synced successfully (ID {$contact_id})!</p>";
+		echo "<p>Subscriber synced successfully (ID {$subscriber_id})!</p>";
 	}
 	else {
 		// request failed
