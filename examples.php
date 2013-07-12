@@ -136,5 +136,3 @@
 	echo "</pre>";
 
 ?>
-
-<a href="http://www.activecampaign/api">View more API examples!</a>
