@@ -17,6 +17,16 @@
 	}
 
 	/*
+	 * VIEW USER DETAILS.
+	 */
+
+	$user = $ac->api("user/view?id=1");
+
+	echo "<pre>";
+	print_r($user);
+	echo "</pre>";
+
+	/*
 	 * ADD NEW LIST.
 	 */
 
