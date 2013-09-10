@@ -129,6 +129,7 @@ class AC_Connector {
 		}
 
 		header("HTTP/1.1 " . $http_code);
+		$object->http_code = $http_code;
 
 		if (isset($object->result_code)) {
 			$object->success = $object->result_code;
