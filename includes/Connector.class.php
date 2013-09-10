@@ -127,6 +127,9 @@ class AC_Connector {
 			// something went wrong
 			return "An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned. Here is the actual response from the server: ---- " . $response;
 		}
+
+		header("HTTP/1.1 " . $http_code);
+
 		if (isset($object->result_code)) {
 			$object->success = $object->result_code;
 			if (!(int)$object->result_code) {
