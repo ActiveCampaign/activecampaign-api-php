@@ -118,7 +118,7 @@ class AC_Connector {
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		curl_close($request);
 		$object = json_decode($response);
-		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded)) ) {
+		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded) && !isset($object->success)) ) {
 		// add methods that only return a string
 			$string_responses = array("form_html");
 			if (in_array($method, $string_responses)) {
