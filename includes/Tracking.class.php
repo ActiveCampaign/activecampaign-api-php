@@ -12,9 +12,8 @@ class AC_Tracking extends ActiveCampaign {
 
 	function log($params, $post_data) {
 		$request_url = "https://trackcmp.net/event";
-		$user = $this->api("user/me");
-		$post_data["actid"] = $user->trackid;
-		$post_data["key"] = $user->eventkey;
+		$post_data["actid"] = $this->track_actid;
+		$post_data["key"] = $this->track_key;
 		$response = $this->curl($request_url, $post_data);
 		return $response;
 	}

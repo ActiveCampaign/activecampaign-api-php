@@ -10,6 +10,8 @@ class ActiveCampaign extends AC_Connector {
 
 	public $url;
 	public $api_key;
+	public $track_actid;
+	public $track_key;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url = $url;
@@ -61,8 +63,16 @@ class ActiveCampaign extends AC_Connector {
 		$class = "AC_" . $class;
 		// IE: new Contact();
 
+		$add_tracking = false;
+		if ($class == "AC_Tracking") $add_tracking = true;
+
 		$class = new $class($this->url, $this->api_key);
-		// IE: $contact->view();
+		// IE: $contact->view()
+
+		if ($add_tracking) {
+			$class->track_actid = $this->track_actid;
+			$class->track_key = $this->track_key;
+		}
 
 		if ($method == "list") {
 			// reserved word
