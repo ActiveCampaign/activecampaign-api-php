@@ -85,6 +85,7 @@ require_once("Group.class.php");
 require_once("List.class.php");
 require_once("Message.class.php");
 require_once("Subscriber.class.php");
+require_once("Tracking.class.php");
 require_once("User.class.php");
 require_once("Webhook.class.php");
 
