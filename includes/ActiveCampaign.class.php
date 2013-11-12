@@ -10,6 +10,8 @@ class ActiveCampaign extends AC_Connector {
 
 	public $url;
 	public $api_key;
+	public $track_url;
+	public $track_referer;
 	public $track_email;
 	public $track_actid;
 	public $track_key;
@@ -71,6 +73,8 @@ class ActiveCampaign extends AC_Connector {
 		// IE: $contact->view()
 
 		if ($add_tracking) {
+			$class->track_url = $this->track_url;
+			$class->track_referer = $this->track_referer;
 			$class->track_email = $this->track_email;
 			$class->track_actid = $this->track_actid;
 			$class->track_key = $this->track_key;

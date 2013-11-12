@@ -57,6 +57,7 @@ class AC_Connector {
 		$method = preg_match("/[^=]*$/i", $matches[0], $matches2);
 		$method = $matches2[0];
 		$request = curl_init();
+$this->dbg($url);
 		curl_setopt($request, CURLOPT_URL, $url);
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
