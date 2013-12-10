@@ -54,6 +54,20 @@ class AC_Contact extends ActiveCampaign {
 		return $response;
 	}
 
+	function tag_add($params, $post_data) {
+		$request_url = "{$this->url}&api_action=contact_tag_add&api_output={$this->output}";
+		if ($params) $request_url .= "&{$params}";
+		$response = $this->curl($request_url, $post_data);
+		return $response;
+	}
+
+	function tag_remove($params, $post_data) {
+		$request_url = "{$this->url}&api_action=contact_tag_remove&api_output={$this->output}";
+		if ($params) $request_url .= "&{$params}";
+		$response = $this->curl($request_url, $post_data);
+		return $response;
+	}
+
 	function view($params) {
 		// can be a contact ID, email, or hash
 		if (preg_match("/^email=/", $params)) {

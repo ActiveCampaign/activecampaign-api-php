@@ -25,6 +25,15 @@ class ActiveCampaign extends AC_Connector {
 		$components = explode("/", $path);
 		$component = $components[0];
 
+		if (count($components) > 2) {
+			// IE: "contact/tag/add?whatever"
+			// shift off the first item (the component, IE: "contact").
+			array_shift($components);
+			// IE: convert to "tag_add?whatever"
+			$method_str = implode("_", $components);
+			$components = array($component, $method_str);
+		}
+
 		if (preg_match("/\?/", $components[1])) {
 			// query params appended to method
 			// IE: contact/edit?overwrite=0
