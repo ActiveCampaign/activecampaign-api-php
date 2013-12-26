@@ -41,6 +41,24 @@ class AC_Contact extends ActiveCampaign {
 		return $response;
 	}
 
+	function note_add($params, $post_data) {
+		$request_url = "{$this->url}&api_action=contact_note_add&api_output={$this->output}&{$params}";
+		$response = $this->curl($request_url, $post_data);
+		return $response;
+	}
+
+	function note_edit($params, $post_data) {
+		$request_url = "{$this->url}&api_action=contact_note_edit&api_output={$this->output}&{$params}";
+		$response = $this->curl($request_url, $post_data);
+		return $response;
+	}
+
+	function note_delete($params) {
+		$request_url = "{$this->url}&api_action=contact_note_delete&api_output={$this->output}&{$params}";
+		$response = $this->curl($request_url);
+		return $response;
+	}
+
 	function paginator($params) {
 		$request_url = "{$this->url}&api_action=contact_paginator&api_output={$this->output}&{$params}";
 		$response = $this->curl($request_url);
