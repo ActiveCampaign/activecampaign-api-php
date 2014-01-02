@@ -41,11 +41,15 @@ class AC_Connector {
 	}
 
 	// debug function (nicely outputs variables)
-	public function dbg($var, $continue = 0, $element = "pre") {
+	public function dbg($var, $continue = 0, $element = "pre", $extra = "") {
 	  echo "<" . $element . ">";
 	  echo "Vartype: " . gettype($var) . "\n";
-	  if ( is_array($var) ) echo "Elements: " . count($var) . "\n\n";
-	  elseif ( is_string($var) ) echo "Length: " . strlen($var) . "\n\n";
+	  if ( is_array($var) ) echo "Elements: " . count($var) . "\n";
+	  elseif ( is_string($var) ) echo "Length: " . strlen($var) . "\n";
+	  if ($extra) {
+	  	echo $extra . "\n";
+	  }
+	  echo "\n";
 	  print_r($var);
 	  echo "</" . $element . ">";
 		if (!$continue) exit();
@@ -57,6 +61,9 @@ class AC_Connector {
 		$method = preg_match("/[^=]*$/i", $matches[0], $matches2);
 		$method = $matches2[0];
 		$request = curl_init();
+		if ($this->debug) {
+			$this->dbg($url, 1, "pre", "Description: Request URL");
+		}
 		curl_setopt($request, CURLOPT_URL, $url);
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
@@ -108,16 +115,27 @@ class AC_Connector {
 
 			$data = rtrim($data, "& ");
 			curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:"));
+			if ($this->debug) {
+				$this->dbg($data, 1, "pre", "Description: POST data");
+			}
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
 		}
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
 		$response = curl_exec($request);
-//$this->dbg($response);
+		if ($this->debug) {
+			$this->dbg($response, 1, "pre", "Description: Raw response");
+		}
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
+		if ($this->debug) {
+			$this->dbg($http_code, 1, "pre", "Description: Response HTTP code");
+		}
 		curl_close($request);
 		$object = json_decode($response);
+		if ($this->debug) {
+			$this->dbg($object, 0, "pre", "Description: Response object (json_decode)");
+		}
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded) && !isset($object->success)) ) {
 		// add methods that only return a string
 			$string_responses = array("form_html");

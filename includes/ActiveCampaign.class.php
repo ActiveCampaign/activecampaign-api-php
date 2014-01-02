@@ -13,6 +13,7 @@ class ActiveCampaign extends AC_Connector {
 	public $track_email;
 	public $track_actid;
 	public $track_key;
+	public $debug = false;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url = $url;
@@ -89,6 +90,8 @@ class ActiveCampaign extends AC_Connector {
 			// reserved word
 			$method = "list_";
 		}
+
+		$class->debug = $this->debug;
 
 		$response = $class->$method($params, $post_data);
 		return $response;
