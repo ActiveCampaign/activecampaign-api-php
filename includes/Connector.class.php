@@ -55,13 +55,14 @@ class AC_Connector {
 		if (!$continue) exit();
 	}
 
-	public function curl($url, $post_data = array(), $verb = "GET") {
+	public function curl($url, $post_data = array(), $verb = "GET", $v2_method = "") {
 		if ($this->version == 1) {
-			// find the method from the URL
+			// find the method from the URL.
 			$method = preg_match("/api_action=[^&]*/i", $url, $matches);
 			$method = preg_match("/[^=]*$/i", $matches[0], $matches2);
 			$method = $matches2[0];
 		} elseif ($this->version == 2) {
+			$method = $v2_method;
 			$url .= "?api_key=" . $this->api_key;
 		}
 		$request = curl_init();
@@ -146,7 +147,7 @@ class AC_Connector {
 		}
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded) && !isset($object->success)) ) {
 			// add methods that only return a string
-			$string_responses = array("form_html", "event_list");
+			$string_responses = array("form_html", "tracking_site_list", "tracking_event_list");
 			if (in_array($method, $string_responses)) {
 				return $response;
 			}

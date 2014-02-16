@@ -23,12 +23,12 @@ class AC_Tracking extends ActiveCampaign {
 		} elseif ($this->version == 2) {
 			$request_url = "{$this->url_base}/track/site";
 		}
-		$response = $this->curl($request_url);
+		$response = $this->curl($request_url, array(), "GET", "tracking_site_list");
 		return $response;
 	}
 
 	/*
-	 * Returns existing events.
+	 * Returns existing tracked events.
 	 */
 	function event_list($params) {
 		if ($this->version == 1) {
@@ -36,7 +36,7 @@ class AC_Tracking extends ActiveCampaign {
 		} elseif ($this->version == 2) {
 			$request_url = "{$this->url_base}/track/event";
 		}
-		$response = $this->curl($request_url);
+		$response = $this->curl($request_url, array(), "GET", "tracking_event_list");
 		return $response;
 	}
 
