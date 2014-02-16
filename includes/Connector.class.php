@@ -145,8 +145,8 @@ class AC_Connector {
 			$this->dbg($object, 0, "pre", "Description: Response object (json_decode)");
 		}
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded) && !isset($object->success)) ) {
-		// add methods that only return a string
-			$string_responses = array("form_html");
+			// add methods that only return a string
+			$string_responses = array("form_html", "event_list");
 			if (in_array($method, $string_responses)) {
 				return $response;
 			}
