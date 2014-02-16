@@ -8,17 +8,26 @@ require_once("Connector.class.php");
 
 class ActiveCampaign extends AC_Connector {
 
+	public $url_base;
 	public $url;
 	public $api_key;
 	public $track_email;
 	public $track_actid;
 	public $track_key;
+	public $version = 1;
 	public $debug = false;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
-		$this->url = $url;
+		$this->url_base = $this->url = $url;
 		$this->api_key = $api_key;
 		AC_Connector::__construct($url, $api_key, $api_user, $api_pass);
+	}
+
+	function version($version) {
+		$this->version = (int)$version;
+		if ($version == 2) {
+			$this->url_base = $this->url_base . "/2";
+		}
 	}
 
 	function api($path, $post_data = array()) {
@@ -77,7 +86,7 @@ class ActiveCampaign extends AC_Connector {
 		$add_tracking = false;
 		if ($class == "AC_Tracking") $add_tracking = true;
 
-		$class = new $class($this->url, $this->api_key);
+		$class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
 		// IE: $contact->view()
 
 		if ($add_tracking) {

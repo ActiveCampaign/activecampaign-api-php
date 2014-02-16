@@ -55,11 +55,15 @@ class AC_Connector {
 		if (!$continue) exit();
 	}
 
-	public function curl($url, $post_data = array()) {
-		// find the method from the URL
-		$method = preg_match("/api_action=[^&]*/i", $url, $matches);
-		$method = preg_match("/[^=]*$/i", $matches[0], $matches2);
-		$method = $matches2[0];
+	public function curl($url, $post_data = array(), $verb = "GET") {
+		if ($this->version == 1) {
+			// find the method from the URL
+			$method = preg_match("/api_action=[^&]*/i", $url, $matches);
+			$method = preg_match("/[^=]*$/i", $matches[0], $matches2);
+			$method = $matches2[0];
+		} elseif ($this->version == 2) {
+			$url .= "?api_key=" . $this->api_key;
+		}
 		$request = curl_init();
 		if ($this->debug) {
 			$this->dbg($url, 1, "pre", "Description: Request URL");
@@ -68,9 +72,13 @@ class AC_Connector {
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 		if ($post_data) {
-			curl_setopt($request, CURLOPT_POST, 1);
+			if ($verb == "PUT") {
+				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
+			} else {
+				$verb = "POST";
+				curl_setopt($request, CURLOPT_POST, 1);
+			}
 			$data = "";
-
 			if (is_array($post_data)) {
 				foreach($post_data as $key => $value) {
 					if (is_array($value)) {
