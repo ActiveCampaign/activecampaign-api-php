@@ -15,6 +15,26 @@ class AC_Tracking extends ActiveCampaign {
 	}
 
 	/*
+	 * Update the status (enabled or disabled) for site tracking.
+	 */
+	function site_status($params, $post_data) {
+		// version 2 only.
+		$request_url = "{$this->url_base}/track/site";
+		$response = $this->curl($request_url, $post_data, "POST", "tracking_site_status");
+		return $response;
+	}
+
+	/*
+	 * Update the status (enabled or disabled) for event tracking.
+	 */
+	function event_status($params, $post_data) {
+		// version 2 only.
+		$request_url = "{$this->url_base}/track/event";
+		$response = $this->curl($request_url, $post_data, "POST", "tracking_event_status");
+		return $response;
+	}
+
+	/*
 	 * Returns existing whitelisted domains.
 	 */
 	function site_list($params) {
