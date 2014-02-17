@@ -19,6 +19,7 @@ class AC_Tracking extends ActiveCampaign {
 	 */
 	function site_list($params) {
 		if ($this->version == 1) {
+			// not supported currently.
 			//$request_url = "{$this->url}&api_action=contact_delete_list&api_output={$this->output}&{$params}";
 		} elseif ($this->version == 2) {
 			$request_url = "{$this->url_base}/track/site";
@@ -32,6 +33,7 @@ class AC_Tracking extends ActiveCampaign {
 	 */
 	function event_list($params) {
 		if ($this->version == 1) {
+			// not supported currently.
 			//$request_url = "{$this->url}&api_action=contact_delete_list&api_output={$this->output}&{$params}";
 		} elseif ($this->version == 2) {
 			$request_url = "{$this->url_base}/track/event";
@@ -40,6 +42,19 @@ class AC_Tracking extends ActiveCampaign {
 		return $response;
 	}
 
+	/*
+	 * Adds a domain to the site tracking whitelist.
+	 */
+	function whitelist($params, $post_data) {
+		// version 2 only.
+		$request_url = "{$this->url_base}/track/site";
+		$response = $this->curl($request_url, $post_data, "PUT", "tracking_whitelist");
+		return $response;
+	}
+
+	/*
+	 * Adds a new event.
+	 */
 	function log($params, $post_data) {
 		$request_url = "https://trackcmp.net/event";
 		if ($this->track_email) $post_data["visit"] = json_encode(array("email" => $this->track_email));
