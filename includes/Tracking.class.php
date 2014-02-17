@@ -45,7 +45,7 @@ class AC_Tracking extends ActiveCampaign {
 		if ($this->track_email) $post_data["visit"] = json_encode(array("email" => $this->track_email));
 		$post_data["actid"] = $this->track_actid;
 		$post_data["key"] = $this->track_key;
-		$response = $this->curl($request_url, $post_data);
+		$response = $this->curl($request_url, $post_data, "POST", "tracking_log");
 		return $response;
 	}
 
