@@ -69,19 +69,26 @@ class AC_Connector {
 			$method = $custom_method;
 			$url .= "?api_key=" . $this->api_key;
 		}
+		$debug_str1 = "";
 		$request = curl_init();
+		$debug_str1 .= "\$ch = curl_init();\n";
 		if ($this->debug) {
 			$this->dbg($url, 1, "pre", "Description: Request URL");
 		}
 		curl_setopt($request, CURLOPT_URL, $url);
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_URL, \"" . $url . "\");\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
 		if ($post_data) {
 			if ($verb == "PUT") {
 				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
+				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"PUT\");\n";
 			} else {
 				$verb = "POST";
 				curl_setopt($request, CURLOPT_POST, 1);
+				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_POST, 1);\n";
 			}
 			$data = "";
 			if (is_array($post_data)) {
@@ -128,26 +135,34 @@ class AC_Connector {
 
 			$data = rtrim($data, "& ");
 			curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:"));
+			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HTTPHEADER, array(\"Expect:\"));\n";
 			if ($this->debug) {
 				$this->dbg($data, 1, "pre", "Description: POST data");
 			}
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
+			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_POSTFIELDS, \"" . $data . "\");\n";
 		}
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYPEER, false);\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_FOLLOWLOCATION, true);\n";
 		$response = curl_exec($request);
+		$debug_str1 .= "curl_exec(\$ch);\n";
 		if ($this->debug) {
 			$this->dbg($response, 1, "pre", "Description: Raw response");
 		}
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
+		$debug_str1 .= "\$http_code = curl_getinfo(\$ch, CURLINFO_HTTP_CODE);\n";
 		if ($this->debug) {
 			$this->dbg($http_code, 1, "pre", "Description: Response HTTP code");
 		}
 		curl_close($request);
+		$debug_str1 .= "curl_close(\$ch);\n";
 		$object = json_decode($response);
 		if ($this->debug) {
-			$this->dbg($object, 0, "pre", "Description: Response object (json_decode)");
+			$this->dbg($object, 1, "pre", "Description: Response object (json_decode)");
 		}
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded) && !isset($object->success)) ) {
 			// add methods that only return a string
@@ -157,6 +172,10 @@ class AC_Connector {
 			}
 			// something went wrong
 			return "An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned. Here is the actual response from the server: ---- " . $response;
+		}
+
+		if ($this->debug) {
+			echo "<textarea style='height: 300px; width: 600px;'>" . $debug_str1 . "</textarea>";
 		}
 
 		header("HTTP/1.1 " . $http_code);
