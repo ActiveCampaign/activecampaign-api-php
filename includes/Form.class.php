@@ -87,6 +87,10 @@ class AC_Form extends ActiveCampaign {
 				// if using Ajax, remove the <form> action attribute completely
 				$html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
 
+				// replace the Submit button to be a button type (for ajax).
+				// forms come out of AC now with a "submit" button (it used to be "button").
+				$html = preg_replace("/input type='submit'/", "input type='button'", $html);
+
 				$action_val = urldecode($action_val);
 
 				// add jQuery stuff
