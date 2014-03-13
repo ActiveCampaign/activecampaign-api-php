@@ -201,7 +201,7 @@ var \$j = jQuery.noConflict();
 
 				if ((int)$contact_request->success) {
 					// successful request
-					$contact_id = (int)$contact_request->contact_id;
+					$contact_id = (int)$contact_request->subscriber_id;
 					$r = array(
 						"success" => 1,
 						"message" => $contact_request->result_message,
