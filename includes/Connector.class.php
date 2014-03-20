@@ -55,7 +55,7 @@ class AC_Connector {
 		if (!$continue) exit();
 	}
 
-	public function curl($url, $post_data = array(), $verb = "GET", $custom_method = "") {
+	public function curl($url, $params_data = array(), $verb = "GET", $custom_method = "") {
 		if ($this->version == 1) {
 			// find the method from the URL.
 			$method = preg_match("/api_action=[^&]*/i", $url, $matches);
@@ -72,16 +72,24 @@ class AC_Connector {
 		$debug_str1 = "";
 		$request = curl_init();
 		$debug_str1 .= "\$ch = curl_init();\n";
+		curl_setopt($request, CURLOPT_HEADER, 0);
+		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
+		if ($params_data && $verb == "GET") {
+			if ($this->version == 2) {
+				$url .= "&" . $params_data;
+				curl_setopt($request, CURLOPT_URL, $url);
+			}
+		}
+		else {
+			curl_setopt($request, CURLOPT_URL, $url);
+		}
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_URL, \"" . $url . "\");\n";
 		if ($this->debug) {
 			$this->dbg($url, 1, "pre", "Description: Request URL");
 		}
-		curl_setopt($request, CURLOPT_URL, $url);
-		curl_setopt($request, CURLOPT_HEADER, 0);
-		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_URL, \"" . $url . "\");\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
-		if ($post_data) {
+		if ($params_data && ($verb == "POST" || $verb == "PUT")) {
 			if ($verb == "PUT") {
 				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"PUT\");\n";
@@ -91,8 +99,8 @@ class AC_Connector {
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_POST, 1);\n";
 			}
 			$data = "";
-			if (is_array($post_data)) {
-				foreach($post_data as $key => $value) {
+			if (is_array($params_data)) {
+				foreach($params_data as $key => $value) {
 					if (is_array($value)) {
 
 						if (is_int($key)) {
@@ -130,7 +138,7 @@ class AC_Connector {
 			else {
 				// not an array - perhaps serialized or JSON string?
 				// just pass it as data
-				$data = "data={$post_data}";
+				$data = "data={$params_data}";
 			}
 
 			$data = rtrim($data, "& ");
@@ -166,7 +174,7 @@ class AC_Connector {
 		}
 		if ( !is_object($object) || (!isset($object->result_code) && !isset($object->succeeded) && !isset($object->success)) ) {
 			// add methods that only return a string
-			$string_responses = array("form_html", "tracking_site_status", "tracking_event_status", "tracking_whitelist", "tracking_log", "tracking_site_list", "tracking_event_list");
+			$string_responses = array("contact_list", "form_html", "tracking_site_status", "tracking_event_status", "tracking_whitelist", "tracking_log", "tracking_site_list", "tracking_event_list");
 			if (in_array($method, $string_responses)) {
 				return $response;
 			}
