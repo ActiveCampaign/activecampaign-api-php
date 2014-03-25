@@ -55,7 +55,7 @@ class AC_Connector {
 		if (!$continue) exit();
 	}
 
-	public function curl($url, $params_data = array(), $verb = "GET", $custom_method = "") {
+	public function curl($url, $params_data = array(), $verb = "", $custom_method = "") {
 		if ($this->version == 1) {
 			// find the method from the URL.
 			$method = preg_match("/api_action=[^&]*/i", $url, $matches);
@@ -85,9 +85,10 @@ class AC_Connector {
 		else {
 			curl_setopt($request, CURLOPT_URL, $url);
 			if ($params_data && !$verb) {
-				// if no verb passed, it's likely POST because we capture GET's above, and anything new or custom
-				// we should have passed the verb in.
+				// if no verb passed but there IS params data, it's likely POST.
 				$verb = "POST";
+			} else {
+				$verb = "GET";
 			}
 		}
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_URL, \"" . $url . "\");\n";
