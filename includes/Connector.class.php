@@ -84,12 +84,17 @@ class AC_Connector {
 		}
 		else {
 			curl_setopt($request, CURLOPT_URL, $url);
+			if (!$verb) {
+				// if no verb passed, it's likely POST because we capture GET's above, and anything new or custom
+				// we should have passed the verb in.
+				$verb = "POST";
+			}
 		}
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_URL, \"" . $url . "\");\n";
 		if ($this->debug) {
 			$this->dbg($url, 1, "pre", "Description: Request URL");
 		}
-		if ($params_data && ($verb == "POST" || $verb == "PUT")) {
+		if ($verb == "POST" || $verb == "PUT") {
 			if ($verb == "PUT") {
 				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"PUT\");\n";
