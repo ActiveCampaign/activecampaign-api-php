@@ -84,7 +84,7 @@ class AC_Connector {
 		}
 		else {
 			curl_setopt($request, CURLOPT_URL, $url);
-			if (!$verb) {
+			if ($params_data && !$verb) {
 				// if no verb passed, it's likely POST because we capture GET's above, and anything new or custom
 				// we should have passed the verb in.
 				$verb = "POST";
