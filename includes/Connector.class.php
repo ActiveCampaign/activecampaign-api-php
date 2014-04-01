@@ -87,6 +87,8 @@ class AC_Connector {
 			if ($params_data && !$verb) {
 				// if no verb passed but there IS params data, it's likely POST.
 				$verb = "POST";
+			} elseif ($params_data && $verb) {
+				// $verb is likely "POST" or "PUT".
 			} else {
 				$verb = "GET";
 			}
