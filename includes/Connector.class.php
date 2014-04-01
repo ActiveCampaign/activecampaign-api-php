@@ -97,10 +97,13 @@ class AC_Connector {
 		if ($this->debug) {
 			$this->dbg($url, 1, "pre", "Description: Request URL");
 		}
-		if ($verb == "POST" || $verb == "PUT") {
+		if ($verb == "POST" || $verb == "PUT" || $verb == "DELETE") {
 			if ($verb == "PUT") {
 				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"PUT\");\n";
+			} elseif ($verb == "DELETE") {
+				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "DELETE");
+				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"DELETE\");\n";
 			} else {
 				$verb = "POST";
 				curl_setopt($request, CURLOPT_POST, 1);

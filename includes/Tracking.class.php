@@ -73,6 +73,16 @@ class AC_Tracking extends ActiveCampaign {
 	}
 
 	/*
+	 * Removes a domain from the site tracking whitelist.
+	 */
+	function whitelist_remove($params, $post_data) {
+		// version 2 only.
+		$request_url = "{$this->url_base}/track/site";
+		$response = $this->curl($request_url, $post_data, "DELETE", "tracking_whitelist");
+		return $response;
+	}
+
+	/*
 	 * Adds a new event.
 	 */
 	function log($params, $post_data) {
