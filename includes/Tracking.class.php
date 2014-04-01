@@ -83,6 +83,16 @@ class AC_Tracking extends ActiveCampaign {
 	}
 
 	/*
+	 * Removes an event.
+	 */
+	function event_remove($params, $post_data) {
+		// version 2 only.
+		$request_url = "{$this->url_base}/track/event";
+		$response = $this->curl($request_url, $post_data, "DELETE", "tracking_event_remove");
+		return $response;
+	}
+
+	/*
 	 * Adds a new event.
 	 */
 	function log($params, $post_data) {
