@@ -97,9 +97,18 @@ class AC_Tracking extends ActiveCampaign {
 	 */
 	function log($params, $post_data) {
 		$request_url = "https://trackcmp.net/event";
-		if ($this->track_email) $post_data["visit"] = json_encode(array("email" => $this->track_email));
 		$post_data["actid"] = $this->track_actid;
 		$post_data["key"] = $this->track_key;
+		$visit_data = array();
+		if ($this->track_email) {
+			$visit_data["email"] = $this->track_email;
+		}
+		if (isset($post_data["visit"])) {
+			$visit_data = array_merge($visit_data, $post_data["visit"]);
+		}
+		if ($visit_data) {
+			$post_data["visit"] = json_encode($visit_data);
+		}
 		$response = $this->curl($request_url, $post_data, "POST", "tracking_log");
 		return $response;
 	}
