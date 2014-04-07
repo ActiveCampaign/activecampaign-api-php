@@ -1,5 +1,7 @@
 <?php
 
+if(!class_exists('AC_Webhook')) {
+    
 class AC_Webhook extends ActiveCampaign {
 
 	public $version;
@@ -81,4 +83,5 @@ class AC_Webhook extends ActiveCampaign {
 
 }
 
+}
 ?>

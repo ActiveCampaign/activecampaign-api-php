@@ -1,5 +1,7 @@
 <?php
 
+if(!class_exists('AC_Form')) {
+    
 class AC_Form extends ActiveCampaign {
 
 	public $version;
@@ -260,4 +262,5 @@ var \$j = jQuery.noConflict();
 
 }
 
+}
 ?>

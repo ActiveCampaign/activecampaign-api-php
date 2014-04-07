@@ -1,5 +1,7 @@
 <?php
 
+if(!class_exists('AC_Connector')) {
+    
 class AC_Connector {
 
 	public $url;
@@ -215,6 +217,8 @@ class AC_Connector {
 		}
 		return $object;
 	}
+
+}
 
 }
 

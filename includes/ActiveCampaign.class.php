@@ -6,6 +6,8 @@ if ( !defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !d
 
 require_once("Connector.class.php");
 
+if(!class_exists('ActiveCampaign')) {
+
 class ActiveCampaign extends AC_Connector {
 
 	public $url_base;
@@ -105,6 +107,8 @@ class ActiveCampaign extends AC_Connector {
 		$response = $class->$method($params, $post_data);
 		return $response;
 	}
+
+}
 
 }
 
