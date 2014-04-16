@@ -155,7 +155,7 @@ var \$j = jQuery.noConflict();
 
 		$formid = $_POST["f"];
 		$email = $_POST["email"];
-		$phone = $_POST["phone"];
+		$phone = isset($_POST["phone"]) ? $_POST["phone"] : "";
 
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
