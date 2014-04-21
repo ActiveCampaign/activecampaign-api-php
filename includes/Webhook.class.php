@@ -57,7 +57,7 @@ class EM_Webhook extends Em {
 	}
 	
 	function process($params) {
-		// process an incoming webhook payload (from ActiveCampaign), and format it (or do something with it)
+		// process an incoming webhook payload and format it (or do something with it)
 		
 		$r = array();
 		if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
