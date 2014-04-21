@@ -1,6 +1,6 @@
 <?php
 
-class AC_Tracking extends ActiveCampaign {
+class EM_Tracking extends Em {
 
 	public $version;
 	public $url_base;

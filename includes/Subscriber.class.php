@@ -1,6 +1,6 @@
 <?php
 
-class AC_Subscriber extends AC_Contact {
+class EM_Subscriber extends EM_Contact {
 }
 
 ?>
