@@ -1,14 +1,14 @@
 <?php
 
-	require_once("includes/ActiveCampaign.class.php");
+	require_once("includes/Em.class.php");
 
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	$em = new Em(API_URL, API_KEY);
 
 	/*
 	 * TEST API CREDENTIALS.
 	 */
 
-	if (!(int)$ac->credentials_test()) {
+	if (!(int)$em->credentials_test()) {
 		echo "<p>Access denied: Invalid credentials (URL and/or API key).</p>";
 		exit();
 	}
@@ -20,10 +20,10 @@
 	 * VIEW ACCOUNT DETAILS.
 	 */
 
-	$account = $ac->api("account/view");
+	$emcount = $em->api("account/view");
 
 	echo "<pre>";
-	print_r($account);
+	print_r($emcount);
 	echo "</pre>";
 
 	/*
@@ -39,7 +39,7 @@
 		"sender_country" => "USA",
 	);
 
-	$list_add = $ac->api("list/add", $list);
+	$list_add = $em->api("list/add", $list);
 
 	if ((int)$list_add->success) {
 		// successful request
@@ -64,7 +64,7 @@
 		"status[{$list_id}]" => 1, // "Active" status
 	);
 
-	$contact_sync = $ac->api("contact/sync", $contact);
+	$contact_sync = $em->api("contact/sync", $contact);
 
 	if ((int)$contact_sync->success) {
 		// successful request
@@ -90,7 +90,7 @@
 		"p[{$list_id}]" => $list_id,
 	);
 
-	$message_add = $ac->api("message/add", $message);
+	$message_add = $em->api("message/add", $message);
 
 	if ((int)$message_add->success) {
 		// successful request
@@ -120,7 +120,7 @@
 		"m[{$message_id}]" => 100, // 100 percent of subscribers
 	);
 
-	$campaign_create = $ac->api("campaign/create", $campaign);
+	$campaign_create = $em->api("campaign/create", $campaign);
 
 	if ((int)$campaign_create->success) {
 		// successful request
@@ -137,7 +137,7 @@
 	 * VIEW CAMPAIGN REPORTS (FOR THE CAMPAIGN CREATED ABOVE).
 	 */
 
-	$campaign_report_totals = $ac->api("campaign/report_totals?campaignid={$campaign_id}");
+	$campaign_report_totals = $em->api("campaign/report_totals?campaignid={$campaign_id}");
 
 	echo "<p>Reports:</p>";
 	echo "<pre>";
@@ -145,5 +145,3 @@
 	echo "</pre>";
 
 ?>
-
-<a href="http://www.activecampaign/api">View more API examples!</a>
