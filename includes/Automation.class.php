@@ -1,6 +1,6 @@
 <?php
 
-class EM_Automation extends Em {
+class AC_Automation extends ActiveCampaign {
 
 	public $version;
 	public $url_base;

@@ -1,6 +1,6 @@
 <?php
 
-class EM_Auth extends Em {
+class AC_Auth extends ActiveCampaign {
 
 	public $version;
 	public $url_base;
