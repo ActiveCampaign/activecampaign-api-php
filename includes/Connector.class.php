@@ -1,6 +1,6 @@
 <?php
 
-class AC_Connector {
+class EM_Connector {
 
 	public $url;
 	public $api_key;
@@ -8,11 +8,7 @@ class AC_Connector {
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		// $api_pass should be md5() already
-		$base = "";
-		if (!preg_match("/https:\/\/www.activecampaign.com/", $url)) {
-			// not a reseller
-			$base = "/admin";
-		}
+		$base = "/admin";
 		if (preg_match("/\/$/", $url)) {
 			// remove trailing slash
 			$url = substr($url, 0, strlen($url) - 1);
