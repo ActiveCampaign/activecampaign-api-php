@@ -20,7 +20,7 @@ class ActiveCampaign extends AC_Connector {
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url_base = $this->url = $url;
 		$this->api_key = $api_key;
-		AC_Connector::__construct($url, $api_key, $api_user, $api_pass);
+		parent::__construct($url, $api_key, $api_user, $api_pass);
 	}
 
 	function version($version) {
