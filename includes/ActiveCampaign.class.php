@@ -110,6 +110,7 @@ class ActiveCampaign extends AC_Connector {
 
 require_once("Account.class.php");
 require_once("Auth.class.php");
+require_once("Automation.class.php");
 require_once("Campaign.class.php");
 require_once("Contact.class.php");
 require_once("Design.class.php");
