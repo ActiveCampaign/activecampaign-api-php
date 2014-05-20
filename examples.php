@@ -146,4 +146,4 @@
 
 ?>
 
-<a href="http://www.activecampaign/api">View more API examples!</a>
+<a href="http://www.activecampaign.com/api">View more API examples!</a>
