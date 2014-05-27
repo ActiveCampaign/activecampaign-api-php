@@ -10,7 +10,7 @@ Both customers of our hosted platform and On-Site edition can use these files. O
 
 You can install **activecampaign-api-php** by downloading or cloning the source.
 
-[Click here to download the source (.zip)](zipball/master) which includes all dependencies.
+[Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
 
 `require_once("includes/ActiveCampaign.class.php");`
 
@@ -18,7 +18,7 @@ Fill in your URL and API Key in the `includes/config.php` file, and you are good
 
 ### Composer
 
-If you are using Composer, create your `composer.json` file ([example here](blob/master/examples-composer/composer.json)).
+If you are using Composer, create your `composer.json` file ([example here](examples-composer/composer.json)).
 
 Then load the `composer.phar` file in that directory:
 
@@ -72,7 +72,7 @@ $ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 $account = $ac->api("account/view");
 </pre>
 
-See our [examples file](blob/master/examples.php) for more in-depth samples.
+See our [examples file](examples.php) for more in-depth samples.
 
 ## Full Documentation
 
