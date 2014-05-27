@@ -2,7 +2,7 @@
 
 	require "vendor/autoload.php";
 
-	$ac = new ActiveCampaign("", "");
+	$ac = new ActiveCampaign("API_URL", "API_KEY");
 
 	if (!(int)$ac->credentials_test()) {
 		echo "<p>Access denied: Invalid credentials (URL and/or API key).</p>";
