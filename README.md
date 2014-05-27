@@ -8,13 +8,9 @@ Both customers of our hosted platform and On-Site edition can use these files. O
 
 ## Installation
 
-You can install **activecampaign-api-php** by downloading or cloning the source.
+You can install **activecampaign-api-php** by [downloading (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) or cloning the source:
 
-[Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
-
-`require_once("includes/ActiveCampaign.class.php");`
-
-Fill in your URL and API Key in the `includes/config.php` file, and you are good to go!
+`git clone git@github.com:ActiveCampaign/activecampaign-api-php.git`
 
 ### Composer
 
@@ -48,31 +44,25 @@ That's it!
 
 ### includes/config.php
 
-<pre>
-define("ACTIVECAMPAIGN_URL", "https://ACCOUNT.api-us1.com");
-define("ACTIVECAMPAIGN_API_KEY", "njasdf89hy...23ad7");
-</pre>
+	define("ACTIVECAMPAIGN_URL", "API_URL");
+	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
 
 ### examples.php
 
-<pre>
-require_once("includes/ActiveCampaign.class.php");
+	require_once("includes/ActiveCampaign.class.php");
 
-$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-$account = $ac->api("account/view");
-</pre>
+	$account = $ac->api("account/view");
 
 Or just include everything in the same PHP file:
 
-<pre>
-define("ACTIVECAMPAIGN_URL", "https://ACCOUNT.api-us1.com");
-define("ACTIVECAMPAIGN_API_KEY", "njasdf89hy...23ad7");
-require_once("includes/ActiveCampaign.class.php");
-$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	define("ACTIVECAMPAIGN_URL", "API_URL");
+	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+	require_once("includes/ActiveCampaign.class.php");
+	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-$account = $ac->api("account/view");
-</pre>
+	$account = $ac->api("account/view");
 
 See our [examples file](examples.php) for more in-depth samples.
 
