@@ -10,7 +10,7 @@ Both customers of our hosted platform and On-Site edition can use these files. O
 
 You can install **activecampaign-api-php** by downloading or cloning the source.
 
-[Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
+[Click here to download the source (.zip)](/zipball/master) which includes all dependencies.
 
 `require_once("includes/ActiveCampaign.class.php");`
 
@@ -80,4 +80,4 @@ See our [examples file](examples.php) for more in-depth samples.
 
 ## Reporting Issues
 
-We'd love to help if you have questions or problems. Report issues using the [Github Issue Tracker](issues) or email help@activecampaign.com.
+We'd love to help if you have questions or problems. Report issues using the [Github Issue Tracker](/issues) or email help@activecampaign.com.
