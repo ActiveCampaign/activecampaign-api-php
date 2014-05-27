@@ -10,13 +10,39 @@ Both customers of our hosted platform and On-Site edition can use these files. O
 
 You can install **activecampaign-api-php** by downloading or cloning the source.
 
-[Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
+[Click here to download the source (.zip)](zipball/master) which includes all dependencies.
 
 `require_once("includes/ActiveCampaign.class.php");`
 
 Fill in your URL and API Key in the `includes/config.php` file, and you are good to go!
 
+### Composer
+
+If you are using Composer, create your `composer.json` file ([example here](blob/master/examples-composer/composer.json)).
+
+Then load the `composer.phar` file in that directory:
+
+`curl -sS https://getcomposer.org/installer | php`
+
+Next, run install to load the ActiveCampaign library:
+
+`php composer.phar install`
+
+You should then see the `activecampaign` folder inside `vendor`.
+
 ## Example Usage
+
+### Composer
+
+In your script just include the `autoload.php` file to load all classes:
+
+`require "vendor/autoload.php";`
+
+Next, create a class instance of `ActiveCampaign`:
+
+`$ac = new ActiveCampaign("API_URL", "API_KEY");`
+
+That's it!
 
 ### includes/config.php
 
@@ -46,7 +72,7 @@ $ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 $account = $ac->api("account/view");
 </pre>
 
-See our [examples file](https://github.com/ActiveCampaign/activecampaign-api-php/blob/master/examples.php) for more in-depth samples.
+See our [examples file](blob/master/examples.php) for more in-depth samples.
 
 ## Full Documentation
 
@@ -54,4 +80,4 @@ See our [examples file](https://github.com/ActiveCampaign/activecampaign-api-php
 
 ## Reporting Issues
 
-We'd love to help if you have questions or problems. Report issues using the [Github Issue Tracker](https://github.com/ActiveCampaign/activecampaign-api-php/issues) or email help@activecampaign.com.
+We'd love to help if you have questions or problems. Report issues using the [Github Issue Tracker](issues) or email help@activecampaign.com.
