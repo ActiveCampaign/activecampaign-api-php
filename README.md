@@ -1,3 +1,5 @@
+# ActiveCampaign PHP API Wrapper
+
 This is the official PHP wrapper for the ActiveCampaign API. The purpose of these files is to provide a simple interface to the ActiveCampaign API. You are **not** required to use these files (in order to use the ActiveCampaign API), but it's recommended for a few reasons:
 
 1. It's a lot easier to get set up and use (as opposed to coding everything from scratch on your own).
