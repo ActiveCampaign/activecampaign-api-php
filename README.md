@@ -30,6 +30,8 @@ Next, run install to load the ActiveCampaign library:
 
 You should then see the `activecampaign` folder inside `vendor`.
 
+[Read more about using Composer](https://getcomposer.org/doc/).
+
 ## Example Usage
 
 ### Composer
