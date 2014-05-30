@@ -113,6 +113,7 @@ require_once("Auth.class.php");
 require_once("Automation.class.php");
 require_once("Campaign.class.php");
 require_once("Contact.class.php");
+require_once("Deal.class.php");
 require_once("Design.class.php");
 require_once("Form.class.php");
 require_once("Group.class.php");
