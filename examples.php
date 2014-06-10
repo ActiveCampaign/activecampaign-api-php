@@ -2,7 +2,7 @@
 
 	require_once("includes/ActiveCampaign.class.php");
 
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	$ac = new ActiveCampaign("API_URL", "API_KEY");
 
 	/*
 	 * TEST API CREDENTIALS.
@@ -78,6 +78,15 @@
 	}
 
 	/*
+	 * VIEW ALL CONTACTS IN A LIST (RETURNS ID AND EMAIL).
+	 */
+
+	$ac->version(2);
+	$contacts_view = $ac->api("contact/list?listid=14&limit=500");
+
+	$ac->version(1);
+
+	/*
 	 * ADD NEW EMAIL MESSAGE (FOR A CAMPAIGN).
 	 */
 
@@ -137,7 +146,7 @@
 	 * VIEW CAMPAIGN REPORTS (FOR THE CAMPAIGN CREATED ABOVE).
 	 */
 
-	$campaign_report_totals = $ac->api("campaign/report_totals?campaignid={$campaign_id}");
+	$campaign_report_totals = $ac->api("campaign/report/totals?campaignid={$campaign_id}");
 
 	echo "<p>Reports:</p>";
 	echo "<pre>";
