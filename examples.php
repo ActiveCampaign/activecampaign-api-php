@@ -2,7 +2,7 @@
 
 	require_once("includes/Em.class.php");
 
-	$em = new Em(API_URL, API_KEY);
+	$em = new Em("API_URL", "API_KEY");
 
 	/*
 	 * TEST API CREDENTIALS.
@@ -78,6 +78,15 @@
 	}
 
 	/*
+	 * VIEW ALL CONTACTS IN A LIST (RETURNS ID AND EMAIL).
+	 */
+
+	$ac->version(2);
+	$contacts_view = $ac->api("contact/list?listid=14&limit=500");
+
+	$ac->version(1);
+
+	/*
 	 * ADD NEW EMAIL MESSAGE (FOR A CAMPAIGN).
 	 */
 
@@ -137,6 +146,7 @@
 	 * VIEW CAMPAIGN REPORTS (FOR THE CAMPAIGN CREATED ABOVE).
 	 */
 
+
 	$campaign_report_totals = $em->api("campaign/report_totals?campaignid={$campaign_id}");
 
 	echo "<p>Reports:</p>";
@@ -144,4 +154,10 @@
 	print_r($campaign_report_totals);
 	echo "</pre>";
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+
+<a href="http://www.activecampaign.com/api">View more API examples!</a>
+>>>>>>> master

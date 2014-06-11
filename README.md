@@ -1,3 +1,5 @@
+# ActiveCampaign PHP API Wrapper
+
 This is the official PHP wrapper for the ActiveCampaign API. The purpose of these files is to provide a simple interface to the ActiveCampaign API. You are **not** required to use these files (in order to use the ActiveCampaign API), but it's recommended for a few reasons:
 
 1. It's a lot easier to get set up and use (as opposed to coding everything from scratch on your own).
@@ -8,45 +10,63 @@ Both customers of our hosted platform and On-Site edition can use these files. O
 
 ## Installation
 
-You can install **activecampaign-api-php** by downloading or cloning the source.
+You can install **activecampaign-api-php** by [downloading (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) or cloning the source:
 
-[Click here to download the source (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) which includes all dependencies.
+`git clone git@github.com:ActiveCampaign/activecampaign-api-php.git`
 
-`require_once("includes/ActiveCampaign.class.php");`
+### Composer
 
-Fill in your URL and API Key in the `includes/config.php` file, and you are good to go!
+If you are using Composer, create your `composer.json` file ([example here](examples-composer/composer.json)).
+
+Then load the `composer.phar` file in that directory:
+
+`curl -sS https://getcomposer.org/installer | php`
+
+Next, run install to load the ActiveCampaign library:
+
+`php composer.phar install`
+
+You should then see the `activecampaign` folder inside `vendor`.
+
+[Read more about using Composer](https://getcomposer.org/doc/).
 
 ## Example Usage
 
+### Composer
+
+In your script just include the `autoload.php` file to load all classes:
+
+`require "vendor/autoload.php";`
+
+Next, create a class instance of `ActiveCampaign`:
+
+`$ac = new ActiveCampaign("API_URL", "API_KEY");`
+
+That's it!
+
 ### includes/config.php
 
-<pre>
-define("ACTIVECAMPAIGN_URL", "https://ACCOUNT.api-us1.com");
-define("ACTIVECAMPAIGN_API_KEY", "njasdf89hy...23ad7");
-</pre>
+	define("ACTIVECAMPAIGN_URL", "API_URL");
+	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
 
 ### examples.php
 
-<pre>
-require_once("includes/ActiveCampaign.class.php");
+	require_once("includes/ActiveCampaign.class.php");
 
-$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-$account = $ac->api("account/view");
-</pre>
+	$account = $ac->api("account/view");
 
 Or just include everything in the same PHP file:
 
-<pre>
-define("ACTIVECAMPAIGN_URL", "https://ACCOUNT.api-us1.com");
-define("ACTIVECAMPAIGN_API_KEY", "njasdf89hy...23ad7");
-require_once("includes/ActiveCampaign.class.php");
-$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+	define("ACTIVECAMPAIGN_URL", "API_URL");
+	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+	require_once("includes/ActiveCampaign.class.php");
+	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-$account = $ac->api("account/view");
-</pre>
+	$account = $ac->api("account/view");
 
-See our [examples file](https://github.com/ActiveCampaign/activecampaign-api-php/blob/master/examples.php) for more in-depth samples.
+See our [examples file](examples.php) for more in-depth samples.
 
 ## Full Documentation
 

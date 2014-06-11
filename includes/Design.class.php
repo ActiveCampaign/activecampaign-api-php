@@ -1,6 +1,6 @@
 <?php
 
-class EM_Design extends Em {
+class AC_Design extends ActiveCampaign {
 
 	public $version;
 	public $url_base;
