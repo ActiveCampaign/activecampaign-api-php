@@ -82,7 +82,7 @@
 	 */
 
 	$ac->version(2);
-	$contacts_view = $ac->api("contact/list?listid=14&limit=500");
+	$contacts_view = $em->api("contact/list?listid=14&limit=500");
 
 	$ac->version(1);
 
@@ -154,10 +154,4 @@
 	print_r($campaign_report_totals);
 	echo "</pre>";
 
-<<<<<<< HEAD
 ?>
-=======
-?>
-
-<a href="http://www.activecampaign.com/api">View more API examples!</a>
->>>>>>> master

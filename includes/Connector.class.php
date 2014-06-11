@@ -1,6 +1,6 @@
 <?php
 
-class AC_Connector {
+class Em_Connector {
 
 	public $url;
 	public $api_key;
