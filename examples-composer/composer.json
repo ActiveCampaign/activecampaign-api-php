@@ -9,7 +9,7 @@
 		}
 	],
 	"require": {
-		"activecampaign/api-php": "dev-master"
+		"activecampaign/api-php": "1.0.0"
 	},
 	"minimum-stability": "dev"
 }
