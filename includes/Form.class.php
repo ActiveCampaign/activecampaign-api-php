@@ -103,6 +103,24 @@ var \$j = jQuery.noConflict();
 	\$j('#_form_{$id} input[type*=\"button\"]').click(function() {
 
 		var form_data = {};
+
+		/*var unchecked_lists = {};
+		\$j('#_form_{$id} ._type_checkbox input[type=checkbox]').each(function() {
+			if (\$j(this).prop('checked') == false) {
+				unchecked_lists[\$j(this).val()] = \$j(this).val();
+			}
+		});
+
+		var test = {};
+		\$j('#_form_{$id} ._type_checkbox').find(':checkbox:not(:checked)').each(function() {
+			var val = \$j(this).val();
+			test[val] = val;
+			\$j(this).attr('value', false);
+			//test = \$j(this).serialize();
+		});
+debugger;
+		*/
+
 		\$j('#_form_{$id}').each(function() {
 			form_data = \$j(this).serialize();
 		});
