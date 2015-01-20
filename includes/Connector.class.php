@@ -156,6 +156,8 @@ class AC_Connector {
 			curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:"));
 			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HTTPHEADER, array(\"Expect:\"));\n";
 			if ($this->debug) {
+				curl_setopt($request, CURLINFO_HEADER_OUT, 1);
+				$debug_str1 .= "curl_setopt(\$ch, CURLINFO_HEADER_OUT, 1);\n";
 				$this->dbg($data, 1, "pre", "Description: POST data");
 			}
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
@@ -176,6 +178,9 @@ class AC_Connector {
 		$debug_str1 .= "\$http_code = curl_getinfo(\$ch, CURLINFO_HTTP_CODE);\n";
 		if ($this->debug) {
 			$this->dbg($http_code, 1, "pre", "Description: Response HTTP code");
+			$request_headers = curl_getinfo($request, CURLINFO_HEADER_OUT);
+			$debug_str1 .= "\$request_headers = curl_getinfo(\$ch, CURLINFO_HEADER_OUT);\n";
+			$this->dbg($request_headers, 1, "pre", "Description: Request headers");
 		}
 		curl_close($request);
 		$debug_str1 .= "curl_close(\$ch);\n";
