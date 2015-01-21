@@ -102,6 +102,9 @@ var \$j = jQuery.noConflict();
 
 	\$j('#_form_{$id} input[type*=\"button\"]').click(function() {
 
+		// rename the radio options for Subscribe/Unsubscribe, since they conflict with the hidden field.
+		\$j('input[type=radio][name=act]').attr('name','act_radio');
+
 		var form_data = {};
 		\$j('#_form_{$id}').each(function() {
 			form_data = \$j(this).serialize();
@@ -154,6 +157,12 @@ var \$j = jQuery.noConflict();
 		}
 
 		$formid = $_POST["f"];
+		// sub or unsub
+		$act = isset($_POST["act"]) ? $_POST["act"] : "sub";
+		if (isset($_POST["act_radio"])) {
+			// the radio options for Subscribe/Unsubscribe.
+			$act = $_POST["act_radio"];
+		}
 		$email = $_POST["email"];
 		$phone = isset($_POST["phone"]) ? $_POST["phone"] : "";
 
@@ -184,9 +193,10 @@ var \$j = jQuery.noConflict();
 		}
 
 		// add lists
+		$status = ($act == "unsub") ? 2 : 1;
 		foreach ($_POST["nlbox"] as $listid) {
 			$contact["p[{$listid}]"] = $listid;
-			$contact["status[{$listid}]"] = 1;
+			$contact["status[{$listid}]"] = $status;
 		}
 
 		if (!$sync) {
