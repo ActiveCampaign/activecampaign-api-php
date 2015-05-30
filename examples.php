@@ -12,10 +12,9 @@
 		echo "<p>Access denied: Invalid credentials (URL and/or API key).</p>";
 		exit();
 	}
-	else {
-		echo "<p>Credentials valid! Proceeding...</p>";
-	}
-
+	
+        echo "<p>Credentials valid! Proceeding...</p>";
+	
 	/*
 	 * VIEW ACCOUNT DETAILS.
 	 */
@@ -41,16 +40,15 @@
 
 	$list_add = $ac->api("list/add", $list);
 
-	if ((int)$list_add->success) {
-		// successful request
-		$list_id = (int)$list_add->id;
-		echo "<p>List added successfully (ID {$list_id})!</p>";
-	}
-	else {
+	if (!(int)$list_add->success) {
 		// request failed
 		echo "<p>Adding list failed. Error returned: " . $list_add->error . "</p>";
 		exit();
 	}
+        
+        // successful request
+        $list_id = (int)$list_add->id;
+        echo "<p>List added successfully (ID {$list_id})!</p>";
 
 	/*
 	 * ADD OR EDIT CONTACT (TO THE NEW LIST CREATED ABOVE).
@@ -66,16 +64,15 @@
 
 	$contact_sync = $ac->api("contact/sync", $contact);
 
-	if ((int)$contact_sync->success) {
-		// successful request
-		$contact_id = (int)$contact_sync->subscriber_id;
-		echo "<p>Contact synced successfully (ID {$contact_id})!</p>";
-	}
-	else {
+	if (!(int)$contact_sync->success) {
 		// request failed
 		echo "<p>Syncing contact failed. Error returned: " . $contact_sync->error . "</p>";
 		exit();
 	}
+        
+        // successful request
+        $contact_id = (int)$contact_sync->subscriber_id;
+        echo "<p>Contact synced successfully (ID {$contact_id})!</p>";
 
 	/*
 	 * VIEW ALL CONTACTS IN A LIST (RETURNS ID AND EMAIL).
@@ -101,16 +98,15 @@
 
 	$message_add = $ac->api("message/add", $message);
 
-	if ((int)$message_add->success) {
-		// successful request
-		$message_id = (int)$message_add->id;
-		echo "<p>Message added successfully (ID {$message_id})!</p>";
-	}
-	else {
+	if (!(int)$message_add->success) {
 		// request failed
 		echo "<p>Adding email message failed. Error returned: " . $message_add->error . "</p>";
 		exit();
 	}
+        
+        // successful request
+        $message_id = (int)$message_add->id;
+        echo "<p>Message added successfully (ID {$message_id})!</p>";
 
 	/*
 	 * CREATE NEW CAMPAIGN (USING THE EMAIL MESSAGE CREATED ABOVE).
@@ -131,16 +127,15 @@
 
 	$campaign_create = $ac->api("campaign/create", $campaign);
 
-	if ((int)$campaign_create->success) {
-		// successful request
-		$campaign_id = (int)$campaign_create->id;
-		echo "<p>Campaign created and sent! (ID {$campaign_id})!</p>";
-	}
-	else {
+	if (!(int)$campaign_create->success) {
 		// request failed
 		echo "<p>Creating campaign failed. Error returned: " . $campaign_create->error . "</p>";
 		exit();
 	}
+        
+        // successful request
+        $campaign_id = (int)$campaign_create->id;
+        echo "<p>Campaign created and sent! (ID {$campaign_id})!</p>";
 
 	/*
 	 * VIEW CAMPAIGN REPORTS (FOR THE CAMPAIGN CREATED ABOVE).
