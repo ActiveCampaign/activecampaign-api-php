@@ -31,11 +31,11 @@
 	 */
 
 	$list = array(
-		"name" => "List 3",
-		"sender_name" => "My Company",
-		"sender_addr1" => "123 S. Street",
-		"sender_city" => "Chicago",
-		"sender_zip" => "60601",
+		"name"           => "List 3",
+		"sender_name"    => "My Company",
+		"sender_addr1"   => "123 S. Street",
+		"sender_city"    => "Chicago",
+		"sender_zip"     => "60601",
 		"sender_country" => "USA",
 	);
 
@@ -57,10 +57,10 @@
 	 */
 
 	$contact = array(
-		"email" => "test@example.com",
-		"first_name" => "Test",
-		"last_name" => "Test",
-		"p[{$list_id}]" => $list_id,
+		"email"              => "test@example.com",
+		"first_name"         => "Test",
+		"last_name"          => "Test",
+		"p[{$list_id}]"      => $list_id,
 		"status[{$list_id}]" => 1, // "Active" status
 	);
 
@@ -91,11 +91,11 @@
 	 */
 
 	$message = array(
-		"format" => "mime",
-		"subject" => "Check out our latest deals!",
-		"fromemail" => "newsletter@test.com",
-		"fromname" => "Test from API",
-		"html" => "<p>My email newsletter.</p>",
+		"format"        => "mime",
+		"subject"       => "Check out our latest deals!",
+		"fromemail"     => "newsletter@test.com",
+		"fromname"      => "Test from API",
+		"html"          => "<p>My email newsletter.</p>",
 		"p[{$list_id}]" => $list_id,
 	);
 
@@ -117,15 +117,15 @@
 	 */
 
 	$campaign = array(
-		"type" => "single",
-		"name" => "July Campaign", // internal name (message subject above is what contacts see)
-		"sdate" => "2013-07-01 00:00:00",
-		"status" => 1,
-		"public" => 1,
-		"tracklinks" => "all",
-		"trackreads" => 1,
-		"htmlunsub" => 1,
-		"p[{$list_id}]" => $list_id,
+		"type"             => "single",
+		"name"             => "July Campaign", // internal name (message subject above is what contacts see)
+		"sdate"            => "2013-07-01 00:00:00",
+		"status"           => 1,
+		"public"           => 1,
+		"tracklinks"       => "all",
+		"trackreads"       => 1,
+		"htmlunsub"        => 1,
+		"p[{$list_id}]"    => $list_id,
 		"m[{$message_id}]" => 100, // 100 percent of subscribers
 	);
 
