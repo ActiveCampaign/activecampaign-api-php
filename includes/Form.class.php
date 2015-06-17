@@ -165,6 +165,7 @@ var \$j = jQuery.noConflict();
 		}
 		$email = $_POST["email"];
 		$phone = isset($_POST["phone"]) ? $_POST["phone"] : "";
+		$lists = (isset($_POST["nlbox"]) && $_POST["nlbox"]) ? $_POST["nlbox"] : array();
 
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
@@ -194,7 +195,7 @@ var \$j = jQuery.noConflict();
 
 		// add lists
 		$status = ($act == "unsub") ? 2 : 1;
-		foreach ($_POST["nlbox"] as $listid) {
+		foreach ($lists as $listid) {
 			$contact["p[{$listid}]"] = $listid;
 			$contact["status[{$listid}]"] = $status;
 		}
