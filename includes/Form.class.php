@@ -166,6 +166,17 @@ var \$j = jQuery.noConflict();
 		$email = $_POST["email"];
 		$phone = isset($_POST["phone"]) ? $_POST["phone"] : "";
 		$lists = (isset($_POST["nlbox"]) && $_POST["nlbox"]) ? $_POST["nlbox"] : array();
+		if (isset($_SESSION["image_random_value"])) {
+			// Captcha is part of the form.
+			// Get the captcha value the user entered.
+			$captcha = "";
+			if (isset($_POST["captcha"])) {
+				$captcha = md5(strtoupper((string)$_POST["captcha"]));
+			}
+			if (!isset($_SESSION["image_random_value"][$captcha])) {
+				return json_encode(array("success" => 0, "message" => "Invalid captcha"));
+			}
+		}
 
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
