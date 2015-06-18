@@ -144,6 +144,7 @@ var \$j = jQuery.noConflict();
 		if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
 
 		$sync = 0;
+		$captcha_in_form = 0;
 		if ($params) {
 			$params_array = explode("&", $params);
 			$params_ = array();
@@ -154,6 +155,7 @@ var \$j = jQuery.noConflict();
 			}
 
 			$sync = (isset($params_["sync"])) ? (int)$params_["sync"] : 0;
+			$captcha_in_form = (isset($params_["captcha"])) ? (int)$params_["captcha"] : 0;
 		}
 
 		$formid = $_POST["f"];
@@ -165,6 +167,18 @@ var \$j = jQuery.noConflict();
 		}
 		$email = $_POST["email"];
 		$phone = isset($_POST["phone"]) ? $_POST["phone"] : "";
+		$lists = (isset($_POST["nlbox"]) && $_POST["nlbox"]) ? $_POST["nlbox"] : array();
+		if ($captcha_in_form) {
+			// Captcha is part of the form.
+			// Get the captcha value the user entered.
+			$captcha = "";
+			if (isset($_POST["captcha"])) {
+				$captcha = md5(strtoupper((string)$_POST["captcha"]));
+			}
+			if (!isset($_SESSION["image_random_value"]) || !isset($_SESSION["image_random_value"][$captcha])) {
+				return json_encode(array("success" => 0, "message" => "Invalid captcha"));
+			}
+		}
 
 		if (isset($_POST["fullname"])) {
 			$fullname = explode(" ", $_POST["fullname"]);
@@ -194,7 +208,7 @@ var \$j = jQuery.noConflict();
 
 		// add lists
 		$status = ($act == "unsub") ? 2 : 1;
-		foreach ($_POST["nlbox"] as $listid) {
+		foreach ($lists as $listid) {
 			$contact["p[{$listid}]"] = $listid;
 			$contact["status[{$listid}]"] = $status;
 		}
