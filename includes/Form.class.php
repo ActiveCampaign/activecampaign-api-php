@@ -123,7 +123,6 @@ var \$j = jQuery.noConflict();
 				\$j('#form_result_message').html(data.message);
 				var result_class = (data.success) ? 'form_result_success' : 'form_result_error';
 				\$j('#form_result_message').removeClass('form_result_success form_result_error').addClass(result_class);
-				\$j('#form_result_message').addClass(result_class);
 			}
 		});
 
