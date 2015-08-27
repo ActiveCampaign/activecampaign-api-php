@@ -87,6 +87,7 @@ class ActiveCampaign extends AC_Connector {
 		if ($class == "AC_Tracking") $add_tracking = true;
 
 		$class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
+		$class->output = $this->output;
 		// IE: $contact->view()
 
 		if ($add_tracking) {
