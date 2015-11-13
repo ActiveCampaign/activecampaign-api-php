@@ -16,6 +16,7 @@ class ActiveCampaign extends AC_Connector {
 	public $track_key;
 	public $version = 1;
 	public $debug = false;
+	public $set_header = true;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url_base = $this->url = $url;
@@ -101,6 +102,7 @@ class ActiveCampaign extends AC_Connector {
 		}
 
 		$class->debug = $this->debug;
+		$class->set_header = $this->set_header;
 
 		$response = $class->$method($params, $post_data);
 		return $response;
