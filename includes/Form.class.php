@@ -91,6 +91,9 @@ class AC_Form extends ActiveCampaign {
 				// forms come out of AC now with a "submit" button (it used to be "button").
 				$html = preg_replace("/input type='submit'/", "input type='button'", $html);
 
+				// Replace the external image (captcha) script with the local one, so the session var is accessible.
+				$html = preg_replace("/\/\/.*\/ac_global\/scripts\/randomimage\.php/i", "randomimage.php", $html);
+
 				$action_val = urldecode($action_val);
 
 				// add jQuery stuff
