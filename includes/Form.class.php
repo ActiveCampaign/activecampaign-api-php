@@ -216,6 +216,7 @@ var \$j = jQuery.noConflict();
 		foreach ($lists as $listid) {
 			$contact["p[{$listid}]"] = $listid;
 			$contact["status[{$listid}]"] = $status;
+			$contact["instantresponders[{$listid}]"] = 1;
 		}
 
 		if (!$sync) {
