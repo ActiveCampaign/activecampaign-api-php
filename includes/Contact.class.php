@@ -21,6 +21,12 @@ class AC_Contact extends ActiveCampaign {
 		return $response;
 	}
 
+	function automation_list($params) {
+		$request_url = "{$this->url}&api_action=contact_automation_list&api_output={$this->output}&{$params}";
+		$response = $this->curl($request_url);
+		return $response;
+	}
+
 	function delete_list($params) {
 		$request_url = "{$this->url}&api_action=contact_delete_list&api_output={$this->output}&{$params}";
 		$response = $this->curl($request_url);
