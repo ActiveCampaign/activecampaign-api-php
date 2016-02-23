@@ -119,6 +119,7 @@ require_once("Form.class.php");
 require_once("Group.class.php");
 require_once("List.class.php");
 require_once("Message.class.php");
+require_once("Segment.class.php");
 require_once("Settings.class.php");
 require_once("Subscriber.class.php");
 require_once("Tracking.class.php");
