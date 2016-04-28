@@ -89,7 +89,7 @@ class AC_Form extends ActiveCampaign {
 
 				// replace the Submit button to be a button type (for ajax).
 				// forms come out of AC now with a "submit" button (it used to be "button").
-				$html = preg_replace("/input type='submit'/", "input type='button'", $html);
+				$html = preg_replace("/class=['\"]+_submit['\"]+ type=['\"]+submit['\"]+/", "class='_submit' type='button'", $html);
 
 				// Replace the external image (captcha) script with the local one, so the session var is accessible.
 				$html = preg_replace("/\/\/.*\/ac_global\/scripts\/randomimage\.php/i", "randomimage.php", $html);
@@ -106,13 +106,13 @@ var \$j = jQuery.noConflict();
 
 \$j(document).ready(function() {
 
-	\$j('#_form_{$id} input[type*=\"button\"]').click(function() {
+	\$j('#_form_{$id}_ button').click(function() {
 
 		// rename the radio options for Subscribe/Unsubscribe, since they conflict with the hidden field.
 		\$j('input[type=radio][name=act]').attr('name','act_radio');
 
 		var form_data = {};
-		\$j('#_form_{$id}').each(function() {
+		\$j('#_form_{$id}_').each(function() {
 			form_data = \$j(this).serialize();
 		});
 
@@ -147,7 +147,6 @@ var \$j = jQuery.noConflict();
 	}
 
 	function process($params) {
-
 		$r = array();
 		if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
 
@@ -174,6 +173,7 @@ var \$j = jQuery.noConflict();
 			$act = $_POST["act_radio"];
 		}
 		$email = $_POST["email"];
+		$firstname = $lastname = "";
 		$phone = isset($_POST["phone"]) ? $_POST["phone"] : "";
 		$lists = (isset($_POST["nlbox"]) && $_POST["nlbox"]) ? $_POST["nlbox"] : array();
 		if ($captcha_in_form) {
@@ -193,7 +193,7 @@ var \$j = jQuery.noConflict();
 			$firstname = array_shift($fullname);
 			$lastname = implode(" ", $fullname);
 		}
-		else {
+		elseif (isset($_POST["firstname"]) && isset($_POST["lastname"])) {
 			$firstname = trim($_POST["firstname"]);
 			$lastname = trim($_POST["lastname"]);
 			if ($firstname == "" && isset($_POST["first_name"])) $firstname = trim($_POST["first_name"]);
