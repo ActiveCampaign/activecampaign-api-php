@@ -95,7 +95,7 @@ class AC_Form extends ActiveCampaign {
 				$html = preg_replace("/\/\/.*\/ac_global\/scripts\/randomimage\.php/i", "randomimage.php", $html);
 
 				// Remove Embedded forms JS
-                $html = preg_replace('/<script[^>]*>.*?<\/script>/s', '', $html);
+				$html = preg_replace('/<script[^>]*>.*?<\/script>/s', '', $html);
 
 				$action_val = urldecode($action_val);
 
