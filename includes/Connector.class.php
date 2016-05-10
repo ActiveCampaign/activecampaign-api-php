@@ -179,7 +179,7 @@ class AC_Connector {
 			$this->dbg($response, 1, "pre", "Description: Raw response");
 		}
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
-		if (!preg_match("/^[2-3][0-9]{2}+/", $http_code)) {
+		if (!preg_match("/^[2-3][0-9]{2}/", $http_code)) {
 			// If not 200 or 300 range HTTP code, return custom error.
 			return "HTTP code $http_code returned";
 		}
