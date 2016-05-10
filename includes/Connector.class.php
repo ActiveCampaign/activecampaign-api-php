@@ -170,11 +170,19 @@ class AC_Connector {
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_FOLLOWLOCATION, true);\n";
 		$response = curl_exec($request);
+		$curl_error = curl_error($request);
+		if (!$response && $curl_error) {
+			return $curl_error;
+		}
 		$debug_str1 .= "curl_exec(\$ch);\n";
 		if ($this->debug) {
 			$this->dbg($response, 1, "pre", "Description: Raw response");
 		}
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
+		if (!preg_match("/^[2-3][0-9]{2}/", $http_code)) {
+			// If not 200 or 300 range HTTP code, return custom error.
+			return "HTTP code $http_code returned";
+		}
 		$debug_str1 .= "\$http_code = curl_getinfo(\$ch, CURLINFO_HTTP_CODE);\n";
 		if ($this->debug) {
 			$this->dbg($http_code, 1, "pre", "Description: Response HTTP code");
