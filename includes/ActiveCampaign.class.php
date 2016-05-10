@@ -16,6 +16,7 @@ class ActiveCampaign extends AC_Connector {
 	public $track_key;
 	public $version = 1;
 	public $debug = false;
+	public $curl_response_error = "";
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url_base = $this->url = $url;
