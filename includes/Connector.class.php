@@ -170,6 +170,10 @@ class AC_Connector {
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_FOLLOWLOCATION, true);\n";
 		$response = curl_exec($request);
+		$curl_error = curl_error($request);
+		if (!$response && $curl_error) {
+			return $curl_error;
+		}
 		$debug_str1 .= "curl_exec(\$ch);\n";
 		if ($this->debug) {
 			$this->dbg($response, 1, "pre", "Description: Raw response");
