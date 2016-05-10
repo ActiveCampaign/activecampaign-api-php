@@ -32,9 +32,9 @@ class AC_Connector {
 		if (is_object($r) && (int)$r->result_code) {
 			// successful
 			$r = true;
-		}
-		else {
-			// failed
+		} else {
+			// failed - log it
+			$this->curl_response_error = $r;
 			$r = false;
 		}
 		return $r;
