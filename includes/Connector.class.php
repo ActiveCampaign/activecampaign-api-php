@@ -192,7 +192,16 @@ class AC_Connector {
 		}
 		curl_close($request);
 		$debug_str1 .= "curl_close(\$ch);\n";
-		$object = json_decode($response);
+		switch ($this->output) {
+			case 'xml':
+				$object = simplexml_load_string($response);
+				break;
+			case 'json':
+				$object = json_decode($response);
+				break;
+			default:
+				$object = unserialize($response);
+		}
 		if ($this->debug) {
 			$this->dbg($object, 1, "pre", "Description: Response object (json_decode)");
 		}
@@ -214,16 +223,16 @@ class AC_Connector {
 		$object->http_code = $http_code;
 
 		if (isset($object->result_code)) {
-			$object->success = $object->result_code;
+			$object->success = (string)$object->result_code;
 			if (!(int)$object->result_code) {
-				$object->error = $object->result_message;
+				$object->error = (string)$object->result_message;
 			}
 		}
 		elseif (isset($object->succeeded)) {
 			// some calls return "succeeded" only
-			$object->success = $object->succeeded;
+			$object->success = (string)$object->succeeded;
 			if (!(int)$object->succeeded) {
-				$object->error = $object->message;
+				$object->error = (string)$object->message;
 			}
 		}
 		return $object;
