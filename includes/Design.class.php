@@ -1,5 +1,7 @@
 <?php
 
+if(!class_exists('AC_Design')) {    
+
 class AC_Design extends ActiveCampaign {
 
 	public $version;
@@ -28,4 +30,5 @@ class AC_Design extends ActiveCampaign {
 
 }
 
+}
 ?>

@@ -1,5 +1,7 @@
 <?php
 
+if(!class_exists('AC_Auth')) {
+    
 class AC_Auth extends ActiveCampaign {
 
 	public $version;
@@ -19,6 +21,8 @@ class AC_Auth extends ActiveCampaign {
 		$response = $this->curl($request_url);
 		return $response;
 	}
+
+}
 
 }
 
