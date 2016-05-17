@@ -210,7 +210,6 @@ class AC_Connector {
 			echo "<textarea style='height: 300px; width: 600px;'>" . $debug_str1 . "</textarea>";
 		}
 
-		header("HTTP/1.1 " . $http_code);
 		$object->http_code = $http_code;
 
 		if (isset($object->result_code)) {
@@ -230,5 +229,3 @@ class AC_Connector {
 	}
 
 }
-
-?>
