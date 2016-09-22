@@ -165,10 +165,8 @@ class AC_Connector {
 		}
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYPEER, false);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_FOLLOWLOCATION, true);\n";
 		$response = curl_exec($request);
 		$curl_error = curl_error($request);
 		if (!$response && $curl_error) {
