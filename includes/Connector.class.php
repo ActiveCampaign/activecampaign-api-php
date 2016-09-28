@@ -199,6 +199,8 @@ class AC_Connector {
 			$string_responses = array("tracking_event_remove", "contact_list", "form_html", "tracking_site_status", "tracking_event_status", "tracking_whitelist", "tracking_log", "tracking_site_list", "tracking_event_list");
 			if (in_array($method, $string_responses)) {
 				return $response;
+			}elseif ($method == 'segment_list'){
+				return $object;
 			}
 			// something went wrong
 			return "An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned. Here is the actual response from the server: ---- " . $response;
