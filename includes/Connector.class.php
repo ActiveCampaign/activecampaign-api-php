@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
+
 class AC_Connector {
 
 	public $url;
@@ -200,8 +202,10 @@ class AC_Connector {
 			if (in_array($method, $string_responses)) {
 				return $response;
 			}
-			// something went wrong
-			return "An unexpected problem occurred with the API request. Some causes include: invalid JSON or XML returned. Here is the actual response from the server: ---- " . $response;
+
+			$requestException = new RequestException;
+			$requestException->setFailedMessage($response);
+			throw $requestException;
 		}
 
 		if ($this->debug) {
