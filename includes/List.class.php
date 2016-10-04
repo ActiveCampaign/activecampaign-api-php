@@ -56,9 +56,9 @@ class AC_List_ extends ActiveCampaign {
 		return $response;
 	}
 
-	function field_view($params) {
+	function field_view($params, $post_data) {
 		$request_url = "{$this->url}&api_action=list_field_view&api_output={$this->output}&{$params}";
-		$response = $this->curl($request_url);
+		$response = $this->curl($request_url, $post_data);
 		return $response;
 	}
 
