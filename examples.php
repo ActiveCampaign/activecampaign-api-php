@@ -150,4 +150,16 @@
 
 ?>
 
+*Note*: It can also be helpful to check our [API documentation](http://www.activecampaign.com/api/overview.php) for the HTTP method that should be used for a particular endpoint as it can affect the format of your request. 
+Example: `list_field_view` GET
+```php
+$ac->api("list/field/view?ids=all");
+```
+Query params appended for a GET request.
+
+Example: `list_field_edit` POST
+```php
+$ac->api("list/field/edit", array(/*POST params here.*/));
+```
+
 <a href="http://www.activecampaign.com/api">View more API examples!</a>
