@@ -203,6 +203,12 @@ class AC_Connector {
 				return $response;
 			}
 
+			// add methods that don't return a success key in the response
+			$array_responses = array("tags_list");
+			if (in_array($method, $array_responses)) {
+				return $object;
+			}
+
 			$requestException = new RequestException;
 			$requestException->setFailedMessage($response);
 			throw $requestException;
