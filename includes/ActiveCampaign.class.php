@@ -106,26 +106,9 @@ class ActiveCampaign extends AC_Connector {
 
 		$class->debug = $this->debug;
 
-		$this->prepare_post_data($post_data);
-
 		$response = $class->$method($params, $post_data);
 		return $response;
 	}
-
-	function prepare_post_data($post_data) {
-		// prepare fields with array values
-		foreach ($post_data as $key => $value) {
-			// if the $key is that of a field
-			if (preg_match('/^field\[.*,0\]/', $key)) {
-				// and the $value is that of an array
-				if (is_array($value)) {
-					// then join the values with double pipes and set the value to the new string
-					$post_data[$key] = implode('||', $value);
-				}
-			}
-		}
-	}
-
 }
 
 require_once("Account.class.php");
