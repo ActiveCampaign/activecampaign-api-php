@@ -124,13 +124,18 @@ class AC_Connector {
 										$k = urlencode($k);
 										$data .= "{$key_}[{$key}][{$k}]=" . urlencode($v) . "&";
 									}
-								}
-								else {
+								} else {
 									$data .= "{$key_}[{$key}]=" . urlencode($value_) . "&";
 								}
 							}
-						}
-						else {
+						} elseif (preg_match('/^field\[.*,0\]/', $key)) {
+							// if the $key is that of a field and the $value is that of an array
+							if (is_array($value)) {
+								// then join the values with double pipes
+								$value = implode('||', $value);
+							}
+							$data .= "{$key}=" . urlencode($value) . "&";
+						} else {
 							// IE: [group] => array(2 => 2, 3 => 3)
 							// normally we just want the key to be a string, IE: ["group[2]"] => 2
 							// but we want to allow passing both formats
@@ -142,13 +147,11 @@ class AC_Connector {
 							}
 						}
 
-					}
-					else {
+					} else {
 						$data .= "{$key}=" . urlencode($value) . "&";
 					}
 				}
-			}
-			else {
+			} else {
 				// not an array - perhaps serialized or JSON string?
 				// just pass it as data
 				$data = "data={$params_data}";

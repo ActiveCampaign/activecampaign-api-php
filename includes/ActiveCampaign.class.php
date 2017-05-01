@@ -109,7 +109,6 @@ class ActiveCampaign extends AC_Connector {
 		$response = $class->$method($params, $post_data);
 		return $response;
 	}
-
 }
 
 require_once("Account.class.php");
