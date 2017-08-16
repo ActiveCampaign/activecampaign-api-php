@@ -76,8 +76,12 @@ class AC_Connector {
 		$debug_str1 .= "\$ch = curl_init();\n";
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($request, CURLOPT_TIMEOUT, 15);
+		curl_setopt($request, CURLOPT_CONNECTTIMEOUT, 10);
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, 15);\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CONNECTTIMEOUT, 10);\n";
 		if ($params_data && $verb == "GET") {
 			if ($this->version == 2) {
 				$url .= "&" . $params_data;
