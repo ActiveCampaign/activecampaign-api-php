@@ -7,6 +7,7 @@ class AC_Connector {
 	public $url;
 	public $api_key;
 	public $output = "json";
+	private $timeout = NULL;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		// $api_pass should be md5() already
@@ -57,6 +58,14 @@ class AC_Connector {
 		if (!$continue) exit();
 	}
 
+	public function set_curl_timeout($seconds) {
+		$this->timeout = $seconds;
+	}
+
+	public function get_curl_timeout() {
+		return $this->timeout;
+	}
+
 	public function curl($url, $params_data = array(), $verb = "", $custom_method = "") {
 		if ($this->version == 1) {
 			// find the method from the URL.
@@ -78,6 +87,12 @@ class AC_Connector {
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
+
+		if (!is_null($this->timeout)) {
+			curl_setopt($request, CURLOPT_TIMEOUT, $this->timeout);
+			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->timeout . ");\n";
+		}
+
 		if ($params_data && $verb == "GET") {
 			if ($this->version == 2) {
 				$url .= "&" . $params_data;

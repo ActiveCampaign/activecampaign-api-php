@@ -93,6 +93,8 @@ class ActiveCampaign extends AC_Connector {
 		$class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
 		// IE: $contact->view()
 
+		$class->set_curl_timeout($this->get_curl_timeout());
+
 		if ($add_tracking) {
 			$class->track_email = $this->track_email;
 			$class->track_actid = $this->track_actid;
