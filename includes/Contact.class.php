@@ -102,23 +102,24 @@ class AC_Contact extends ActiveCampaign {
 		return $response;
 	}
 
-	function view($params) {
+	function view($params, $post_data) {
 		// can be a contact ID, email, or hash
-		if (preg_match("/^email=/", $params)) {
+		if (array_key_exists('email', $post_data)) {
 			$action = "contact_view_email";
 		}
-		elseif (preg_match("/^hash=/", $params)) {
+		elseif (array_key_exists('hash', $post_data)){
 			$action = "contact_view_hash";
 		}
-		elseif (preg_match("/^id=/", $params)) {
+		elseif (array_key_exists('id', $post_data)){
 			$action = "contact_view";
 		}
 		else {
 			// default
 			$action = "contact_view";
 		}
+
 		$request_url = "{$this->url}&api_action={$action}&api_output={$this->output}&{$params}";
-		$response = $this->curl($request_url);
+		$response = $this->curl($request_url, $post_data);
 		return $response;
 	}
 
