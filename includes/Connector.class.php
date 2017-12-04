@@ -4,10 +4,12 @@ require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
 
 class AC_Connector {
 
+	const DEFAULT_TIMEOUT = 30; 
+
 	public $url;
 	public $api_key;
 	public $output = "json";
-	private $timeout = NULL;
+	private $timeout = self::DEFAULT_TIMEOUT;
 
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		// $api_pass should be md5() already
@@ -85,13 +87,10 @@ class AC_Connector {
 		$debug_str1 .= "\$ch = curl_init();\n";
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($request, CURLOPT_TIMEOUT, $this->timeout);
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
-
-		if (!is_null($this->timeout)) {
-			curl_setopt($request, CURLOPT_TIMEOUT, $this->timeout);
-			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->timeout . ");\n";
-		}
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->timeout . ");\n";
 
 		if ($params_data && $verb == "GET") {
 			if ($this->version == 2) {
