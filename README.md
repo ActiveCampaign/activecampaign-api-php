@@ -55,6 +55,9 @@ That's it!
 
 	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
+	// Adjust the default cURL timeout
+	$ac->set_curl_timeout(10);
+
 	$account = $ac->api("account/view");
 
 Or just include everything in the same PHP file:
@@ -63,6 +66,9 @@ Or just include everything in the same PHP file:
 	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
 	require_once("includes/ActiveCampaign.class.php");
 	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+
+	// Adjust the default cURL timeout
+	$ac->set_curl_timeout(10);
 
 	$account = $ac->api("account/view");
 
