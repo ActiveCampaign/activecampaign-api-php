@@ -273,9 +273,9 @@ class AC_Connector {
 		$response = curl_exec($request);
 
 		$curl_error = curl_error($request);
-
-		if (! $response && $curl_error) {
-			$this->throwRequestException($curl_error);
+		
+		if (!$response && $curl_error) {
+			return $curl_error;
 		}
 
 		$debug_str1 .= "curl_exec(\$ch);\n";
