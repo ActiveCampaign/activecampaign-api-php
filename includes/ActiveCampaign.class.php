@@ -6,24 +6,75 @@ if ( !defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !d
 
 require_once("Connector.class.php");
 
+/**
+ * Class ActiveCampaign
+ */
 class ActiveCampaign extends AC_Connector {
 
+	/**
+	 * @var
+	 */
 	public $url_base;
+
+	/**
+	 * @var
+	 */
 	public $url;
+
+	/**
+	 * @var
+	 */
 	public $api_key;
+
+	/**
+	 * @var
+	 */
 	public $track_email;
+
+	/**
+	 * @var
+	 */
 	public $track_actid;
+
+	/**
+	 * @var
+	 */
 	public $track_key;
+
+	/**
+	 * @var int
+	 */
 	public $version = 1;
+
+	/**
+	 * @var bool
+	 */
 	public $debug = false;
+
+	/**
+	 * @var string
+	 */
 	public $curl_response_error = "";
 
+	/**
+	 * ActiveCampaign constructor.
+	 *
+	 * @param        $url
+	 * @param        $api_key
+	 * @param string $api_user
+	 * @param string $api_pass
+	 */
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		$this->url_base = $this->url = $url;
 		$this->api_key = $api_key;
 		parent::__construct($url, $api_key, $api_user, $api_pass);
 	}
 
+	/**
+	 * Set the version on the url
+	 *
+	 * @param $version
+	 */
 	function version($version) {
 		$this->version = (int)$version;
 		if ($version == 2) {
@@ -31,6 +82,14 @@ class ActiveCampaign extends AC_Connector {
 		}
 	}
 
+	/**
+	 * Make api calls
+	 *
+	 * @param       $path
+	 * @param array $post_data
+	 *
+	 * @return mixed
+	 */
 	function api($path, $post_data = array()) {
 		// IE: "contact/view"
 		$components = explode("/", $path);
@@ -91,7 +150,8 @@ class ActiveCampaign extends AC_Connector {
 		}
 
 		$class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
-		// IE: $contact->view()
+
+		$class->set_curl_timeout($this->get_curl_timeout());
 
 		if ($add_tracking) {
 			$class->track_email = $this->track_email;
@@ -130,5 +190,3 @@ require_once("Tag.class.php");
 require_once("Tracking.class.php");
 require_once("User.class.php");
 require_once("Webhook.class.php");
-
-?>

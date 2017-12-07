@@ -2,15 +2,44 @@
 
 require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
 
+/**
+ * Class AC_Connector
+ */
 class AC_Connector {
 
-	const DEFAULT_TIMEOUT = 30; 
+	/**
+	 * Default curl timeout
+	 */
+	const DEFAULT_TIMEOUT = 30;
 
+	/**
+	 * @var string
+	 */
 	public $url;
+
+	/**
+	 * @var
+	 */
 	public $api_key;
+
+	/**
+	 * @var string
+	 */
 	public $output = "json";
+
+	/**
+	 * @var int
+	 */
 	private $timeout = self::DEFAULT_TIMEOUT;
 
+	/**
+	 * AC_Connector constructor.
+	 *
+	 * @param        $url
+	 * @param        $api_key
+	 * @param string $api_user
+	 * @param string $api_pass
+	 */
 	function __construct($url, $api_key, $api_user = "", $api_pass = "") {
 		// $api_pass should be md5() already
 		$base = "";
@@ -31,6 +60,12 @@ class AC_Connector {
 		$this->api_key = $api_key;
 	}
 
+	/**
+	 * Test the api credentials
+	 *
+	 * @return bool|mixed
+	 * @throws \RequestException
+	 */
 	public function credentials_test() {
 		$test_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
 		$r = $this->curl($test_url);
@@ -45,7 +80,14 @@ class AC_Connector {
 		return $r;
 	}
 
-	// debug function (nicely outputs variables)
+	/**
+	 * Debug helper function
+	 *
+	 * @param        $var
+	 * @param int    $continue
+	 * @param string $element
+	 * @param string $extra
+	 */
 	public function dbg($var, $continue = 0, $element = "pre", $extra = "") {
 	  echo "<" . $element . ">";
 	  echo "Vartype: " . gettype($var) . "\n";
@@ -60,14 +102,35 @@ class AC_Connector {
 		if (!$continue) exit();
 	}
 
+	/**
+	 * Set curl timeout
+	 *
+	 * @param $seconds
+	 */
 	public function set_curl_timeout($seconds) {
 		$this->timeout = $seconds;
 	}
 
+	/**
+	 * Get curl timeout
+	 *
+	 * @return int
+	 */
 	public function get_curl_timeout() {
 		return $this->timeout;
 	}
 
+	/**
+	 * Make the curl request
+	 *
+	 * @param        $url
+	 * @param array  $params_data
+	 * @param string $verb
+	 * @param string $custom_method
+	 *
+	 * @return mixed
+	 * @throws \RequestException
+	 */
 	public function curl($url, $params_data = array(), $verb = "", $custom_method = "") {
 		if ($this->version == 1) {
 			// find the method from the URL.
@@ -82,12 +145,17 @@ class AC_Connector {
 			$method = $custom_method;
 			$url .= "?api_key=" . $this->api_key;
 		}
+
 		$debug_str1 = "";
+
 		$request = curl_init();
+
 		$debug_str1 .= "\$ch = curl_init();\n";
+
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($request, CURLOPT_TIMEOUT, $this->timeout);
+
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->timeout . ");\n";
@@ -109,20 +177,26 @@ class AC_Connector {
 				$verb = "GET";
 			}
 		}
+
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_URL, \"" . $url . "\");\n";
+
 		if ($this->debug) {
 			$this->dbg($url, 1, "pre", "Description: Request URL");
 		}
+
 		if ($verb == "POST" || $verb == "PUT" || $verb == "DELETE") {
 			if ($verb == "PUT") {
 				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "PUT");
+
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"PUT\");\n";
 			} elseif ($verb == "DELETE") {
 				curl_setopt($request, CURLOPT_CUSTOMREQUEST, "DELETE");
+
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CUSTOMREQUEST, \"DELETE\");\n";
 			} else {
 				$verb = "POST";
 				curl_setopt($request, CURLOPT_POST, 1);
+
 				$debug_str1 .= "curl_setopt(\$ch, CURLOPT_POST, 1);\n";
 			}
 			$data = "";
@@ -172,44 +246,68 @@ class AC_Connector {
 			}
 
 			$data = rtrim($data, "& ");
+
 			curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:"));
+
 			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HTTPHEADER, array(\"Expect:\"));\n";
+
 			if ($this->debug) {
 				curl_setopt($request, CURLINFO_HEADER_OUT, 1);
+
 				$debug_str1 .= "curl_setopt(\$ch, CURLINFO_HEADER_OUT, 1);\n";
+
 				$this->dbg($data, 1, "pre", "Description: POST data");
 			}
+
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
+
 			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_POSTFIELDS, \"" . $data . "\");\n";
 		}
+
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
+
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYPEER, false);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
+
 		$response = curl_exec($request);
+
 		$curl_error = curl_error($request);
+		
 		if (!$response && $curl_error) {
 			return $curl_error;
 		}
+
 		$debug_str1 .= "curl_exec(\$ch);\n";
+
 		if ($this->debug) {
 			$this->dbg($response, 1, "pre", "Description: Raw response");
 		}
+
 		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
 		if (!preg_match("/^[2-3][0-9]{2}/", $http_code)) {
 			// If not 200 or 300 range HTTP code, return custom error.
 			return "HTTP code $http_code returned";
 		}
+
 		$debug_str1 .= "\$http_code = curl_getinfo(\$ch, CURLINFO_HTTP_CODE);\n";
+
 		if ($this->debug) {
 			$this->dbg($http_code, 1, "pre", "Description: Response HTTP code");
+
 			$request_headers = curl_getinfo($request, CURLINFO_HEADER_OUT);
+
 			$debug_str1 .= "\$request_headers = curl_getinfo(\$ch, CURLINFO_HEADER_OUT);\n";
+
 			$this->dbg($request_headers, 1, "pre", "Description: Request headers");
 		}
+
 		curl_close($request);
+
 		$debug_str1 .= "curl_close(\$ch);\n";
+
 		$object = json_decode($response);
+
 		if ($this->debug) {
 			$this->dbg($object, 1, "pre", "Description: Response object (json_decode)");
 		}
@@ -220,9 +318,7 @@ class AC_Connector {
 				return $response;
 			}
 
-			$requestException = new RequestException;
-			$requestException->setFailedMessage($response);
-			throw $requestException;
+			$this->throwRequestException($response);
 		}
 
 		if ($this->debug) {
@@ -233,18 +329,33 @@ class AC_Connector {
 
 		if (isset($object->result_code)) {
 			$object->success = $object->result_code;
+
 			if (!(int)$object->result_code) {
 				$object->error = $object->result_message;
 			}
-		}
-		elseif (isset($object->succeeded)) {
+		} elseif (isset($object->succeeded)) {
 			// some calls return "succeeded" only
 			$object->success = $object->succeeded;
+
 			if (!(int)$object->succeeded) {
 				$object->error = $object->message;
 			}
 		}
+
 		return $object;
 	}
 
+	/**
+	 * Throw the request exception
+	 *
+	 * @param $message
+	 *
+	 * @throws \RequestException
+	 */
+	protected function throwRequestException($message) {
+		$requestException = new RequestException;
+		$requestException->setFailedMessage($message);
+
+		throw $requestException;
+	}
 }
