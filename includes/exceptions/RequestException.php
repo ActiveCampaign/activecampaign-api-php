@@ -1,7 +1,11 @@
 <?php
 
 class RequestException extends \Exception {
-	
+	/**
+	 * The message returned by the failed request
+	 *
+	 * @var string
+	 */
 	private $failedRequestMessage;
 
 	/**
