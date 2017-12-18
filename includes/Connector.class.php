@@ -305,10 +305,22 @@ class AC_Connector {
 
 		$response = curl_exec($request);
 
-		$curl_error = curl_error($request);
-		
-		if (!$response && $curl_error) {
-			return $curl_error;
+		// if there's a curl error code
+		if (curl_errno($response)) {
+			// respond to that code
+			if ((string)curl_errno($response) === '28') {
+				// timeout
+				throw new RequestTimeoutException(curl_error($response));
+			}
+
+			$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
+			if (preg_match("/^4.*/", $http_code)) {
+				// 4** status code
+				throw new RequestInvalidException(curl_error($response), $http_code);
+			} elseif (preg_match("/^5.*/", $http_code)) {
+				// 5** status code
+				throw new RequestErrorException(curl_error($response), $http_code);
+			}
 		}
 
 		$debug_str1 .= "curl_exec(\$ch);\n";
