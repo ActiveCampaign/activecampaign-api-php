@@ -1,6 +1,9 @@
 <?php
 
 require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
+require_once(dirname(__FILE__) . "/exceptions/RequestTimeoutException.php");
+require_once(dirname(__FILE__) . "/exceptions/RequestInvalidException.php");
+require_once(dirname(__FILE__) . "/exceptions/RequestErrorException.php");
 
 /**
  * Class AC_Connector
