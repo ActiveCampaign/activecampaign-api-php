@@ -11,9 +11,14 @@ require_once(dirname(__FILE__) . "/exceptions/RequestErrorException.php");
 class AC_Connector {
 
 	/**
-	 * Default curl timeout
+	 * Default curl transfer timeout
 	 */
 	const DEFAULT_TIMEOUT = 30;
+
+	/**
+	 * Default curl connection timeout
+	 */
+	const DEFAULT_CONNECTTIMEOUT = 10;
 
 	/**
 	 * @var string
@@ -29,6 +34,11 @@ class AC_Connector {
 	 * @var string
 	 */
 	public $output = "json";
+
+	/**
+	 * @var int
+	 */
+	private $connect_timeout = self::DEFAULT_CONNECTTIMEOUT;
 
 	/**
 	 * @var int
@@ -124,6 +134,24 @@ class AC_Connector {
 	}
 
 	/**
+	 * Set curl connect timeout
+	 *
+	 * @param $seconds
+	 */
+	public function set_curl_connect_timeout($seconds) {
+		$this->connect_timeout = $seconds;
+	}
+
+	/**
+	 * Get curl connect timeout
+	 *
+	 * @return int
+	 */
+	public function get_curl_connect_timeout() {
+		return $this->connect_timeout;
+	}
+
+	/**
 	 * Make the curl request
 	 *
 	 * @param        $url
@@ -157,11 +185,13 @@ class AC_Connector {
 
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($request, CURLOPT_TIMEOUT, $this->timeout);
+		curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->get_curl_connect_timeout());
+		curl_setopt($request, CURLOPT_TIMEOUT, $this->get_curl_timeout());
 
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->timeout . ");\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CONNECTTIMEOUT, " . $this->get_curl_connect_timeout() . ");\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->get_curl_timeout() . ");\n";
 
 		if ($params_data && $verb == "GET") {
 			if ($this->version == 2) {
