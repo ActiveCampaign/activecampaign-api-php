@@ -104,7 +104,7 @@ class AC_Connector {
 	  if ( is_array($var) ) echo "Elements: " . count($var) . "\n";
 	  elseif ( is_string($var) ) echo "Length: " . strlen($var) . "\n";
 	  if ($extra) {
-	  	echo $extra . "\n";
+		echo $extra . "\n";
 	  }
 	  echo "\n";
 	  print_r($var);
@@ -302,23 +302,9 @@ class AC_Connector {
 
 		$response = curl_exec($request);
 
-		// if there's a curl error code
-		if (curl_errno($response)) {
-			// respond to that code
-			if ((string)curl_errno($response) === '28') {
-				// timeout
-				throw new RequestTimeoutException(curl_error($response));
-			}
+		$this->checkForRequestErrors($request, $response);
 
-			$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
-			if (preg_match("/^4.*/", $http_code)) {
-				// 4** status code
-				throw new RequestInvalidException(curl_error($response), $http_code);
-			} elseif (preg_match("/^5.*/", $http_code)) {
-				// 5** status code
-				throw new RequestErrorException(curl_error($response), $http_code);
-			}
-		}
+		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
 
 		curl_close($request);
 
@@ -375,5 +361,21 @@ class AC_Connector {
 		$requestException->setFailedMessage($message);
 
 		throw $requestException;
+	}
+
+	protected function checkForRequestErrors($request, $response) {
+		// if curl timed out
+		if (curl_errno($request) && (string)curl_errno($request) === '28') {
+			throw new RequestTimeoutException(curl_error($request));
+		}
+
+		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
+		if (preg_match("/^4.*/", $http_code)) {
+			// 4** status code
+			throw new RequestInvalidException($response, $http_code);
+		} elseif (preg_match("/^5.*/", $http_code)) {
+			// 5** status code
+			throw new RequestErrorException($response, $http_code);
+		}
 	}
 }
