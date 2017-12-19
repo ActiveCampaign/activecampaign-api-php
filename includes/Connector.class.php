@@ -11,12 +11,12 @@ require_once(dirname(__FILE__) . "/exceptions/ServerException.php");
 class AC_Connector {
 
 	/**
-	 * Default curl transfer timeout
+	 * Default curl timeout after connection established (waiting for the response)
 	 */
 	const DEFAULT_TIMEOUT = 30;
 
 	/**
-	 * Default curl connection timeout
+	 * Default curl timeout before connection established (waiting for a server connection)
 	 */
 	const DEFAULT_CONNECTTIMEOUT = 10;
 
@@ -363,10 +363,22 @@ class AC_Connector {
 		throw $requestException;
 	}
 
+	/**
+	 * Checks the cURL request for errors and throws exceptions appropriately
+	 *
+	 * @param $request
+	 * @param $response string The response from the request
+	 * @throws RequestException
+	 * @throws ClientException
+	 * @throws ServerException
+	 * @throws TimeoutException
+	 */
 	protected function checkForRequestErrors($request, $response) {
 		// if curl timed out
 		if (curl_errno($request) && (string)curl_errno($request) === '28') {
 			throw new TimeoutException(curl_error($request));
+		} elseif (curl_error($request)) {
+			$this->throwRequestException(curl_error($request));
 		}
 
 		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
