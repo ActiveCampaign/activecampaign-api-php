@@ -23,5 +23,4 @@ class AC_Segment extends ActiveCampaign
         $response = $this->curl($request_url, $params, "GET", "segment_list");
         return $response;
     }
-
 }

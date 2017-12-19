@@ -22,5 +22,4 @@ class AC_Settings extends ActiveCampaign
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
-
 }

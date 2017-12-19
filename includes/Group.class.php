@@ -57,5 +57,4 @@ class AC_Group extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }

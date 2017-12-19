@@ -98,5 +98,4 @@ class AC_List_ extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }

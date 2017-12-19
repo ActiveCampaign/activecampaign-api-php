@@ -72,5 +72,4 @@ class AC_User extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }

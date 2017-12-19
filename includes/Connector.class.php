@@ -196,7 +196,6 @@ class AC_Connector
             if (is_array($params_data)) {
                 foreach ($params_data as $key => $value) {
                     if (is_array($value)) {
-
                         if (is_int($key)) {
                             // array two levels deep
                             foreach ($value as $key_ => $value_) {
@@ -227,7 +226,6 @@ class AC_Connector
                                 }
                             }
                         }
-
                     } else {
                         $data .= "{$key}=" . urlencode($value) . "&";
                     }

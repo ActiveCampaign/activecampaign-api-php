@@ -26,7 +26,9 @@ class AC_Automation extends ActiveCampaign
     function contact_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=automation_contact_add&api_output={$this->output}";
-        if ($params) $request_url .= "&{$params}";
+        if ($params) {
+            $request_url .= "&{$params}";
+        }
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
@@ -34,7 +36,9 @@ class AC_Automation extends ActiveCampaign
     function contact_remove($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=automation_contact_remove&api_output={$this->output}";
-        if ($params) $request_url .= "&{$params}";
+        if ($params) {
+            $request_url .= "&{$params}";
+        }
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
@@ -52,5 +56,4 @@ class AC_Automation extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }

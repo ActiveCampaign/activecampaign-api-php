@@ -70,7 +70,9 @@ class AC_Webhook extends ActiveCampaign
         // process an incoming webhook payload (from ActiveCampaign), and format it (or do something with it)
 
         $r = array();
-        if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            return $r;
+        }
 
         $params_array = explode("&", $params);
         $params_ = array();
@@ -86,7 +88,5 @@ class AC_Webhook extends ActiveCampaign
         if ($format == "json") {
             return json_encode($_POST);
         }
-
     }
-
 }

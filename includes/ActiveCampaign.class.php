@@ -138,7 +138,9 @@ class ActiveCampaign extends AC_Connector
         // IE: new Contact();
 
         $add_tracking = false;
-        if ($class == "AC_Tracking") $add_tracking = true;
+        if ($class == "AC_Tracking") {
+            $add_tracking = true;
+        }
         if ($class == "AC_Tags") {
             $class = "AC_Tag";
         }

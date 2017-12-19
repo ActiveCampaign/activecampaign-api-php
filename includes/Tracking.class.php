@@ -122,5 +122,4 @@ class AC_Tracking extends ActiveCampaign
         $response = $this->curl($request_url, $post_data, "POST", "tracking_log");
         return $response;
     }
-
 }

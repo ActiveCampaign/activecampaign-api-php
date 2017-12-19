@@ -53,7 +53,6 @@ class AC_Form extends ActiveCampaign
         }
 
         if ($html) {
-
             if ($action) {
                 if ($action != "this") {
                     // replace the action attribute with the one provided
@@ -84,7 +83,6 @@ class AC_Form extends ActiveCampaign
                     $html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
                 }
             } else {
-
                 // if using Ajax, remove the <form> action attribute completely
                 $html = preg_replace("/action=['\"][^'\"]+['\"]/", "", $html);
 
@@ -141,7 +139,6 @@ var \$j = jQuery.noConflict();
 
                 $html = $html . $extra;
             }
-
         }
 
         return $html;
@@ -150,7 +147,9 @@ var \$j = jQuery.noConflict();
     function process($params)
     {
         $r = array();
-        if ($_SERVER["REQUEST_METHOD"] != "POST") return $r;
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            return $r;
+        }
 
         $sync = 0;
         $captcha_in_form = 0;
@@ -197,8 +196,12 @@ var \$j = jQuery.noConflict();
         } elseif (isset($_POST["firstname"]) && isset($_POST["lastname"])) {
             $firstname = trim($_POST["firstname"]);
             $lastname = trim($_POST["lastname"]);
-            if ($firstname == "" && isset($_POST["first_name"])) $firstname = trim($_POST["first_name"]);
-            if ($lastname == "" && isset($_POST["last_name"])) $lastname = trim($_POST["last_name"]);
+            if ($firstname == "" && isset($_POST["first_name"])) {
+                $firstname = trim($_POST["first_name"]);
+            }
+            if ($lastname == "" && isset($_POST["last_name"])) {
+                $lastname = trim($_POST["last_name"]);
+            }
         }
 
         $fields = (isset($_POST["field"])) ? $_POST["field"] : array();
@@ -229,7 +232,6 @@ var \$j = jQuery.noConflict();
             $contact_exists = $this->api("contact/view?email={$email}", $contact);
 
             if (!isset($contact_exists->id)) {
-
                 // contact does not exist - add them
 
                 $contact_request = $this->api("contact/add", $contact);
@@ -249,7 +251,6 @@ var \$j = jQuery.noConflict();
                         "message" => $contact_request->error,
                     );
                 }
-
             } else {
                 // contact already exists - edit them
 
@@ -258,13 +259,11 @@ var \$j = jQuery.noConflict();
                 $contact["id"] = $contact_id;
 
                 $contact_request = $this->api("contact/edit?overwrite=0", $contact);
-
             }
         } else {
             // perform sync (add or edit)
 
             $contact_request = $this->api("contact/sync", $contact);
-
         }
 
         if ((int)$contact_request->success) {
@@ -285,5 +284,4 @@ var \$j = jQuery.noConflict();
 
         return json_encode($r);
     }
-
 }

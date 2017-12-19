@@ -113,5 +113,4 @@ class AC_Message extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }

@@ -19,7 +19,9 @@ class AC_Contact extends ActiveCampaign
     function add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_add&api_output={$this->output}";
-        if ($params) $request_url .= "&{$params}";
+        if ($params) {
+            $request_url .= "&{$params}";
+        }
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
@@ -96,7 +98,9 @@ class AC_Contact extends ActiveCampaign
     function sync($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_sync&api_output={$this->output}";
-        if ($params) $request_url .= "&{$params}";
+        if ($params) {
+            $request_url .= "&{$params}";
+        }
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
@@ -104,7 +108,9 @@ class AC_Contact extends ActiveCampaign
     function tag_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_tag_add&api_output={$this->output}";
-        if ($params) $request_url .= "&{$params}";
+        if ($params) {
+            $request_url .= "&{$params}";
+        }
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
@@ -112,7 +118,9 @@ class AC_Contact extends ActiveCampaign
     function tag_remove($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_tag_remove&api_output={$this->output}";
-        if ($params) $request_url .= "&{$params}";
+        if ($params) {
+            $request_url .= "&{$params}";
+        }
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
@@ -134,5 +142,4 @@ class AC_Contact extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }

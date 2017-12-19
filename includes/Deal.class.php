@@ -155,5 +155,4 @@ class AC_Deal extends ActiveCampaign
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
-
 }

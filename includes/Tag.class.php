@@ -22,5 +22,4 @@ class AC_Tag extends ActiveCampaign
         $response = $this->curl($request_url);
         return $response;
     }
-
 }
