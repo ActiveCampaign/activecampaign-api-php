@@ -1,5 +1,5 @@
 <?php
 
-
-class ServerException extends RequestException {
+class ServerException extends RequestException
+{
 }
