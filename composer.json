@@ -20,5 +20,12 @@
 			"includes/"
 		]
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "stable",
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.2"
+	},
+	"scripts": {
+		"lint": "./vendor/bin/phpcs ./includes --standard=PSR2",
+		"autoformat": "./vendor/bin/phpcbf ./includes --standard=PSR2"
+	}
 }
