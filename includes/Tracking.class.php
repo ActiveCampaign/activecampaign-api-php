@@ -8,7 +8,7 @@ class AC_Tracking extends ActiveCampaign
     public $url;
     public $api_key;
 
-    function __construct($version, $url_base, $url, $api_key)
+    public function __construct($version, $url_base, $url, $api_key)
     {
         $this->version = $version;
         $this->url_base = $url_base;
@@ -19,7 +19,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Update the status (enabled or disabled) for site tracking.
      */
-    function site_status($params, $post_data)
+    public function site_status($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/site";
@@ -30,7 +30,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Update the status (enabled or disabled) for event tracking.
      */
-    function event_status($params, $post_data)
+    public function event_status($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/event";
@@ -41,7 +41,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Returns existing whitelisted domains.
      */
-    function site_list($params)
+    public function site_list($params)
     {
         if ($this->version == 1) {
             // not supported currently.
@@ -56,7 +56,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Returns existing tracked events.
      */
-    function event_list($params)
+    public function event_list($params)
     {
         if ($this->version == 1) {
             // not supported currently.
@@ -71,7 +71,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Adds a domain to the site tracking whitelist.
      */
-    function whitelist($params, $post_data)
+    public function whitelist($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/site";
@@ -82,7 +82,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Removes a domain from the site tracking whitelist.
      */
-    function whitelist_remove($params, $post_data)
+    public function whitelist_remove($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/site";
@@ -93,7 +93,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Removes an event.
      */
-    function event_remove($params, $post_data)
+    public function event_remove($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/event";
@@ -104,7 +104,7 @@ class AC_Tracking extends ActiveCampaign
     /*
      * Adds a new event.
      */
-    function log($params, $post_data)
+    public function log($params, $post_data)
     {
         $request_url = "https://trackcmp.net/event";
         $post_data["actid"] = $this->track_actid;

@@ -60,7 +60,7 @@ class ActiveCampaign extends AC_Connector
      * @param string $api_user
      * @param string $api_pass
      */
-    function __construct($url, $api_key, $api_user = "", $api_pass = "")
+    public function __construct($url, $api_key, $api_user = "", $api_pass = "")
     {
         $this->url_base = $this->url = $url;
         $this->api_key = $api_key;
@@ -72,7 +72,7 @@ class ActiveCampaign extends AC_Connector
      *
      * @param $version
      */
-    function version($version)
+    public function version($version)
     {
         $this->version = (int)$version;
         if ($version == 2) {
@@ -88,7 +88,7 @@ class ActiveCampaign extends AC_Connector
      *
      * @return mixed
      */
-    function api($path, $post_data = array())
+    public function api($path, $post_data = array())
     {
         // IE: "contact/view"
         $components = explode("/", $path);

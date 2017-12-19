@@ -8,7 +8,7 @@ class AC_Contact extends ActiveCampaign
     public $url;
     public $api_key;
 
-    function __construct($version, $url_base, $url, $api_key)
+    public function __construct($version, $url_base, $url, $api_key)
     {
         $this->version = $version;
         $this->url_base = $url_base;
@@ -16,7 +16,7 @@ class AC_Contact extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
-    function add($params, $post_data)
+    public function add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_add&api_output={$this->output}";
         if ($params) {
@@ -26,35 +26,35 @@ class AC_Contact extends ActiveCampaign
         return $response;
     }
 
-    function automation_list($params)
+    public function automation_list($params)
     {
         $request_url = "{$this->url}&api_action=contact_automation_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function delete_list($params)
+    public function delete_list($params)
     {
         $request_url = "{$this->url}&api_action=contact_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function delete($params)
+    public function delete($params)
     {
         $request_url = "{$this->url}&api_action=contact_delete&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function edit($params, $post_data)
+    public function edit($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_edit&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    function list_($params)
+    public function list_($params)
     {
         if ($this->version == 1) {
             $request_url = "{$this->url}&api_action=contact_list&api_output={$this->output}&{$params}";
@@ -67,35 +67,35 @@ class AC_Contact extends ActiveCampaign
         return $response;
     }
 
-    function note_add($params, $post_data)
+    public function note_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_note_add&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    function note_edit($params, $post_data)
+    public function note_edit($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_note_edit&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    function note_delete($params)
+    public function note_delete($params)
     {
         $request_url = "{$this->url}&api_action=contact_note_delete&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function paginator($params)
+    public function paginator($params)
     {
         $request_url = "{$this->url}&api_action=contact_paginator&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function sync($params, $post_data)
+    public function sync($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_sync&api_output={$this->output}";
         if ($params) {
@@ -105,7 +105,7 @@ class AC_Contact extends ActiveCampaign
         return $response;
     }
 
-    function tag_add($params, $post_data)
+    public function tag_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_tag_add&api_output={$this->output}";
         if ($params) {
@@ -115,7 +115,7 @@ class AC_Contact extends ActiveCampaign
         return $response;
     }
 
-    function tag_remove($params, $post_data)
+    public function tag_remove($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_tag_remove&api_output={$this->output}";
         if ($params) {
@@ -125,7 +125,7 @@ class AC_Contact extends ActiveCampaign
         return $response;
     }
 
-    function view($params)
+    public function view($params)
     {
         // can be a contact ID, email, or hash
         if (preg_match("/^email=/", $params)) {

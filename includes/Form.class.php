@@ -8,7 +8,7 @@ class AC_Form extends ActiveCampaign
     public $url;
     public $api_key;
 
-    function __construct($version, $url_base, $url, $api_key)
+    public function __construct($version, $url_base, $url, $api_key)
     {
         $this->version = $version;
         $this->url_base = $url_base;
@@ -16,21 +16,21 @@ class AC_Form extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
-    function getforms($params)
+    public function getforms($params)
     {
         $request_url = "{$this->url}&api_action=form_getforms&api_output={$this->output}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function html($params)
+    public function html($params)
     {
         $request_url = "{$this->url}&api_action=form_html&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    function embed($params)
+    public function embed($params)
     {
         $params_array = explode("&", $params);
         $params_ = array();
@@ -144,7 +144,7 @@ var \$j = jQuery.noConflict();
         return $html;
     }
 
-    function process($params)
+    public function process($params)
     {
         $r = array();
         if ($_SERVER["REQUEST_METHOD"] != "POST") {

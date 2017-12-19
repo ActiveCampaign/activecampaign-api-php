@@ -8,7 +8,7 @@ class AC_Segment extends ActiveCampaign
     public $url;
     public $api_key;
 
-    function __construct($version, $url_base, $url, $api_key)
+    public function __construct($version, $url_base, $url, $api_key)
     {
         $this->version = $version;
         $this->url_base = $url_base;
@@ -16,7 +16,7 @@ class AC_Segment extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
-    function list_($params)
+    public function list_($params)
     {
         // version 2 only
         $request_url = "{$this->url_base}/segment/list";
