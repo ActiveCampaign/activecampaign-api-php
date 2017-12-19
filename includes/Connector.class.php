@@ -1,9 +1,9 @@
 <?php
 
 require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
-require_once(dirname(__FILE__) . "/exceptions/RequestTimeoutException.php");
-require_once(dirname(__FILE__) . "/exceptions/RequestInvalidException.php");
-require_once(dirname(__FILE__) . "/exceptions/RequestErrorException.php");
+require_once(dirname(__FILE__) . "/exceptions/TimeoutException.php");
+require_once(dirname(__FILE__) . "/exceptions/ClientException.php");
+require_once(dirname(__FILE__) . "/exceptions/ServerException.php");
 
 /**
  * Class AC_Connector
@@ -366,16 +366,16 @@ class AC_Connector {
 	protected function checkForRequestErrors($request, $response) {
 		// if curl timed out
 		if (curl_errno($request) && (string)curl_errno($request) === '28') {
-			throw new RequestTimeoutException(curl_error($request));
+			throw new TimeoutException(curl_error($request));
 		}
 
 		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
 		if (preg_match("/^4.*/", $http_code)) {
 			// 4** status code
-			throw new RequestInvalidException($response, $http_code);
+			throw new ClientException($response, $http_code);
 		} elseif (preg_match("/^5.*/", $http_code)) {
 			// 5** status code
-			throw new RequestErrorException($response, $http_code);
+			throw new ServerException($response, $http_code);
 		}
 	}
 }
