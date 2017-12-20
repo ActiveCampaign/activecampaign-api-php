@@ -43,7 +43,9 @@ require "vendor/autoload.php";
 Next, create a class instance of `ActiveCampaign`:
 
 ```php
-$ac = new ActiveCampaign\Api\ActiveCampaign("API_URL", "API_KEY");
+use ActiveCampaign\Api\ActiveCampaign;
+
+$ac = new ActiveCampaign("API_URL", "API_KEY");
 ```
 
 That's it!
@@ -62,34 +64,14 @@ Then create a class instance of `ActiveCampaign`:
 $ac = new ActiveCampaign\Api\ActiveCampaign("API_URL", "API_KEY");
 ```
 
-
-### includes/config.php
-
-```php
-define("ACTIVECAMPAIGN_URL", "API_URL");
-define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
-```
-
 ### examples.php
 
 ```php
-$ac = new ActiveCampaign("ACTIVECAMPAIGN_URL", "ACTIVECAMPAIGN_API_KEY");
+use ActiveCampaign\Api\ActiveCampaign;
+
+$ac = new ActiveCampaign("API_URL", "API_KEY");
 
 // Adjust the default cURL timeout (defaults to 30 seconds)
-$ac->set_curl_timeout(10);
-
-$account = $ac->api("account/view");
-```
-
-Or just include everything in the same PHP file:
-
-```php
-define("ACTIVECAMPAIGN_URL", "API_URL");
-define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
-require_once("includes/ActiveCampaign.class.php");
-$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
-
-// Adjust the default cURL timeout
 $ac->set_curl_timeout(10);
 
 $account = $ac->api("account/view");

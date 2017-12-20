@@ -1,9 +1,5 @@
 <?php
 
-if (!defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !defined("ACTIVECAMPAIGN_API_USER") && !defined("ACTIVECAMPAIGN_API_PASS"))) {
-    require_once(dirname(__FILE__) . "/config.php");
-}
-
 require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
 require_once(dirname(__FILE__) . "/exceptions/TimeoutException.php");
 require_once(dirname(__FILE__) . "/exceptions/ClientException.php");
