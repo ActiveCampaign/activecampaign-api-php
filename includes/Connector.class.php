@@ -1,6 +1,9 @@
 <?php
 
 require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
+require_once(dirname(__FILE__) . "/exceptions/TimeoutException.php");
+require_once(dirname(__FILE__) . "/exceptions/ClientException.php");
+require_once(dirname(__FILE__) . "/exceptions/ServerException.php");
 
 /**
  * Class AC_Connector
@@ -8,9 +11,14 @@ require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
 class AC_Connector {
 
 	/**
-	 * Default curl timeout
+	 * Default curl timeout after connection established (waiting for the response)
 	 */
 	const DEFAULT_TIMEOUT = 30;
+
+	/**
+	 * Default curl timeout before connection established (waiting for a server connection)
+	 */
+	const DEFAULT_CONNECTTIMEOUT = 10;
 
 	/**
 	 * @var string
@@ -26,6 +34,11 @@ class AC_Connector {
 	 * @var string
 	 */
 	public $output = "json";
+
+	/**
+	 * @var int
+	 */
+	private $connect_timeout = self::DEFAULT_CONNECTTIMEOUT;
 
 	/**
 	 * @var int
@@ -68,13 +81,10 @@ class AC_Connector {
 	 */
 	public function credentials_test() {
 		$test_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
-		$r = $this->curl($test_url);
-		if (is_object($r) && (int)$r->result_code) {
-			// successful
-			$r = true;
-		} else {
-			// failed - log it
-			$this->curl_response_error = $r;
+		$r = true;
+		try {
+			$this->curl($test_url);
+		} catch (\Exception $e) {
 			$r = false;
 		}
 		return $r;
@@ -94,7 +104,7 @@ class AC_Connector {
 	  if ( is_array($var) ) echo "Elements: " . count($var) . "\n";
 	  elseif ( is_string($var) ) echo "Length: " . strlen($var) . "\n";
 	  if ($extra) {
-	  	echo $extra . "\n";
+		echo $extra . "\n";
 	  }
 	  echo "\n";
 	  print_r($var);
@@ -118,6 +128,24 @@ class AC_Connector {
 	 */
 	public function get_curl_timeout() {
 		return $this->timeout;
+	}
+
+	/**
+	 * Set curl connect timeout
+	 *
+	 * @param $seconds
+	 */
+	public function set_curl_connect_timeout($seconds) {
+		$this->connect_timeout = $seconds;
+	}
+
+	/**
+	 * Get curl connect timeout
+	 *
+	 * @return int
+	 */
+	public function get_curl_connect_timeout() {
+		return $this->connect_timeout;
 	}
 
 	/**
@@ -154,11 +182,13 @@ class AC_Connector {
 
 		curl_setopt($request, CURLOPT_HEADER, 0);
 		curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($request, CURLOPT_TIMEOUT, $this->timeout);
+		curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->get_curl_connect_timeout());
+		curl_setopt($request, CURLOPT_TIMEOUT, $this->get_curl_timeout());
 
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_HEADER, 0);\n";
 		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_RETURNTRANSFER, true);\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->timeout . ");\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_CONNECTTIMEOUT, " . $this->get_curl_connect_timeout() . ");\n";
+		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_TIMEOUT, " . $this->get_curl_timeout() . ");\n";
 
 		if ($params_data && $verb == "GET") {
 			if ($this->version == 2) {
@@ -272,35 +302,9 @@ class AC_Connector {
 
 		$response = curl_exec($request);
 
-		$curl_error = curl_error($request);
-		
-		if (!$response && $curl_error) {
-			return $curl_error;
-		}
+		$this->checkForRequestErrors($request, $response);
 
-		$debug_str1 .= "curl_exec(\$ch);\n";
-
-		if ($this->debug) {
-			$this->dbg($response, 1, "pre", "Description: Raw response");
-		}
-
-		$http_code = curl_getinfo($request, CURLINFO_HTTP_CODE);
-		if (!preg_match("/^[2-3][0-9]{2}/", $http_code)) {
-			// If not 200 or 300 range HTTP code, return custom error.
-			return "HTTP code $http_code returned";
-		}
-
-		$debug_str1 .= "\$http_code = curl_getinfo(\$ch, CURLINFO_HTTP_CODE);\n";
-
-		if ($this->debug) {
-			$this->dbg($http_code, 1, "pre", "Description: Response HTTP code");
-
-			$request_headers = curl_getinfo($request, CURLINFO_HEADER_OUT);
-
-			$debug_str1 .= "\$request_headers = curl_getinfo(\$ch, CURLINFO_HEADER_OUT);\n";
-
-			$this->dbg($request_headers, 1, "pre", "Description: Request headers");
-		}
+		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
 
 		curl_close($request);
 
@@ -357,5 +361,39 @@ class AC_Connector {
 		$requestException->setFailedMessage($message);
 
 		throw $requestException;
+	}
+
+	/**
+	 * Checks the cURL request for errors and throws exceptions appropriately
+	 *
+	 * @param $request
+	 * @param $response string The response from the request
+	 * @throws RequestException
+	 * @throws ClientException
+	 * @throws ServerException
+	 * @throws TimeoutException
+	 */
+	protected function checkForRequestErrors($request, $response) {
+		// if curl has an error number
+		if (curl_errno($request)) {
+			switch (curl_errno($request)) {
+				// curl timeout error
+				case CURLE_OPERATION_TIMEDOUT:
+					throw new TimeoutException(curl_error($request));
+					break;
+				default:
+					$this->throwRequestException(curl_error($request));
+					break;
+			}
+		}
+
+		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
+		if (preg_match("/^4.*/", $http_code)) {
+			// 4** status code
+			throw new ClientException($response, $http_code);
+		} elseif (preg_match("/^5.*/", $http_code)) {
+			// 5** status code
+			throw new ServerException($response, $http_code);
+		}
 	}
 }
