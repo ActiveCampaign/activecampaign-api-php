@@ -2,11 +2,6 @@
 
 namespace ActiveCampaign\Api;
 
-require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
-require_once(dirname(__FILE__) . "/exceptions/TimeoutException.php");
-require_once(dirname(__FILE__) . "/exceptions/ClientException.php");
-require_once(dirname(__FILE__) . "/exceptions/ServerException.php");
-
 use ActiveCampaign\Api\Exceptions\RequestException;
 use ActiveCampaign\Api\Exceptions\TimeoutException;
 use ActiveCampaign\Api\Exceptions\ClientException;

@@ -36,47 +36,70 @@ You should then see the `activecampaign` folder inside `vendor`.
 
 In your script just include the `autoload.php` file to load all classes:
 
-`require "vendor/autoload.php";`
+```php
+require "vendor/autoload.php";
+```
 
 Next, create a class instance of `ActiveCampaign`:
 
-`$ac = new ActiveCampaign("API_URL", "API_KEY");`
+```php
+$ac = new ActiveCampaign\Api\ActiveCampaign("API_URL", "API_KEY");
+```
 
 That's it!
 
+### Without Composer
+
+First require the file `includes/ImportActiveCampaign.php` to load all the classes needed:
+
+```php
+require "path\to\activecampaign\includes\ImportActiveCampaign.php
+```
+
+Then create a class instance of `ActiveCampaign`:
+
+```php
+$ac = new ActiveCampaign\Api\ActiveCampaign("API_URL", "API_KEY");
+```
+
+
 ### includes/config.php
 
-	define("ACTIVECAMPAIGN_URL", "API_URL");
-	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+```php
+define("ACTIVECAMPAIGN_URL", "API_URL");
+define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+```
 
 ### examples.php
 
-	require_once("includes/ActiveCampaign.class.php");
+```php
+$ac = new ActiveCampaign("ACTIVECAMPAIGN_URL", "ACTIVECAMPAIGN_API_KEY");
 
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+// Adjust the default cURL timeout (defaults to 30 seconds)
+$ac->set_curl_timeout(10);
 
-	// Adjust the default cURL timeout
-	$ac->set_curl_timeout(10);
-
-	$account = $ac->api("account/view");
+$account = $ac->api("account/view");
+```
 
 Or just include everything in the same PHP file:
 
-	define("ACTIVECAMPAIGN_URL", "API_URL");
-	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
-	require_once("includes/ActiveCampaign.class.php");
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+```php
+define("ACTIVECAMPAIGN_URL", "API_URL");
+define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+require_once("includes/ActiveCampaign.class.php");
+$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-	// Adjust the default cURL timeout
-	$ac->set_curl_timeout(10);
+// Adjust the default cURL timeout
+$ac->set_curl_timeout(10);
 
-	$account = $ac->api("account/view");
+$account = $ac->api("account/view");
+```
 
 See our [examples file](examples.php) for more in-depth samples.
 
 ## Full Documentation
 
-[Click here to view our full API documentation.](http://activecampaign.com/api)
+[Click here to view our full API documentation.](https://www.activecampaign.com/api/overview.php)
 
 ## Reporting Issues
 
