@@ -18,7 +18,10 @@
 	"autoload": {
 		"classmap": [
 			"includes/"
-		]
+		],
+		"PSR-4": {
+			"ActiveCampaign\\Api\\": "includes/"
+		}
 	},
 	"minimum-stability": "stable",
 	"require-dev": {

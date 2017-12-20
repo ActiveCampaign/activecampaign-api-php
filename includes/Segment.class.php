@@ -1,5 +1,7 @@
 <?php
 
+namespace ActiveCampaign\Api;
+
 class Segment extends ActiveCampaign
 {
 

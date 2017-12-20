@@ -1,5 +1,7 @@
 <?php
 
+namespace ActiveCampaign\Api;
+
 class Settings extends ActiveCampaign
 {
 

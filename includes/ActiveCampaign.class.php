@@ -1,5 +1,7 @@
 <?php
 
+namespace ActiveCampaign\Api;
+
 if (!defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !defined("ACTIVECAMPAIGN_API_USER") && !defined("ACTIVECAMPAIGN_API_PASS"))) {
     require_once(dirname(__FILE__) . "/config.php");
 }
