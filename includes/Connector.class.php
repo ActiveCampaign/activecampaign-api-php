@@ -374,11 +374,17 @@ class AC_Connector {
 	 * @throws TimeoutException
 	 */
 	protected function checkForRequestErrors($request, $response) {
-		// if curl timed out
-		if (curl_errno($request) && (string)curl_errno($request) === '28') {
-			throw new TimeoutException(curl_error($request));
-		} elseif (curl_error($request)) {
-			$this->throwRequestException(curl_error($request));
+		// if curl has an error number
+		if (curl_errno($request)) {
+			switch (curl_errno($request)) {
+				// curl timeout error
+				case CURLE_OPERATION_TIMEDOUT:
+					throw new TimeoutException(curl_error($request));
+					break;
+				default:
+					$this->throwRequestException(curl_error($request));
+					break;
+			}
 		}
 
 		$http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
