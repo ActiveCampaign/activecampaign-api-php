@@ -56,7 +56,7 @@ class Connector
      * @param string $api_user
      * @param string $api_pass
      */
-    function __construct($url, $api_key, $api_user = "", $api_pass = "")
+    public function __construct($url, $api_key, $api_user = "", $api_pass = "")
     {
         // $api_pass should be md5() already
         $base = "";
