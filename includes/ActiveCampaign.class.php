@@ -9,7 +9,7 @@ require_once("Connector.class.php");
 /**
  * Class ActiveCampaign
  */
-class ActiveCampaign extends AC_Connector
+class ActiveCampaign extends Connector
 {
 
     /**

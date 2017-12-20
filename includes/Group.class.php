@@ -1,6 +1,6 @@
 <?php
 
-class AC_Group extends ActiveCampaign
+class Group extends ActiveCampaign
 {
 
     public $version;

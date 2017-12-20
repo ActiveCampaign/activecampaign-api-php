@@ -1,6 +1,6 @@
 <?php
 
-class AC_Automation extends ActiveCampaign
+class Automation extends ActiveCampaign
 {
 
     public $version;

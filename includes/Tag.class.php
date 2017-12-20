@@ -1,6 +1,6 @@
 <?php
 
-class AC_Tag extends ActiveCampaign
+class Tag extends ActiveCampaign
 {
 
     public $version;

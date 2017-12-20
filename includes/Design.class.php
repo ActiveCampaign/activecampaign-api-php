@@ -1,6 +1,6 @@
 <?php
 
-class AC_Design extends ActiveCampaign
+class Design extends ActiveCampaign
 {
 
     public $version;

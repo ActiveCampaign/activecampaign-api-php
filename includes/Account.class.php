@@ -1,6 +1,6 @@
 <?php
 
-class AC_Account extends ActiveCampaign
+class Account extends ActiveCampaign
 {
 
     public $version;

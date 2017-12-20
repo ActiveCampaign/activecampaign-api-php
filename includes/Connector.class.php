@@ -8,7 +8,7 @@ require_once(dirname(__FILE__) . "/exceptions/ServerException.php");
 /**
  * Class AC_Connector
  */
-class AC_Connector
+class Connector
 {
 
     /**
