@@ -166,4 +166,4 @@ $ac->api("list/field/view?ids=all");
 $ac->api("list/field/edit", array(/*POST params here.*/));
 </pre>
 
-<a href="http://www.activecampaign.com/api">View more API examples!</a>
+<a href="https://www.activecampaign.com/api/overview.php">View more API examples!</a>
