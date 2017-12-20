@@ -2,6 +2,6 @@
 
 namespace ActiveCampaign\Api;
 
-class Subscriber extends AC_Contact
+class Subscriber extends Contact
 {
 }
