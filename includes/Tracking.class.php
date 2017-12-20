@@ -58,12 +58,7 @@ class AC_Tracking extends ActiveCampaign
      */
     public function event_list($params)
     {
-        if ($this->version == 1) {
-            // not supported currently.
-            //$request_url = "{$this->url}&api_action=contact_delete_list&api_output={$this->output}&{$params}";
-        } elseif ($this->version == 2) {
-            $request_url = "{$this->url_base}/track/event";
-        }
+        $request_url = "{$this->url_base}/track/event";
         $response = $this->curl($request_url, array(), "GET", "tracking_event_list");
         return $response;
     }
