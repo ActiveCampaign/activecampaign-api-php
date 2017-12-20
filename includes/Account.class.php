@@ -23,7 +23,7 @@ class AC_Account extends ActiveCampaign
         return $response;
     }
 
-    public public function cancel($params)
+    public function cancel($params)
     {
         $request_url = "{$this->url}&api_action=account_cancel&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
