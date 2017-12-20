@@ -134,15 +134,14 @@ class ActiveCampaign extends Connector
         }
 
         $class = ucwords($component); // IE: "contact" becomes "Contact"
-        $class = "AC_" . $class;
         // IE: new Contact();
 
         $add_tracking = false;
-        if ($class == "AC_Tracking") {
+        if ($class == "Tracking") {
             $add_tracking = true;
         }
-        if ($class == "AC_Tags") {
-            $class = "AC_Tag";
+        if ($class == "Tags") {
+            $class = "Tag";
         }
 
         $class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
