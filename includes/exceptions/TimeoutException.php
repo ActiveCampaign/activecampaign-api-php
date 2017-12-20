@@ -1,5 +1,5 @@
 <?php
 
-
-class TimeoutException extends RequestException {
+class TimeoutException extends RequestException
+{
 }

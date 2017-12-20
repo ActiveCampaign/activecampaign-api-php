@@ -20,5 +20,12 @@
 			"includes/"
 		]
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "stable",
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.2"
+	},
+	"scripts": {
+		"lint": "./vendor/bin/phpcs -p -s --standard=PSR2 --exclude=PSR1.Methods.CamelCapsMethodName,Squiz.Classes.ValidClassName ./includes",
+		"autoformat": "./vendor/bin/phpcbf -p -s --standard=PSR2 ./includes"
+	}
 }
