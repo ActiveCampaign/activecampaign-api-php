@@ -25,7 +25,7 @@ class Automation extends ActiveCampaign
         return $response;
     }
 
-    public function contact_add($params, $post_data)
+    public function contactAdd($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=automation_contact_add&api_output={$this->output}";
         if ($params) {
@@ -35,7 +35,7 @@ class Automation extends ActiveCampaign
         return $response;
     }
 
-    public function contact_remove($params, $post_data)
+    public function contactRemove($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=automation_contact_remove&api_output={$this->output}";
         if ($params) {
@@ -45,14 +45,14 @@ class Automation extends ActiveCampaign
         return $response;
     }
 
-    public function contact_list($params)
+    public function contactList($params)
     {
         $request_url = "{$this->url}&api_action=automation_contact_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function contact_view($params)
+    public function contactView($params)
     {
         $request_url = "{$this->url}&api_action=automation_contact_view&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);

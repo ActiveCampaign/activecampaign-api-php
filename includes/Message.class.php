@@ -25,7 +25,7 @@ class Message extends ActiveCampaign
         return $response;
     }
 
-    public function delete_list($params)
+    public function deleteList($params)
     {
         $request_url = "{$this->url}&api_action=message_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -53,56 +53,56 @@ class Message extends ActiveCampaign
         return $response;
     }
 
-    public function template_add($params, $post_data)
+    public function templateAdd($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=message_template_add&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function template_delete_list($params)
+    public function templateDeleteList($params)
     {
         $request_url = "{$this->url}&api_action=message_template_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function template_delete($params)
+    public function templateDelete($params)
     {
         $request_url = "{$this->url}&api_action=message_template_delete&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function template_edit($params, $post_data)
+    public function templateEdit($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=message_template_edit&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function template_export($params)
+    public function templateExport($params)
     {
         $request_url = "{$this->url}&api_action=message_template_export&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function template_import($params, $post_data)
+    public function templateImport($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=message_template_import&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function template_list($params)
+    public function templateList($params)
     {
         $request_url = "{$this->url}&api_action=message_template_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function template_view($params)
+    public function templateView($params)
     {
         $request_url = "{$this->url}&api_action=message_template_view&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);

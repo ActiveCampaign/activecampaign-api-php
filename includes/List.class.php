@@ -25,7 +25,7 @@ class List_ extends ActiveCampaign
         return $response;
     }
 
-    public function delete_list($params)
+    public function deleteList($params)
     {
         $request_url = "{$this->url}&api_action=list_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -46,28 +46,28 @@ class List_ extends ActiveCampaign
         return $response;
     }
 
-    public function field_add($params, $post_data)
+    public function fieldAdd($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=list_field_add&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function field_delete($params)
+    public function fieldDelete($params)
     {
         $request_url = "{$this->url}&api_action=list_field_delete&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function field_edit($params, $post_data)
+    public function fieldEdit($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=list_field_edit&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function field_view($params)
+    public function fieldView($params)
     {
         $request_url = "{$this->url}&api_action=list_field_view&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);

@@ -32,7 +32,7 @@ class Webhook extends ActiveCampaign
         return $response;
     }
 
-    public function delete_list($params)
+    public function deleteList($params)
     {
         $request_url = "{$this->url}&api_action=webhook_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);

@@ -25,7 +25,7 @@ class Campaign extends ActiveCampaign
         return $response;
     }
 
-    public function delete_list($params)
+    public function deleteList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -53,84 +53,84 @@ class Campaign extends ActiveCampaign
         return $response;
     }
 
-    public function report_bounce_list($params)
+    public function reportBounceList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_bounce_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_bounce_totals($params)
+    public function reportBounceTotals($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_bounce_totals&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_forward_list($params)
+    public function reportForwardList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_forward_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_forward_totals($params)
+    public function reportForwardTotals($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_forward_totals&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_link_list($params)
+    public function reportLinkList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_link_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_link_totals($params)
+    public function reportLinkTotals($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_link_totals&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_open_list($params)
+    public function reportOpenList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_open_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_open_totals($params)
+    public function reportOpenTotals($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_open_totals&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_totals($params)
+    public function reportTotals($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_totals&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_unopen_list($params)
+    public function reportUnopenList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_unopen_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_unsubscription_list($params)
+    public function reportUnsubscriptionList($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_unsubscription_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function report_unsubscription_totals($params)
+    public function reportUnsubscriptionTotals($params)
     {
         $request_url = "{$this->url}&api_action=campaign_report_unsubscription_totals&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
