@@ -56,8 +56,10 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
+    // phpcs:disable
     public function list_($params)
     {
+        // phpcs:enable
         if ($this->version == 1) {
             $request_url = "{$this->url}&api_action=contact_list&api_output={$this->output}&{$params}";
             $response = $this->curl($request_url);

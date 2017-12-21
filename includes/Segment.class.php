@@ -18,8 +18,10 @@ class Segment extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
+    // phpcs:disable
     public function list_($params)
     {
+        // phpcs:enable
         // version 2 only
         $request_url = "{$this->url_base}/segment/list";
         $response = $this->curl($request_url, $params, "GET", "segment_list");
