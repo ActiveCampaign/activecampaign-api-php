@@ -82,14 +82,15 @@ class Connector
      * @param $arguments array  The array of arguments passed in on that call
      * @throws MissingMethodException
      */
-    public function __call($name, $args) {
+    public function __call($name, $args)
+    {
         // ie, a method like 'list_'
         $appendUnderscore = (substr($name, -1) === "_");
 
         // we want the name of the method called by the user, but they don't pass in an underscore when
         // calling the api, so let's trim it off for clarity
         // 'list_' -> 'list'
-        $originalName = $appendUnderscore ? substr_replace($name ,"",-1) : $name;
+        $originalName = $appendUnderscore ? substr_replace($name, "", -1) : $name;
 
         // 'contact_list' -> ['contact', 'list']
         // 'list_' -> ['list']
