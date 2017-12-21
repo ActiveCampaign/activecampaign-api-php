@@ -1,6 +1,6 @@
 <?php
 
-namespace ActiveCampaign\Api;
+namespace ActiveCampaign\Api\V1;
 
 class Group extends ActiveCampaign
 {

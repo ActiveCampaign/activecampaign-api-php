@@ -20,7 +20,7 @@
 			"includes/"
 		],
 		"PSR-4": {
-			"ActiveCampaign\\Api\\": "includes/"
+			"ActiveCampaign\\Api\\V1\\": "includes/"
 		}
 	},
 	"minimum-stability": "stable",

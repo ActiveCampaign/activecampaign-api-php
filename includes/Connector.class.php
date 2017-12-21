@@ -1,11 +1,11 @@
 <?php
 
-namespace ActiveCampaign\Api;
+namespace ActiveCampaign\Api\V1;
 
-use ActiveCampaign\Api\Exceptions\RequestException;
-use ActiveCampaign\Api\Exceptions\TimeoutException;
-use ActiveCampaign\Api\Exceptions\ClientException;
-use ActiveCampaign\Api\Exceptions\ServerException;
+use ActiveCampaign\Api\V1\Exceptions\RequestException;
+use ActiveCampaign\Api\V1\Exceptions\TimeoutException;
+use ActiveCampaign\Api\V1\Exceptions\ClientException;
+use ActiveCampaign\Api\V1\Exceptions\ServerException;
 
 /**
  * Class AC_Connector

@@ -43,31 +43,17 @@ require "vendor/autoload.php";
 Next, create a class instance of `ActiveCampaign`:
 
 ```php
-use ActiveCampaign\Api\ActiveCampaign;
+use ActiveCampaign\Api\V1\ActiveCampaign;
 
 $ac = new ActiveCampaign("API_URL", "API_KEY");
 ```
 
 That's it!
 
-### Without Composer
-
-First require the file `includes/ImportActiveCampaign.php` to load all the classes needed:
+### Full Example
 
 ```php
-require "path\to\activecampaign\includes\ImportActiveCampaign.php
-```
-
-Then create a class instance of `ActiveCampaign`:
-
-```php
-$ac = new ActiveCampaign\Api\ActiveCampaign("API_URL", "API_KEY");
-```
-
-### examples.php
-
-```php
-use ActiveCampaign\Api\ActiveCampaign;
+use ActiveCampaign\Api\V1\ActiveCampaign;
 
 $ac = new ActiveCampaign("API_URL", "API_KEY");
 
@@ -76,8 +62,6 @@ $ac->set_curl_timeout(10);
 
 $account = $ac->api("account/view");
 ```
-
-See our [examples file](examples.php) for more in-depth samples.
 
 ## Full Documentation
 

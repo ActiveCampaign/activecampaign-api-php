@@ -1,6 +1,6 @@
 <?php
 
-namespace ActiveCampaign\Api\Exceptions;
+namespace ActiveCampaign\Api\V1\Exceptions;
 
 class ServerException extends RequestException
 {
