@@ -16,9 +16,6 @@
 		"ext-curl": "*"
 	},
 	"autoload": {
-		"classmap": [
-			"includes/"
-		],
 		"PSR-4": {
 			"ActiveCampaign\\Api\\V1\\": "includes/"
 		}
