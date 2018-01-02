@@ -21,7 +21,7 @@ class Tracking extends ActiveCampaign
     /*
      * Update the status (enabled or disabled) for site tracking.
      */
-    public function siteStatus($params, $post_data)
+    public function site_status($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/site";
@@ -32,7 +32,7 @@ class Tracking extends ActiveCampaign
     /*
      * Update the status (enabled or disabled) for event tracking.
      */
-    public function eventStatus($params, $post_data)
+    public function event_status($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/event";
@@ -43,7 +43,7 @@ class Tracking extends ActiveCampaign
     /*
      * Returns existing whitelisted domains.
      */
-    public function siteList($params)
+    public function site_list($params)
     {
         if ($this->version == 1) {
             // not supported currently.
@@ -58,7 +58,7 @@ class Tracking extends ActiveCampaign
     /*
      * Returns existing tracked events.
      */
-    public function eventList($params)
+    public function event_list($params)
     {
         $request_url = "{$this->url_base}/track/event";
         $response = $this->curl($request_url, array(), "GET", "tracking_event_list");
@@ -79,7 +79,7 @@ class Tracking extends ActiveCampaign
     /*
      * Removes a domain from the site tracking whitelist.
      */
-    public function whitelistRemove($params, $post_data)
+    public function whitelist_remove($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/site";
@@ -90,7 +90,7 @@ class Tracking extends ActiveCampaign
     /*
      * Removes an event.
      */
-    public function eventRemove($params, $post_data)
+    public function event_remove($params, $post_data)
     {
         // version 2 only.
         $request_url = "{$this->url_base}/track/event";

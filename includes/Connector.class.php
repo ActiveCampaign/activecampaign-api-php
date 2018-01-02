@@ -80,9 +80,9 @@ class Connector
      * Test the api credentials
      *
      * @return bool|mixed
-     * @throws RequestException
+     * @throws \RequestException
      */
-    public function credentialsTest()
+    public function credentials_test()
     {
         $test_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
         $r = true;
@@ -99,7 +99,7 @@ class Connector
      *
      * @param $seconds
      */
-    public function setCurlTimeout($seconds)
+    public function set_curl_timeout($seconds)
     {
         $this->timeout = $seconds;
     }
@@ -109,7 +109,7 @@ class Connector
      *
      * @return int
      */
-    public function getCurlTimeout()
+    public function get_curl_timeout()
     {
         return $this->timeout;
     }
@@ -119,7 +119,7 @@ class Connector
      *
      * @param $seconds
      */
-    public function setCurlConnectTimeout($seconds)
+    public function set_curl_connect_timeout($seconds)
     {
         $this->connect_timeout = $seconds;
     }
@@ -129,7 +129,7 @@ class Connector
      *
      * @return int
      */
-    public function getCurlConnectTimeout()
+    public function get_curl_connect_timeout()
     {
         return $this->connect_timeout;
     }
@@ -143,10 +143,7 @@ class Connector
      * @param string $custom_method
      *
      * @return mixed
-     * @throws RequestException
-     * @throws ClientException
-     * @throws ServerException
-     * @throws TimeoutException
+     * @throws \RequestException
      */
     public function curl($url, $params_data = array(), $verb = "", $custom_method = "")
     {
@@ -168,8 +165,8 @@ class Connector
 
         curl_setopt($request, CURLOPT_HEADER, 0);
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->getCurlConnectTimeout());
-        curl_setopt($request, CURLOPT_TIMEOUT, $this->getCurlTimeout());
+        curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->get_curl_connect_timeout());
+        curl_setopt($request, CURLOPT_TIMEOUT, $this->get_curl_timeout());
 
         if ($params_data && $verb == "GET") {
             if ($this->version == 2) {
@@ -296,7 +293,7 @@ class Connector
      *
      * @param $message
      *
-     * @throws RequestException
+     * @throws \RequestException
      */
     protected function throwRequestException($message)
     {

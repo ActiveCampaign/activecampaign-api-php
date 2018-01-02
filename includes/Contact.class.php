@@ -28,14 +28,14 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
-    public function automationList($params)
+    public function automation_list($params)
     {
         $request_url = "{$this->url}&api_action=contact_automation_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function deleteList($params)
+    public function delete_list($params)
     {
         $request_url = "{$this->url}&api_action=contact_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -71,21 +71,21 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
-    public function noteAdd($params, $post_data)
+    public function note_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_note_add&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function noteEdit($params, $post_data)
+    public function note_edit($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_note_edit&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function noteDelete($params)
+    public function note_delete($params)
     {
         $request_url = "{$this->url}&api_action=contact_note_delete&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -109,7 +109,7 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
-    public function tagAdd($params, $post_data)
+    public function tag_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_tag_add&api_output={$this->output}";
         if ($params) {
@@ -119,7 +119,7 @@ class Contact extends ActiveCampaign
         return $response;
     }
 
-    public function tagRemove($params, $post_data)
+    public function tag_remove($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=contact_tag_remove&api_output={$this->output}";
         if ($params) {

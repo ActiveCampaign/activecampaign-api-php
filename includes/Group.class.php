@@ -25,7 +25,7 @@ class Group extends ActiveCampaign
         return $response;
     }
 
-    public function deleteList($params)
+    public function delete_list($params)
     {
         $request_url = "{$this->url}&api_action=group_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);

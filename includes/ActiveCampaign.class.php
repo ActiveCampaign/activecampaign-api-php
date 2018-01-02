@@ -140,12 +140,10 @@ class ActiveCampaign extends Connector
             $class = "Tag";
         }
 
-        $class = "ActiveCampaign\\Api\\V1\\" . $class;
-
         $class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
 
-        $class->setCurlTimeout($this->getCurlTimeout());
-        $class->setCurlConnectTimeout($this->getCurlConnectTimeout());
+        $class->set_curl_timeout($this->get_curl_timeout());
+        $class->set_curl_connect_timeout($this->get_curl_connect_timeout());
 
         if ($add_tracking) {
             $class->track_email = $this->track_email;

@@ -48,7 +48,7 @@ class Account extends ActiveCampaign
         return $response;
     }
 
-    public function nameCheck($params)
+    public function name_check($params)
     {
         $request_url = "{$this->url}&api_action=account_name_check&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -69,7 +69,7 @@ class Account extends ActiveCampaign
         return $response;
     }
 
-    public function statusSet($params)
+    public function status_set($params)
     {
         $request_url = "{$this->url}&api_action=account_status_set&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
