@@ -19,7 +19,7 @@
 		"classmap": [
 			"includes/"
 		],
-		"PSR-4": {
+		"psr-4": {
 			"ActiveCampaign\\Api\\V1\\": "includes/"
 		}
 	},
