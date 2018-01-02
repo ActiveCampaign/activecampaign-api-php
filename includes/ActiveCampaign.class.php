@@ -1,6 +1,7 @@
 <?php
 
 namespace ActiveCampaign\Api\V1;
+use ActiveCampaign\Api\V1\Exceptions\InvalidArgumentException;
 
 /**
  * Class ActiveCampaign
@@ -143,7 +144,7 @@ class ActiveCampaign extends Connector
         // add the FQCN
         $class = "\\ActiveCampaign\\Api\\V1\\" . $class;
         if (! class_exists($class)) {
-            // throw exception
+            throw new InvalidArgumentException("The class $class does not exist. This class was called from the path $path.");
         }
 
         $class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
