@@ -18,10 +18,8 @@ class Organization extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
-    // phpcs:disable
     public function list_($params, $post_data)
     {
-        // phpcs:enable
         $request_url = "{$this->url}&api_action=organization_list&api_output={$this->output}";
         $response = $this->curl($request_url);
         return $response;

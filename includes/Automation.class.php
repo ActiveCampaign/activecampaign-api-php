@@ -18,10 +18,8 @@ class Automation extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
-    // phpcs:disable
     public function list_($params)
     {
-        // phpcs:enable
         $request_url = "{$this->url}&api_action=automation_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;

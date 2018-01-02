@@ -74,10 +74,8 @@ class List_ extends ActiveCampaign
         return $response;
     }
 
-    // phpcs:disable
-    public function list_($params)
+    public function list_($params, $post_data)
     {
-        // phpcs:enable
         if ($post_data) {
             if (isset($post_data["ids"]) && is_array($post_data["ids"])) {
                 // make them comma-separated.
