@@ -25,7 +25,7 @@ class List_ extends ActiveCampaign
         return $response;
     }
 
-    public function deleteList($params)
+    public function delete_list($params)
     {
         $request_url = "{$this->url}&api_action=list_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -46,38 +46,36 @@ class List_ extends ActiveCampaign
         return $response;
     }
 
-    public function fieldAdd($params, $post_data)
+    public function field_add($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=list_field_add&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function fieldDelete($params)
+    public function field_delete($params)
     {
         $request_url = "{$this->url}&api_action=list_field_delete&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    public function fieldEdit($params, $post_data)
+    public function field_edit($params, $post_data)
     {
         $request_url = "{$this->url}&api_action=list_field_edit&api_output={$this->output}";
         $response = $this->curl($request_url, $post_data);
         return $response;
     }
 
-    public function fieldView($params)
+    public function field_view($params)
     {
         $request_url = "{$this->url}&api_action=list_field_view&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
     }
 
-    // phpcs:disable
-    public function list_($params)
+    public function list_($params, $post_data)
     {
-        // phpcs:enable
         if ($post_data) {
             if (isset($post_data["ids"]) && is_array($post_data["ids"])) {
                 // make them comma-separated.

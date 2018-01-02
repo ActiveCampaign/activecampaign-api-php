@@ -6,7 +6,6 @@ use ActiveCampaign\Api\V1\Exceptions\RequestException;
 use ActiveCampaign\Api\V1\Exceptions\TimeoutException;
 use ActiveCampaign\Api\V1\Exceptions\ClientException;
 use ActiveCampaign\Api\V1\Exceptions\ServerException;
-use ActiveCampaign\Api\V1\Exceptions\MissingMethodException;
 
 /**
  * Class AC_Connector
@@ -78,62 +77,12 @@ class Connector
     }
 
     /**
-     * @param $name      string The name of the method called on the class in ActiveCampaign->api
-     * @param $arguments array  The array of arguments passed in on that call
-     * @throws MissingMethodException
-     */
-    public function __call($name, $args)
-    {
-        // ie, a method like 'list_'
-        $appendUnderscore = (substr($name, -1) === "_");
-
-        // we want the name of the method called by the user, but they don't pass in an underscore when
-        // calling the api, so let's trim it off for clarity
-        // 'list_' -> 'list'
-        $originalName = $appendUnderscore ? substr_replace($name, "", -1) : $name;
-
-        // 'contact_list' -> ['contact', 'list']
-        // 'list_' -> ['list']
-        $newName = explode('_', $name);
-
-        // ['contact', 'list'] -> ['contact', 'List']
-        // ['list'] -> ['list']
-        for ($i = 0; $i < count($newName); $i++) {
-            // skip the first word in the array
-            if ($i !== 0) {
-                $newName[$i] = ucfirst($newName[$i]);
-            }
-        }
-
-        // ['contact', 'List'] -> 'contactList'
-        // ['list'] -> 'list'
-        $newName = implode('', $newName);
-
-        // 'list' -> 'list_'
-        if ($appendUnderscore) {
-            $newName .= "_";
-        }
-
-        // check if the method name we've created, ie, 'contactList', exists on the class
-        if (!method_exists($this, $newName)) {
-            $className = get_class($this);
-            $error = "The method $originalName does not exist on the class $className";
-            throw new MissingMethodException($error);
-        }
-
-        // call our new method name on the class, taking the arguments array
-        // and applying each entry in the array to an argument in the method
-        // $this->$newName($args[0], $args[1], $args[2]);
-        call_user_func_array(array($this, $newName), $args);
-    }
-
-    /**
      * Test the api credentials
      *
      * @return bool|mixed
-     * @throws RequestException
+     * @throws \RequestException
      */
-    public function credentialsTest()
+    public function credentials_test()
     {
         $test_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
         $r = true;
@@ -150,7 +99,7 @@ class Connector
      *
      * @param $seconds
      */
-    public function setCurlTimeout($seconds)
+    public function set_curl_timeout($seconds)
     {
         $this->timeout = $seconds;
     }
@@ -160,7 +109,7 @@ class Connector
      *
      * @return int
      */
-    public function getCurlTimeout()
+    public function get_curl_timeout()
     {
         return $this->timeout;
     }
@@ -170,7 +119,7 @@ class Connector
      *
      * @param $seconds
      */
-    public function setCurlConnectTimeout($seconds)
+    public function set_curl_connect_timeout($seconds)
     {
         $this->connect_timeout = $seconds;
     }
@@ -180,7 +129,7 @@ class Connector
      *
      * @return int
      */
-    public function getCurlConnectTimeout()
+    public function get_curl_connect_timeout()
     {
         return $this->connect_timeout;
     }
@@ -194,10 +143,7 @@ class Connector
      * @param string $custom_method
      *
      * @return mixed
-     * @throws RequestException
-     * @throws ClientException
-     * @throws ServerException
-     * @throws TimeoutException
+     * @throws \RequestException
      */
     public function curl($url, $params_data = array(), $verb = "", $custom_method = "")
     {
@@ -219,8 +165,8 @@ class Connector
 
         curl_setopt($request, CURLOPT_HEADER, 0);
         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->getCurlConnectTimeout());
-        curl_setopt($request, CURLOPT_TIMEOUT, $this->getCurlTimeout());
+        curl_setopt($request, CURLOPT_CONNECTTIMEOUT, $this->get_curl_connect_timeout());
+        curl_setopt($request, CURLOPT_TIMEOUT, $this->get_curl_timeout());
 
         if ($params_data && $verb == "GET") {
             if ($this->version == 2) {
@@ -347,7 +293,7 @@ class Connector
      *
      * @param $message
      *
-     * @throws RequestException
+     * @throws \RequestException
      */
     protected function throwRequestException($message)
     {

@@ -18,10 +18,8 @@ class Tag extends ActiveCampaign
         $this->api_key = $api_key;
     }
 
-    // phpcs:disable
     public function list_($params)
     {
-        // phpcs:enable
         $request_url = "{$this->url}&api_action=tags_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;

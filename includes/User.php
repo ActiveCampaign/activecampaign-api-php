@@ -25,7 +25,7 @@ class User extends ActiveCampaign
         return $response;
     }
 
-    public function deleteList($params)
+    public function delete_list($params)
     {
         $request_url = "{$this->url}&api_action=user_delete_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
@@ -46,10 +46,8 @@ class User extends ActiveCampaign
         return $response;
     }
 
-    // phpcs:disable
     public function list_($params)
     {
-        // phpcs:enable
         $request_url = "{$this->url}&api_action=user_list&api_output={$this->output}&{$params}";
         $response = $this->curl($request_url);
         return $response;
