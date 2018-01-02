@@ -129,8 +129,8 @@ class ActiveCampaign extends Connector
             $component = "auth";
         }
 
-        $class = ucwords($component); // IE: "contact" becomes "Contact"
-        // IE: new Contact();
+        // "contact" becomes "Contact"
+        $class = ucwords($component);
 
         $add_tracking = false;
         if ($class == "Tracking") {
@@ -138,6 +138,12 @@ class ActiveCampaign extends Connector
         }
         if ($class == "Tags") {
             $class = "Tag";
+        }
+
+        // add the FQCN
+        $class = "\\ActiveCampaign\\Api\\V1\\" . $class;
+        if (! class_exists($class)) {
+            // throw exception
         }
 
         $class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
