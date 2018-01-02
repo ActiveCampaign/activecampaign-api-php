@@ -6,7 +6,6 @@ use ActiveCampaign\Api\V1\Exceptions\RequestException;
 use ActiveCampaign\Api\V1\Exceptions\TimeoutException;
 use ActiveCampaign\Api\V1\Exceptions\ClientException;
 use ActiveCampaign\Api\V1\Exceptions\ServerException;
-use ActiveCampaign\Api\V1\Exceptions\MissingMethodException;
 
 /**
  * Class AC_Connector
@@ -75,56 +74,6 @@ class Connector
             $this->url = "{$url}{$base}/api.php?api_user={$api_user}&api_pass={$api_pass}";
         }
         $this->api_key = $api_key;
-    }
-
-    /**
-     * @param $name      string The name of the method called on the class in ActiveCampaign->api
-     * @param $arguments array  The array of arguments passed in on that call
-     * @throws MissingMethodException
-     */
-    public function __call($name, $args)
-    {
-        // ie, a method like 'list_'
-        $appendUnderscore = (substr($name, -1) === "_");
-
-        // we want the name of the method called by the user, but they don't pass in an underscore when
-        // calling the api, so let's trim it off for clarity
-        // 'list_' -> 'list'
-        $originalName = $appendUnderscore ? substr_replace($name, "", -1) : $name;
-
-        // 'contact_list' -> ['contact', 'list']
-        // 'list_' -> ['list']
-        $newName = explode('_', $name);
-
-        // ['contact', 'list'] -> ['contact', 'List']
-        // ['list'] -> ['list']
-        for ($i = 0; $i < count($newName); $i++) {
-            // skip the first word in the array
-            if ($i !== 0) {
-                $newName[$i] = ucfirst($newName[$i]);
-            }
-        }
-
-        // ['contact', 'List'] -> 'contactList'
-        // ['list'] -> 'list'
-        $newName = implode('', $newName);
-
-        // 'list' -> 'list_'
-        if ($appendUnderscore) {
-            $newName .= "_";
-        }
-
-        // check if the method name we've created, ie, 'contactList', exists on the class
-        if (!method_exists($this, $newName)) {
-            $className = get_class($this);
-            $error = "The method $originalName does not exist on the class $className";
-            throw new MissingMethodException($error);
-        }
-
-        // call our new method name on the class, taking the arguments array
-        // and applying each entry in the array to an argument in the method
-        // $this->$newName($args[0], $args[1], $args[2]);
-        call_user_func_array(array($this, $newName), $args);
     }
 
     /**
