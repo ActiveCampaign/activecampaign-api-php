@@ -1,6 +1,8 @@
 <?php
 
-class AC_Webhook extends ActiveCampaign
+namespace ActiveCampaign\Api\V1;
+
+class Webhook extends ActiveCampaign
 {
 
     public $version;

@@ -1,5 +1,7 @@
 <?php
 
+namespace ActiveCampaign\Api\V1\Exceptions;
+
 class RequestException extends \Exception
 {
     /**

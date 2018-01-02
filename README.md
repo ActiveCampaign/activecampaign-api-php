@@ -36,47 +36,36 @@ You should then see the `activecampaign` folder inside `vendor`.
 
 In your script just include the `autoload.php` file to load all classes:
 
-`require "vendor/autoload.php";`
+```php
+require "vendor/autoload.php";
+```
 
 Next, create a class instance of `ActiveCampaign`:
 
-`$ac = new ActiveCampaign("API_URL", "API_KEY");`
+```php
+use ActiveCampaign\Api\V1\ActiveCampaign;
+
+$ac = new ActiveCampaign("API_URL", "API_KEY");
+```
 
 That's it!
 
-### includes/config.php
+### Full Example
 
-	define("ACTIVECAMPAIGN_URL", "API_URL");
-	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+```php
+use ActiveCampaign\Api\V1\ActiveCampaign;
 
-### examples.php
+$ac = new ActiveCampaign("API_URL", "API_KEY");
 
-	require_once("includes/ActiveCampaign.class.php");
+// Adjust the default cURL timeout (defaults to 30 seconds)
+$ac->set_curl_timeout(10);
 
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
-
-	// Adjust the default cURL timeout
-	$ac->set_curl_timeout(10);
-
-	$account = $ac->api("account/view");
-
-Or just include everything in the same PHP file:
-
-	define("ACTIVECAMPAIGN_URL", "API_URL");
-	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
-	require_once("includes/ActiveCampaign.class.php");
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
-
-	// Adjust the default cURL timeout
-	$ac->set_curl_timeout(10);
-
-	$account = $ac->api("account/view");
-
-See our [examples file](examples.php) for more in-depth samples.
+$account = $ac->api("account/view");
+```
 
 ## Full Documentation
 
-[Click here to view our full API documentation.](http://activecampaign.com/api)
+[Click here to view our full API documentation.](https://www.activecampaign.com/api/overview.php)
 
 ## Reporting Issues
 

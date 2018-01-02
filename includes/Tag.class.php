@@ -1,6 +1,8 @@
 <?php
 
-class AC_Tag extends ActiveCampaign
+namespace ActiveCampaign\Api\V1;
+
+class Tag extends ActiveCampaign
 {
 
     public $version;

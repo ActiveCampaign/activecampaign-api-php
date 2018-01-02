@@ -1,6 +1,8 @@
 <?php
 
-class AC_Tracking extends ActiveCampaign
+namespace ActiveCampaign\Api\V1;
+
+class Tracking extends ActiveCampaign
 {
 
     public $version;

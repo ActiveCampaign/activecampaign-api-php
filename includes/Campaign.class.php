@@ -1,6 +1,8 @@
 <?php
 
-class AC_Campaign extends ActiveCampaign
+namespace ActiveCampaign\Api\V1;
+
+class Campaign extends ActiveCampaign
 {
 
     public $version;

@@ -1,6 +1,8 @@
 <?php
 
-class AC_Settings extends ActiveCampaign
+namespace ActiveCampaign\Api\V1;
+
+class Settings extends ActiveCampaign
 {
 
     public $version;

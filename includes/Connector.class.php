@@ -1,14 +1,16 @@
 <?php
 
-require_once(dirname(__FILE__) . "/exceptions/RequestException.php");
-require_once(dirname(__FILE__) . "/exceptions/TimeoutException.php");
-require_once(dirname(__FILE__) . "/exceptions/ClientException.php");
-require_once(dirname(__FILE__) . "/exceptions/ServerException.php");
+namespace ActiveCampaign\Api\V1;
+
+use ActiveCampaign\Api\V1\Exceptions\RequestException;
+use ActiveCampaign\Api\V1\Exceptions\TimeoutException;
+use ActiveCampaign\Api\V1\Exceptions\ClientException;
+use ActiveCampaign\Api\V1\Exceptions\ServerException;
 
 /**
  * Class AC_Connector
  */
-class AC_Connector
+class Connector
 {
 
     /**
@@ -54,7 +56,7 @@ class AC_Connector
      * @param string $api_user
      * @param string $api_pass
      */
-    function __construct($url, $api_key, $api_user = "", $api_pass = "")
+    public function __construct($url, $api_key, $api_user = "", $api_pass = "")
     {
         // $api_pass should be md5() already
         $base = "";

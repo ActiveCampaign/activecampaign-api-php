@@ -1,15 +1,12 @@
 <?php
 
-if (!defined("ACTIVECAMPAIGN_URL") || (!defined("ACTIVECAMPAIGN_API_KEY") && !defined("ACTIVECAMPAIGN_API_USER") && !defined("ACTIVECAMPAIGN_API_PASS"))) {
-    require_once(dirname(__FILE__) . "/config.php");
-}
-
-require_once("Connector.class.php");
+namespace ActiveCampaign\Api\V1;
+use ActiveCampaign\Api\V1\Exceptions\InvalidArgumentException;
 
 /**
  * Class ActiveCampaign
  */
-class ActiveCampaign extends AC_Connector
+class ActiveCampaign extends Connector
 {
 
     /**
@@ -133,16 +130,21 @@ class ActiveCampaign extends AC_Connector
             $component = "auth";
         }
 
-        $class = ucwords($component); // IE: "contact" becomes "Contact"
-        $class = "AC_" . $class;
-        // IE: new Contact();
+        // "contact" becomes "Contact"
+        $class = ucwords($component);
 
         $add_tracking = false;
-        if ($class == "AC_Tracking") {
+        if ($class == "Tracking") {
             $add_tracking = true;
         }
-        if ($class == "AC_Tags") {
-            $class = "AC_Tag";
+        if ($class == "Tags") {
+            $class = "Tag";
+        }
+
+        // add the FQCN
+        $class = "\\ActiveCampaign\\Api\\V1\\" . $class;
+        if (! class_exists($class)) {
+            throw new InvalidArgumentException("The class $class does not exist. This class was called from the path $path.");
         }
 
         $class = new $class($this->version, $this->url_base, $this->url, $this->api_key);
@@ -165,23 +167,3 @@ class ActiveCampaign extends AC_Connector
         return $response;
     }
 }
-
-require_once("Account.class.php");
-require_once("Auth.class.php");
-require_once("Automation.class.php");
-require_once("Campaign.class.php");
-require_once("Contact.class.php");
-require_once("Deal.class.php");
-require_once("Design.class.php");
-require_once("Form.class.php");
-require_once("Group.class.php");
-require_once("List.class.php");
-require_once("Message.class.php");
-require_once("Organization.class.php");
-require_once("Segment.class.php");
-require_once("Settings.class.php");
-require_once("Subscriber.class.php");
-require_once("Tag.class.php");
-require_once("Tracking.class.php");
-require_once("User.class.php");
-require_once("Webhook.class.php");

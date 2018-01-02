@@ -1,5 +1,7 @@
 <?php
 
-class AC_Subscriber extends AC_Contact
+namespace ActiveCampaign\Api\V1;
+
+class Subscriber extends Contact
 {
 }

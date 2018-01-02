@@ -1,6 +1,8 @@
 <?php
 
-class AC_Segment extends ActiveCampaign
+namespace ActiveCampaign\Api\V1;
+
+class Segment extends ActiveCampaign
 {
 
     public $version;
