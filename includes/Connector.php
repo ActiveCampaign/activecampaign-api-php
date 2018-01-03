@@ -77,21 +77,16 @@ class Connector
     }
 
     /**
-     * Test the api credentials
+     * Test the api credentials. Will throw an exception if credentials are not valid
      *
-     * @return bool|mixed
-     * @throws \RequestException
+     * @return true
+     * @throws RequestException
      */
     public function credentials_test()
     {
         $test_url = "{$this->url}&api_action=user_me&api_output={$this->output}";
-        $r = true;
-        try {
-            $this->curl($test_url);
-        } catch (\Exception $e) {
-            $r = false;
-        }
-        return $r;
+        $this->curl($test_url);
+        return true;
     }
 
     /**
