@@ -9,7 +9,7 @@ class RequestException extends \Exception
      *
      * @var array
      */
-    public $context;
+    private $context;
 
     /**
      * The message returned by the failed request
