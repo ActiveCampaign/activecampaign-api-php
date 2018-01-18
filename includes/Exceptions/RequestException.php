@@ -52,14 +52,12 @@ class RequestException extends \Exception
     /**
      * @param array $context
      *
-     * @return array|null
+     * @return $this
      */
-    public function setContext($context)
+    public function setContext(array $context)
     {
-        if (is_array($context)) {
-            $this->context = $context;
-        }
+        $this->context = $context;
 
-        return $this->context;
+        return $this;
     }
 }
