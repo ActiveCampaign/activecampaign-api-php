@@ -11,7 +11,6 @@ class RequestException extends \Exception
      * Optional context for the exception
      *
      * @var array
-     * @default []
      */
     private $context = array();
 
