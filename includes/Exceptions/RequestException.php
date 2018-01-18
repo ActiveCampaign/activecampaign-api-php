@@ -44,7 +44,8 @@ class RequestException extends \Exception
      *
      * @return array
      */
-    public function getContext() {
+    public function getContext()
+    {
         return $this->context;
     }
 
@@ -53,7 +54,8 @@ class RequestException extends \Exception
      *
      * @return array|null
      */
-    public function setContext($context) {
+    public function setContext($context)
+    {
         if (is_array($context)) {
             $this->context = $context;
         }
