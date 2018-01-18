@@ -296,7 +296,7 @@ class Connector
      */
     protected function throwRequestException($message, $request = null, $data = null)
     {
-        $requestException = new RequestException;
+        $requestException = new RequestException($message);
 
         if ($request) {
             $requestException->setContext(array(
@@ -304,8 +304,6 @@ class Connector
                 "request_body" => json_encode($data)
             ));
         }
-
-        $requestException->setFailedMessage($message);
 
         throw $requestException;
     }
