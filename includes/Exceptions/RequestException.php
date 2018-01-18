@@ -5,6 +5,13 @@ namespace ActiveCampaign\Api\V1\Exceptions;
 class RequestException extends \Exception
 {
     /**
+     * Optional context for the exception
+     *
+     * @var array
+     */
+    private $context;
+
+    /**
      * The message returned by the failed request
      *
      * @var string
@@ -12,7 +19,7 @@ class RequestException extends \Exception
     private $failedRequestMessage;
 
     /**
-     * @param string message    Response error message from the server.
+     * @param string $message Response error message from the server.
      *
      * Set the failure message for this exception.
      */
@@ -30,5 +37,27 @@ class RequestException extends \Exception
     public function getFailedMessage()
     {
         return $this->failedRequestMessage;
+    }
+
+    /**
+     * Gets the context
+     *
+     * @return array
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param array $context
+     *
+     * @return $this
+     */
+    public function setContext(array $context)
+    {
+        $this->context = $context;
+
+        return $this;
     }
 }

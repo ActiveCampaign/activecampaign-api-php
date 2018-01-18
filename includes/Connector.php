@@ -245,7 +245,9 @@ class Connector
 
         $response = curl_exec($request);
 
-        $this->checkForRequestErrors($request, $response);
+        $data = isset($data) ? $data : null;
+
+        $this->checkForRequestErrors($request, $response, $data);
 
         $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
 
@@ -260,7 +262,7 @@ class Connector
                 return $response;
             }
 
-            $this->throwRequestException($response);
+            $this->throwRequestException($response, $request, $data);
         }
 
         $object->http_code = $http_code;
@@ -286,13 +288,23 @@ class Connector
     /**
      * Throw the request exception
      *
-     * @param $message
+     * @param string $message
+     * @param resource $request
+     * @param string $data
      *
-     * @throws \RequestException
+     * @throws RequestException
      */
-    protected function throwRequestException($message)
+    protected function throwRequestException($message, $request = null, $data = null)
     {
         $requestException = new RequestException;
+
+        if ($request) {
+            $requestException->setContext(array(
+                "request_url"  => curl_getinfo($request, CURLINFO_EFFECTIVE_URL),
+                "request_body" => json_encode($data)
+            ));
+        }
+
         $requestException->setFailedMessage($message);
 
         throw $requestException;
@@ -301,35 +313,49 @@ class Connector
     /**
      * Checks the cURL request for errors and throws exceptions appropriately
      *
-     * @param $request
-     * @param $response string The response from the request
+     * @param resource $request
+     * @param string $response The response from the request
+     * @param string $data     The post data if it exists
      * @throws RequestException
      * @throws ClientException
      * @throws ServerException
      * @throws TimeoutException
      */
-    protected function checkForRequestErrors($request, $response)
+    protected function checkForRequestErrors($request, $response, $data = null)
     {
+        $exception = null;
+
         // if curl has an error number
         if (curl_errno($request)) {
             switch (curl_errno($request)) {
                 // curl timeout error
                 case CURLE_OPERATION_TIMEDOUT:
-                    throw new TimeoutException(curl_error($request));
+                    $exception = new TimeoutException(curl_error($request));
                     break;
                 default:
-                    $this->throwRequestException(curl_error($request));
+                    $this->throwRequestException(curl_error($request), $request, $data);
                     break;
+            }
+        } else {
+            $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
+            if (preg_match("/^4.*/", $http_code)) {
+                // 4** status code
+                $exception = new ClientException($response, $http_code);
+            } elseif (preg_match("/^5.*/", $http_code)) {
+                // 5** status code
+                $exception = new ServerException($response, $http_code);
             }
         }
 
-        $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
-        if (preg_match("/^4.*/", $http_code)) {
-            // 4** status code
-            throw new ClientException($response, $http_code);
-        } elseif (preg_match("/^5.*/", $http_code)) {
-            // 5** status code
-            throw new ServerException($response, $http_code);
+        if (!$exception) {
+            return;
         }
+
+        $exception->setContext(array(
+            "api_request_url"  => curl_getinfo($request, CURLINFO_EFFECTIVE_URL),
+            "api_request_body" => json_encode($data)
+        ));
+
+        throw $exception;
     }
 }

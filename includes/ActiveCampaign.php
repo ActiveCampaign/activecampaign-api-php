@@ -1,6 +1,7 @@
 <?php
 
 namespace ActiveCampaign\Api\V1;
+
 use ActiveCampaign\Api\V1\Exceptions\InvalidArgumentException;
 
 /**
