@@ -245,9 +245,9 @@ class Connector
 
         $response = curl_exec($request);
 
-        $dataForLog = count($params_data) > 0 ? $data : null;
+        $data = isset($data) ? $data : null;
 
-        $this->checkForRequestErrors($request, $response, $dataForLog);
+        $this->checkForRequestErrors($request, $response, $data);
 
         $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
 
@@ -262,7 +262,7 @@ class Connector
                 return $response;
             }
 
-            $this->throwRequestException($response, $request, $dataForLog);
+            $this->throwRequestException($response, $request, $data);
         }
 
         $object->http_code = $http_code;
