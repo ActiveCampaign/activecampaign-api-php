@@ -336,15 +336,15 @@ class Connector
                     $this->throwRequestException(curl_error($request), $request, $data);
                     break;
             }
-        }
-
-        $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
-        if (preg_match("/^4.*/", $http_code)) {
-            // 4** status code
-            $exception = new ClientException($response, $http_code);
-        } elseif (preg_match("/^5.*/", $http_code)) {
-            // 5** status code
-            $exception = new ServerException($response, $http_code);
+        } else {
+            $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
+            if (preg_match("/^4.*/", $http_code)) {
+                // 4** status code
+                $exception = new ClientException($response, $http_code);
+            } elseif (preg_match("/^5.*/", $http_code)) {
+                // 5** status code
+                $exception = new ServerException($response, $http_code);
+            }
         }
 
         if (!$exception) {
@@ -352,8 +352,8 @@ class Connector
         }
 
         $exception->setContext(array(
-            "request_url"  => curl_getinfo($request, CURLINFO_EFFECTIVE_URL),
-            "request_body" => json_encode($data)
+            "api_request_url"  => curl_getinfo($request, CURLINFO_EFFECTIVE_URL),
+            "api_request_body" => json_encode($data)
         ));
 
         throw $exception;
