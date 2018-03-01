@@ -16,17 +16,9 @@ You can install **activecampaign-api-php** by [downloading (.zip)](https://githu
 
 ### Composer
 
-If you are using Composer, create your `composer.json` file ([example here](examples-composer/composer.json)).
-
-Then load the `composer.phar` file in that directory:
-
-`curl -sS https://getcomposer.org/installer | php`
-
-Next, run install to load the ActiveCampaign library:
-
-`php composer.phar install`
-
-You should then see the `activecampaign` folder inside `vendor`.
+```php
+composer require activecampaign/api-php
+```
 
 [Read more about using Composer](https://getcomposer.org/doc/).
 
