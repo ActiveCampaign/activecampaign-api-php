@@ -336,12 +336,19 @@ class Connector
             }
         } else {
             $http_code = (string)curl_getinfo($request, CURLINFO_HTTP_CODE);
+
+            $response = json_decode($response);
+
+            $message = isset($response->result_message) ?
+                $response->result_message :
+                (isset($response->message) ? $response->message : '');
+
             if (preg_match("/^4.*/", $http_code)) {
                 // 4** status code
-                $exception = new ClientException($response, $http_code);
+                $exception = new ClientException($message, $http_code);
             } elseif (preg_match("/^5.*/", $http_code)) {
                 // 5** status code
-                $exception = new ServerException($response, $http_code);
+                $exception = new ServerException($message, $http_code);
             }
         }
 
