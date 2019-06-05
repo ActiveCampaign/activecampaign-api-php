@@ -32,9 +32,9 @@ class AC_Deal extends ActiveCampaign {
 		return $response;
 	}
 
-	function get($params) {
+	function get($params, $post_data) {
 		$request_url = "{$this->url}&api_action=deal_get&api_output={$this->output}&{$params}";
-		$response = $this->curl($request_url);
+		$response = $this->curl($request_url, $post_data);
 		return $response;
 	}
 
