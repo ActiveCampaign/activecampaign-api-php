@@ -70,6 +70,17 @@ class ActiveCampaign extends AC_Connector {
 		parent::__construct($url, $api_key, $api_user, $api_pass);
 	}
 
+    /**
+	 * Set Tracking credentials
+	 *
+	 * @param string $track_actid
+	 * @param string $track_key
+	 */
+    function setTrackCredentials($track_actid, $track_key) {
+        $this->track_actid = $track_actid;
+        $this->track_key = $track_key;
+    }
+
 	/**
 	 * Set the version on the url
 	 *
