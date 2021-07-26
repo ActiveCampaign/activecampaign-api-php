@@ -12,7 +12,9 @@ Both customers of our hosted platform and On-Site edition can use these files. O
 
 You can install **activecampaign-api-php** by [downloading (.zip)](https://github.com/ActiveCampaign/activecampaign-api-php/zipball/master) or cloning the source:
 
-`git clone git@github.com:ActiveCampaign/activecampaign-api-php.git`
+```bash
+git clone git@github.com:ActiveCampaign/activecampaign-api-php.git
+```
 
 ### Composer
 
@@ -20,11 +22,15 @@ If you are using Composer, create your `composer.json` file ([example here](exam
 
 Then load the `composer.phar` file in that directory:
 
-`curl -sS https://getcomposer.org/installer | php`
+```bash
+curl -sS https://getcomposer.org/installer | php
+```
 
 Next, run install to load the ActiveCampaign library:
 
-`php composer.phar install`
+```bash
+php composer.phar install
+```
 
 You should then see the `activecampaign` folder inside `vendor`.
 
@@ -36,41 +42,51 @@ You should then see the `activecampaign` folder inside `vendor`.
 
 In your script just include the `autoload.php` file to load all classes:
 
-`require "vendor/autoload.php";`
+```php
+require "vendor/autoload.php";
+```
 
 Next, create a class instance of `ActiveCampaign`:
 
-`$ac = new ActiveCampaign("API_URL", "API_KEY");`
+```php
+$ac = new ActiveCampaign("API_URL", "API_KEY");
+```
 
 That's it!
 
 ### includes/config.php
 
-	define("ACTIVECAMPAIGN_URL", "API_URL");
-	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+```php
+define("ACTIVECAMPAIGN_URL", "API_URL");
+define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+```
 
 ### examples.php
 
-	require_once("includes/ActiveCampaign.class.php");
+```php
+require_once("includes/ActiveCampaign.class.php");
 
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-	// Adjust the default cURL timeout
-	$ac->set_curl_timeout(10);
+// Adjust the default cURL timeout
+$ac->set_curl_timeout(10);
 
-	$account = $ac->api("account/view");
+$account = $ac->api("account/view");
+```
 
 Or just include everything in the same PHP file:
 
-	define("ACTIVECAMPAIGN_URL", "API_URL");
-	define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
-	require_once("includes/ActiveCampaign.class.php");
-	$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
+```php
+define("ACTIVECAMPAIGN_URL", "API_URL");
+define("ACTIVECAMPAIGN_API_KEY", "API_KEY");
+require_once("includes/ActiveCampaign.class.php");
+$ac = new ActiveCampaign(ACTIVECAMPAIGN_URL, ACTIVECAMPAIGN_API_KEY);
 
-	// Adjust the default cURL timeout
-	$ac->set_curl_timeout(10);
+// Adjust the default cURL timeout
+$ac->set_curl_timeout(10);
 
-	$account = $ac->api("account/view");
+$account = $ac->api("account/view");
+```
 
 See our [examples file](examples.php) for more in-depth samples.
 
